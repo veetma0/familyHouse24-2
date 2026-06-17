@@ -1,5 +1,5 @@
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
 const serviceItems = [
@@ -141,6 +141,111 @@ function ServiceIcon({ type }) {
   )
 }
 
+function HousesCarousel({ items }) {
+  const scrollerRef = useRef(null)
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  useEffect(() => {
+    const scroller = scrollerRef.current
+    if (!scroller) return
+
+    const cards = scroller.querySelectorAll('.house-card')
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.55) {
+            const index = Number(entry.target.getAttribute('data-index'))
+            if (!Number.isNaN(index)) setActiveIndex(index)
+          }
+        })
+      },
+      { root: scroller, threshold: [0.55, 0.75] },
+    )
+
+    cards.forEach((card) => observer.observe(card))
+    return () => observer.disconnect()
+  }, [items.length])
+
+  const scrollToIndex = (index) => {
+    const scroller = scrollerRef.current
+    if (!scroller) return
+    const nextIndex = Math.max(0, Math.min(index, items.length - 1))
+    const card = scroller.querySelector(`[data-index="${nextIndex}"]`)
+    card?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' })
+    setActiveIndex(nextIndex)
+  }
+
+  return (
+    <div className="houses-carousel">
+      <div className="houses-scroller" ref={scrollerRef} aria-label="Список домов для отдыха">
+        {items.map((house, index) => (
+          <article className="house-card" key={house.title} data-index={index}>
+            <div
+              className="house-photo-placeholder"
+              role="img"
+              aria-label={`Место для фото дома ${house.title}`}
+            >
+              [ЗДЕСЬ БУДЕТ ФОТО ДОМА]
+            </div>
+            <div className="house-content">
+              <h3>{house.title}</h3>
+              <p className="house-meta">{house.details}</p>
+              <p>{house.description}</p>
+              <Link to="/booking" className="button button-primary house-book-btn">
+                Забронировать
+              </Link>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div className="houses-nav" aria-label="Навигация по домам">
+        <button
+          type="button"
+          className="houses-nav-btn"
+          onClick={() => scrollToIndex(activeIndex - 1)}
+          disabled={activeIndex === 0}
+          aria-label="Предыдущий дом"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15 6l-6 6 6 6" className="icon-stroke" />
+          </svg>
+        </button>
+
+        <div className="houses-dots" role="tablist" aria-label="Выбор дома">
+          {items.map((house, index) => (
+            <button
+              key={house.title}
+              type="button"
+              role="tab"
+              aria-selected={activeIndex === index}
+              aria-label={`Дом ${index + 1}: ${house.title}`}
+              className={`houses-dot${activeIndex === index ? ' is-active' : ''}`}
+              onClick={() => scrollToIndex(index)}
+            />
+          ))}
+        </div>
+
+        <button
+          type="button"
+          className="houses-nav-btn"
+          onClick={() => scrollToIndex(activeIndex + 1)}
+          disabled={activeIndex === items.length - 1}
+          aria-label="Следующий дом"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 6l6 6-6 6" className="icon-stroke" />
+          </svg>
+        </button>
+      </div>
+
+      <p className="houses-counter" aria-live="polite">
+        {activeIndex + 1} / {items.length}
+      </p>
+    </div>
+  )
+}
+
 function SiteHeader() {
   return (
     <header className="header">
@@ -177,6 +282,19 @@ function SiteFooter() {
         <Link to="/#contacts">Контакты</Link>
         <Link to="/#services">Услуги</Link>
         <Link to="/booking">Бронирование</Link>
+        <a
+          href="https://www.instagram.com/familyhouse_baza?igshid=hbnt1uo470"
+          className="footer-social"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Family House в Instagram"
+        >
+          <svg viewBox="0 0 24 24" className="footer-instagram-icon" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5" className="icon-stroke" />
+            <circle cx="12" cy="12" r="4" className="icon-stroke" />
+            <circle cx="17.2" cy="6.8" r="1" className="icon-stroke" />
+          </svg>
+        </a>
       </div>
     </footer>
   )
@@ -256,27 +374,7 @@ function HomePage() {
           Выберите дом для семьи или компании друзей: просторные гостиные, оборудованные кухни
           и уютные террасы с видом на природу.
         </p>
-        <div className="houses-scroller" aria-label="Список домов для отдыха">
-          {houseItems.map((house) => (
-            <article className="house-card" key={house.title}>
-              <div
-                className="house-photo-placeholder"
-                role="img"
-                aria-label={`Место для фото дома ${house.title}`}
-              >
-                [ЗДЕСЬ БУДЕТ ФОТО ДОМА]
-              </div>
-              <div className="house-content">
-                <h3>{house.title}</h3>
-                <p className="house-meta">{house.details}</p>
-                <p>{house.description}</p>
-                <Link to="/booking" className="button button-primary house-book-btn">
-                  Забронировать
-                </Link>
-              </div>
-            </article>
-          ))}
-        </div>
+        <HousesCarousel items={houseItems} />
       </section>
 
       <section className="content-section section-anchor" id="services">

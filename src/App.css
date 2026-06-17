@@ -319,44 +319,119 @@ h1 {
   margin-top: 0.65rem;
 }
 
-.houses-scroller {
+.houses-carousel {
   margin-top: 1.2rem;
+}
+
+.houses-scroller {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(300px, 1fr);
+  grid-auto-columns: 100%;
   gap: 1rem;
   overflow-x: auto;
-  padding: 0.15rem 0.1rem 0.7rem;
+  padding: 0;
   scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
+  align-items: stretch;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .houses-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.houses-nav {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.houses-nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(216, 183, 121, 0.5);
+  background: rgba(216, 183, 121, 0.12);
+  color: #e7d2ab;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.houses-nav-btn svg {
+  width: 22px;
+  height: 22px;
+}
+
+.houses-nav-btn .icon-stroke {
+  stroke: #e7d2ab;
+}
+
+.houses-nav-btn:hover:not(:disabled) {
+  background: rgba(216, 183, 121, 0.24);
+  border-color: #d8b779;
+  transform: translateY(-1px);
+}
+
+.houses-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.houses-dots {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.houses-dot {
+  width: 10px;
   height: 10px;
+  border-radius: 50%;
+  border: 1px solid #c8a86f;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
-.houses-scroller::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 999px;
+.houses-dot.is-active {
+  background: linear-gradient(120deg, #d2b178, #a88249);
+  transform: scale(1.2);
 }
 
-.houses-scroller::-webkit-scrollbar-thumb {
-  background: linear-gradient(90deg, #d2b178, #a88249);
-  border-radius: 999px;
+.houses-dot:hover {
+  background: rgba(216, 183, 121, 0.35);
+}
+
+.houses-counter {
+  margin: 0.65rem 0 0;
+  text-align: center;
+  color: #c5b08a;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
 }
 
 .house-card {
   scroll-snap-align: start;
+  scroll-snap-stop: always;
   background: linear-gradient(165deg, rgba(250, 242, 228, 0.98), rgba(234, 224, 205, 0.98));
   border: 1px solid #d0b98f;
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
-  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 520px;
 }
 
 .house-photo-placeholder {
-  min-height: 210px;
+  flex: 1.35;
+  min-height: 300px;
   background: linear-gradient(135deg, #8f9492, #a4a8a6);
   border-bottom: 1px dashed #6f7472;
   display: grid;
@@ -365,11 +440,15 @@ h1 {
   color: #f2f4f3;
   font-weight: 600;
   letter-spacing: 0.02em;
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
 .house-content {
-  padding: 1rem 1rem 1.15rem;
+  padding: 1.25rem 1.35rem 1.35rem;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
 }
 
 .house-content h3 {
@@ -392,7 +471,31 @@ h1 {
 }
 
 .house-book-btn {
-  margin-top: 0.85rem;
+  margin-top: auto;
+  width: 100%;
+  max-width: 280px;
+  padding-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .house-card {
+    flex-direction: row;
+    min-height: 400px;
+  }
+
+  .house-photo-placeholder {
+    flex: 1.6;
+    min-height: 100%;
+    min-width: 58%;
+    border-bottom: none;
+    border-right: 1px dashed #6f7472;
+  }
+
+  .house-content {
+    flex: 1;
+    padding: 1.5rem 1.75rem;
+    justify-content: center;
+  }
 }
 
 .contacts-grid {
@@ -601,6 +704,34 @@ h1 {
   color: #f3e1bd;
 }
 
+.footer-social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(216, 183, 121, 0.45);
+  background: rgba(216, 183, 121, 0.1);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-social:hover {
+  background: rgba(216, 183, 121, 0.22);
+  border-color: #d8b779;
+  transform: translateY(-1px);
+}
+
+.footer-instagram-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.footer-social .icon-stroke {
+  stroke: #e7d2ab;
+}
+
 @media (max-width: 1200px) {
   .screen {
     padding: 1.15rem;
@@ -643,10 +774,6 @@ h1 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .houses-scroller {
-    grid-auto-columns: minmax(280px, 85%);
-  }
-
   .contacts-grid {
     grid-template-columns: 1fr;
   }
@@ -672,9 +799,5 @@ h1 {
 
   .services-grid {
     grid-template-columns: 1fr;
-  }
-
-  .houses-scroller {
-    grid-auto-columns: minmax(250px, 92%);
   }
 }
