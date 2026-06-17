@@ -20,10 +20,13 @@ import LeadCaptureModal from '../components/LeadCaptureModal'
 import InquiryForm from '../components/InquiryForm'
 import FloatingHelpButton from '../components/FloatingHelpButton'
 import { useLeadCapture } from '../hooks/useLeadCapture'
+import { useScrollReveal } from '../hooks/useScrollReveal'
 
 function HomePage() {
   const [isBookingOpen, setBookingOpen] = useState(false)
   const { isLeadOpen, source, openLead, closeLead, snoozePopup } = useLeadCapture()
+
+  useScrollReveal()
 
   const openBooking = () => setBookingOpen(true)
   const closeBooking = () => setBookingOpen(false)
@@ -57,7 +60,7 @@ function HomePage() {
       <BookingPoliciesSection />
       <FaqSection />
       <ContactsSection onAskQuestion={() => openLead('contacts')} onBook={openBooking} />
-      <SiteFooter />
+      <SiteFooter onLead={() => openLead('footer')} />
       <button type="button" className="sticky-booking-link" onClick={openBooking}>
         Забронировать
       </button>
@@ -65,16 +68,18 @@ function HomePage() {
 
       <LeadCaptureModal
         isOpen={isLeadOpen}
-        title="Подберём формат рыбалки под вашу поездку"
+        title="Получите подбор рыбалки и лучшие даты"
         text={
           source === 'scroll-depth'
-            ? 'Вы уже изучили предложения. Оставьте контакты, и мы поможем выбрать лучший вариант.'
-            : 'Ответим на вопросы по летней и зимней рыбалке, технике и размещению в котеджах.'
+            ? 'Понравилось? Оставьте телефон — подберём свободные даты, технику и котедж под вашу компанию. Перезвоним в течение 15 минут.'
+            : source === 'exit-intent'
+              ? 'Не уезжайте без улова! Оставьте контакты — забронируем лучшие даты сезона и ответим на все вопросы.'
+              : 'Оставьте телефон — подберём формат рыбалки, технику и размещение под ваши даты. Перезвоним в течение 15 минут.'
         }
         onClose={closeLead}
         onSnooze={snoozePopup}
       >
-        <InquiryForm onBookNow={openBooking} />
+        <InquiryForm onBookNow={openBooking} compact />
       </LeadCaptureModal>
 
       <BnovoOverlay isOpen={isBookingOpen} onClose={closeBooking} />

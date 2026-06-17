@@ -26,7 +26,7 @@ function GearAndTransportSection({ onBook }) {
         ))}
       </div>
 
-      <button type="button" className="button button-primary" onClick={onBook}>
+      <button type="button" className="button button-primary button-lg" onClick={onBook}>
         Проверить даты и технику
       </button>
     </section>

@@ -1,7 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
-  <rect width="1200" height="800" fill="#dff1fb" />
-  <ellipse cx="600" cy="430" rx="420" ry="190" fill="#0f5d7a" opacity="0.18" />
-  <path d="M360 430 C420 360 560 350 670 410 C700 428 730 452 770 450 C752 492 700 536 630 554 C524 580 426 550 360 430 Z" fill="#0f5d7a" />
-  <circle cx="654" cy="430" r="9" fill="#f3fbff" />
-  <text x="56" y="88" fill="#0e2f3c" font-family="Montserrat, Arial, sans-serif" font-size="44" font-weight="700">#;>2 4=O</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="cbg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e7f3ef" />
+      <stop offset="1" stop-color="#d2e8e2" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#cbg)" />
+  <ellipse cx="600" cy="430" rx="430" ry="200" fill="#1f7a5a" opacity="0.12" />
+  <g transform="translate(600 430)">
+    <path d="M-240 0 C-160 -110 60 -120 200 -34 C228 -16 262 14 300 6 C262 56 200 110 110 134 C-60 178 -200 130 -240 0 Z" fill="#2ba6b8" />
+    <path d="M-240 0 C-160 -110 60 -120 200 -34 C228 -16 262 14 300 6 C262 56 200 110 110 134 C-60 178 -200 130 -240 0 Z" fill="url(#cbg)" opacity="0.0" />
+    <path d="M-240 0 C-180 -40 -120 -54 -60 -50 C-120 -10 -120 22 -60 60 C-160 60 -210 40 -240 0 Z" fill="#1f7a5a" opacity="0.4" />
+    <circle cx="190" cy="-18" r="11" fill="#f4f9f7" />
+    <circle cx="190" cy="-18" r="5" fill="#14241d" />
+    <path d="M-260 0 L-340 -56 L-330 0 L-340 56 Z" fill="#1d8497" />
+  </g>
 </svg>

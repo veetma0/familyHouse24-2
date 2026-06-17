@@ -1,24 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
 
 :root {
-  --font-base: 'Montserrat', Arial, sans-serif;
-  --font-title: 'Playfair Display', Georgia, serif;
+  --font-base: 'Inter', Arial, sans-serif;
+  --font-title: 'Manrope', 'Inter', Arial, sans-serif;
 
-  --bg-main: #f3fbff;
-  --bg-soft: #e7f4fb;
+  --bg-main: #f7f9f8;
+  --bg-soft: #eef3f2;
   --bg-card: #ffffff;
-  --bg-dark: #0f5d7a;
-  --text-main: #0e2f3c;
-  --text-muted: #365565;
-  --text-inverse: #f3fbff;
-  --accent: #e8a045;
-  --accent-soft: #f5ca8e;
-  --border-main: #bfdae7;
-  --shadow-main: 0 20px 40px rgba(15, 93, 122, 0.12);
+  --bg-dark: #163a2e;
+  --text-main: #14241d;
+  --text-muted: #4f635b;
+  --text-inverse: #f4f9f7;
+  --accent: #1f7a5a;
+  --accent-soft: #d6ece4;
+  --accent-green: #1f7a5a;
+  --accent-water: #2ba6b8;
+  --accent-water-soft: #d4f0f3;
+  --accent-gold: #c7a24a;
+  --border-main: #dde6e2;
+  --shadow-main: 0 10px 36px rgba(20, 36, 29, 0.08);
+  --shadow-soft: 0 4px 18px rgba(20, 36, 29, 0.06);
 
-  --radius-l: 24px;
-  --radius-m: 18px;
-  --radius-s: 12px;
+  --radius-l: 16px;
+  --radius-m: 10px;
+  --radius-s: 6px;
 
   --space-2: 8px;
   --space-3: 12px;
@@ -31,8 +36,8 @@
 
   --content-width: 1200px;
 
-  font-family: 'Montserrat', Arial, sans-serif;
-  line-height: 1.4;
+  font-family: 'Inter', Arial, sans-serif;
+  line-height: 1.5;
   font-weight: 400;
   font-synthesis: none;
   text-rendering: optimizeLegibility;

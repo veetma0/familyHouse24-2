@@ -9,7 +9,7 @@ const initialState = {
   message: '',
 }
 
-function InquiryForm({ onBookNow }) {
+function InquiryForm({ onBookNow, compact = false }) {
   const [formData, setFormData] = useState(initialState)
   const [status, setStatus] = useState('idle')
 
@@ -70,13 +70,15 @@ function InquiryForm({ onBookNow }) {
           <option>Выезд компанией</option>
         </select>
       </label>
-      <label>
-        Комментарий
-        <textarea name="message" value={formData.message} onChange={onChange} rows={3} />
-      </label>
+      {!compact && (
+        <label>
+          Комментарий
+          <textarea name="message" value={formData.message} onChange={onChange} rows={3} />
+        </label>
+      )}
 
       <button type="submit" className="button button-primary" disabled={status === 'loading'}>
-        {status === 'loading' ? 'Отправляем...' : 'Получить консультацию'}
+        {status === 'loading' ? 'Отправляем...' : compact ? 'Получить подбор' : 'Получить консультацию'}
       </button>
 
       {status === 'success' && (

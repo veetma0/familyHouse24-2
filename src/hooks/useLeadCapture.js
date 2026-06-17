@@ -36,7 +36,7 @@ export function useLeadCapture() {
   useEffect(() => {
     if (shouldSuppressPopup()) return undefined
 
-    const timerId = window.setTimeout(() => openLead('time-delay'), 40000)
+    const timerId = window.setTimeout(() => openLead('time-delay'), 15000)
     let hasTriggeredScroll = false
     let hasTriggeredExit = false
 

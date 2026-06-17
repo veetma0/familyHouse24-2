@@ -1,19 +1,65 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0a3f56" />
-      <stop offset="0.6" stop-color="#0f5d7a" />
-      <stop offset="1" stop-color="#2d8fb4" />
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e9f3f1" />
+      <stop offset="0.55" stop-color="#d7ece8" />
+      <stop offset="1" stop-color="#cfe7e6" />
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5fc2c9" />
+      <stop offset="0.5" stop-color="#2ba6b8" />
+      <stop offset="1" stop-color="#1d8497" />
+    </linearGradient>
+    <linearGradient id="forestFar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3f7a64" />
+      <stop offset="1" stop-color="#2e6450" />
+    </linearGradient>
+    <linearGradient id="forestNear" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#235244" />
+      <stop offset="1" stop-color="#163a2e" />
     </linearGradient>
   </defs>
-  <rect width="1600" height="900" fill="url(#bg)" />
-  <circle cx="1220" cy="150" r="88" fill="#e8a045" opacity="0.9" />
-  <path d="M0 620 C230 540 420 690 640 610 C860 530 1030 700 1600 560 L1600 900 L0 900 Z" fill="#083349" opacity="0.72" />
-  <path d="M0 700 C320 610 550 760 920 680 C1170 630 1380 740 1600 700 L1600 900 L0 900 Z" fill="#0b4b64" opacity="0.7" />
-  <text x="88" y="136" fill="#eaf6fb" font-family="Montserrat, Arial, sans-serif" font-size="58" font-weight="700">
-    FAMILY HOUSE
-  </text>
-  <text x="88" y="198" fill="#eaf6fb" font-family="Montserrat, Arial, sans-serif" font-size="30">
-     K1>;>2=0O 1070 =0 @5:5 !8BL
-  </text>
+
+  <rect width="1600" height="900" fill="url(#sky)" />
+
+  <!-- soft sun -->
+  <circle cx="1180" cy="230" r="120" fill="#f3e6c4" opacity="0.7" />
+  <circle cx="1180" cy="230" r="78" fill="#f6efd6" opacity="0.9" />
+
+  <!-- far forest ridge -->
+  <path d="M0 470
+    L70 430 L120 460 L180 415 L240 455 L320 405 L400 450 L470 410
+    L560 452 L640 408 L720 450 L820 405 L920 452 L1010 410
+    L1110 452 L1200 408 L1300 450 L1400 410 L1500 452 L1600 415
+    L1600 560 L0 560 Z" fill="url(#forestFar)" opacity="0.85" />
+
+  <!-- near forest ridge -->
+  <path d="M0 540
+    L60 505 L130 545 L210 500 L300 548 L390 505 L480 550 L580 505
+    L680 552 L780 508 L880 552 L990 505 L1090 552 L1190 508
+    L1300 552 L1400 508 L1510 552 L1600 512
+    L1600 640 L0 640 Z" fill="url(#forestNear)" />
+
+  <!-- water -->
+  <rect y="600" width="1600" height="300" fill="url(#water)" />
+  <path d="M0 640 C300 612 520 660 900 624 C1180 600 1380 648 1600 626 L1600 900 L0 900 Z" fill="#1d8497" opacity="0.55" />
+
+  <!-- water highlights -->
+  <path d="M120 720 q60 -14 120 0" stroke="#d6f3f4" stroke-width="4" fill="none" opacity="0.55" stroke-linecap="round" />
+  <path d="M360 760 q70 -16 140 0" stroke="#d6f3f4" stroke-width="4" fill="none" opacity="0.5" stroke-linecap="round" />
+  <path d="M900 745 q70 -16 140 0" stroke="#d6f3f4" stroke-width="4" fill="none" opacity="0.5" stroke-linecap="round" />
+  <path d="M1200 790 q60 -14 120 0" stroke="#d6f3f4" stroke-width="4" fill="none" opacity="0.45" stroke-linecap="round" />
+
+  <!-- boat -->
+  <g transform="translate(680 690)">
+    <path d="M-90 30 C-60 70 60 70 90 30 L70 30 C50 52 -50 52 -70 30 Z" fill="#14241d" />
+    <rect x="-4" y="-70" width="6" height="74" fill="#14241d" />
+    <path d="M2 -68 L60 -12 L2 -12 Z" fill="#f4f9f7" opacity="0.95" />
+    <path d="M-2 -60 L-46 -14 L-2 -14 Z" fill="#d6ece4" opacity="0.9" />
+    <!-- angler -->
+    <circle cx="-30" cy="6" r="8" fill="#14241d" />
+    <rect x="-34" y="14" width="10" height="18" rx="4" fill="#14241d" />
+    <path d="M-26 18 L40 -30" stroke="#c7a24a" stroke-width="3" fill="none" stroke-linecap="round" />
+    <line x1="40" y1="-30" x2="40" y2="34" stroke="#9fb7af" stroke-width="1.5" />
+  </g>
 </svg>

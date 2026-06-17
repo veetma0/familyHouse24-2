@@ -7,26 +7,33 @@ function MealsSection() {
       <h2>{mealsInfo.title} и кухня</h2>
       <p className="section-intro">{mealsInfo.subtitle}</p>
 
-      <div className="gear-groups-grid">
-        <article className="gear-group">
+      <div className="meals-layout">
+        <article className="meals-card meals-card-info">
           <h3>Как организовано</h3>
-          <ul className="plain-list">
+          <ul className="meals-points">
             {mealsInfo.points.map((point) => (
-              <li key={point}>{point}</li>
+              <li key={point.text}>
+                <span className="meals-point-icon" aria-hidden="true">
+                  {point.icon}
+                </span>
+                <span>{point.text}</span>
+              </li>
             ))}
           </ul>
         </article>
 
-        <article className="gear-group">
+        <article className="meals-card meals-card-schedule">
           <h3>Расписание и стоимость</h3>
-          <ul className="plain-list">
-            {mealsInfo.schedule.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-          <ul className="plain-list plain-list-prices">
-            {mealsInfo.prices.map((item) => (
-              <li key={item}>{item}</li>
+          <ul className="meals-schedule">
+            {mealsInfo.meals.map((meal) => (
+              <li key={meal.name} className="meals-row">
+                <span className="meals-row-icon" aria-hidden="true">
+                  {meal.icon}
+                </span>
+                <span className="meals-row-name">{meal.name}</span>
+                <span className="meals-row-time">{meal.time}</span>
+                <span className="meals-row-price">{meal.price}</span>
+              </li>
             ))}
           </ul>
         </article>

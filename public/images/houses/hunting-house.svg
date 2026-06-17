@@ -1,12 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
-  <rect width="1200" height="800" fill="#e2f3fb" />
-  <rect y="540" width="1200" height="260" fill="#99bfd0" />
-  <rect x="250" y="300" width="700" height="350" rx="20" fill="#f7fcff" stroke="#7ca5b8" stroke-width="8" />
-  <polygon points="220,320 600,170 980,320" fill="#214e64" />
-  <rect x="330" y="430" width="110" height="110" fill="#90bdd2" />
-  <rect x="500" y="430" width="110" height="110" fill="#90bdd2" />
-  <rect x="670" y="430" width="110" height="110" fill="#90bdd2" />
-  <text x="70" y="90" fill="#0e2f3c" font-family="Montserrat, Arial, sans-serif" font-size="48" font-weight="700">
-    E>B=8G89 :>B546
-  </text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e8f2ef" />
+      <stop offset="1" stop-color="#d4e9e3" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#g3)" />
+  <path d="M0 320 L180 270 L360 322 L560 268 L760 322 L960 270 L1160 322 L1200 300 L1200 460 L0 460 Z" fill="#235244" opacity="0.6" />
+  <rect y="610" width="1200" height="190" fill="#cfe2dc" />
+  <!-- log cabin -->
+  <rect x="320" y="380" width="560" height="260" rx="8" fill="#c9a87e" stroke="#a98456" stroke-width="6" />
+  <line x1="320" y1="430" x2="880" y2="430" stroke="#a98456" stroke-width="5" />
+  <line x1="320" y1="480" x2="880" y2="480" stroke="#a98456" stroke-width="5" />
+  <line x1="320" y1="530" x2="880" y2="530" stroke="#a98456" stroke-width="5" />
+  <line x1="320" y1="580" x2="880" y2="580" stroke="#a98456" stroke-width="5" />
+  <polygon points="290,392 600,250 910,392" fill="#1f7a5a" />
+  <rect x="540" y="500" width="120" height="140" fill="#5b3f27" />
+  <rect x="380" y="430" width="90" height="80" rx="6" fill="#cdeef0" stroke="#2ba6b8" stroke-width="5" />
+  <rect x="730" y="430" width="90" height="80" rx="6" fill="#cdeef0" stroke="#2ba6b8" stroke-width="5" />
+  <rect x="556" y="270" width="30" height="64" fill="#5b3f27" />
 </svg>
