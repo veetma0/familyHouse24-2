@@ -33,7 +33,7 @@ function SiteHeader({ compact = false, onBook }) {
         <span />
       </button>
 
-      <nav className={`top-nav${isOpen ? ' open' : ''}`}>
+      <nav className={`top-nav${isOpen ? ' open' : ''}`} aria-label="Главная навигация">
         {!compact &&
           navigationItems.map((item) => (
             <a key={item.id} href={`#${item.id}`} onClick={closeMenu}>
