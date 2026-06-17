@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a3f56" />
+      <stop offset="0.6" stop-color="#0f5d7a" />
+      <stop offset="1" stop-color="#2d8fb4" />
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)" />
+  <circle cx="1220" cy="150" r="88" fill="#e8a045" opacity="0.9" />
+  <path d="M0 620 C230 540 420 690 640 610 C860 530 1030 700 1600 560 L1600 900 L0 900 Z" fill="#083349" opacity="0.72" />
+  <path d="M0 700 C320 610 550 760 920 680 C1170 630 1380 740 1600 700 L1600 900 L0 900 Z" fill="#0b4b64" opacity="0.7" />
+  <text x="88" y="136" fill="#eaf6fb" font-family="Montserrat, Arial, sans-serif" font-size="58" font-weight="700">
+    FAMILY HOUSE
+  </text>
+  <text x="88" y="198" fill="#eaf6fb" font-family="Montserrat, Arial, sans-serif" font-size="30">
+     K1>;>2=0O 1070 =0 @5:5 !8BL
+  </text>
+</svg>
