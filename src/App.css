@@ -341,7 +341,7 @@ h1 {
   display: none;
 }
 
-.houses-nav {
+.snap-nav {
   margin-top: 1rem;
   display: flex;
   align-items: center;
@@ -349,7 +349,7 @@ h1 {
   gap: 1rem;
 }
 
-.houses-nav-btn {
+.snap-nav-btn {
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -362,33 +362,33 @@ h1 {
   transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
-.houses-nav-btn svg {
+.snap-nav-btn svg {
   width: 22px;
   height: 22px;
 }
 
-.houses-nav-btn .icon-stroke {
+.snap-nav-btn .icon-stroke {
   stroke: #e7d2ab;
 }
 
-.houses-nav-btn:hover:not(:disabled) {
+.snap-nav-btn:hover:not(:disabled) {
   background: rgba(216, 183, 121, 0.24);
   border-color: #d8b779;
   transform: translateY(-1px);
 }
 
-.houses-nav-btn:disabled {
+.snap-nav-btn:disabled {
   opacity: 0.35;
   cursor: not-allowed;
 }
 
-.houses-dots {
+.snap-dots {
   display: flex;
   align-items: center;
   gap: 0.55rem;
 }
 
-.houses-dot {
+.snap-dot {
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -399,16 +399,16 @@ h1 {
   transition: transform 0.2s ease, background 0.2s ease;
 }
 
-.houses-dot.is-active {
+.snap-dot.is-active {
   background: linear-gradient(120deg, #d2b178, #a88249);
   transform: scale(1.2);
 }
 
-.houses-dot:hover {
+.snap-dot:hover {
   background: rgba(216, 183, 121, 0.35);
 }
 
-.houses-counter {
+.snap-counter {
   margin: 0.65rem 0 0;
   text-align: center;
   color: #c5b08a;
@@ -598,18 +598,70 @@ h1 {
   text-align: center;
 }
 
-.gallery-placeholder {
-  margin-top: 1rem;
-  border: 2px dashed #7f8381;
-  border-radius: 12px;
-  min-height: 220px;
-  background: #8f9492;
+.gallery-intro {
+  max-width: 68ch;
+}
+
+.gallery-carousel {
+  margin-top: 1.2rem;
+}
+
+.gallery-scroller {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 0;
+  scroll-snap-type: x mandatory;
+  align-items: stretch;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.gallery-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery-slide {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  margin: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #3b3a3f;
+  background: #121316;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+
+.gallery-photo-placeholder {
+  min-height: 380px;
+  background: linear-gradient(135deg, #7a7e7c, #959a98);
+  border-bottom: 1px dashed #6f7472;
   display: grid;
   place-items: center;
   text-align: center;
-  color: #f4f5f3;
+  color: #f2f4f3;
   font-weight: 600;
-  padding: 1rem;
+  letter-spacing: 0.02em;
+  padding: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.gallery-slide figcaption {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  color: #e8e2d6;
+  font-size: 0.92rem;
+  text-align: center;
+  background: rgba(10, 10, 12, 0.55);
+}
+
+@media (min-width: 768px) {
+  .gallery-photo-placeholder {
+    min-height: 460px;
+  }
 }
 
 .booking-page {

@@ -62,6 +62,142 @@ const houseItems = [
   },
 ]
 
+const galleryItems = [
+  { label: 'Панорама базы на закате с рекой' },
+  { label: 'Территория Family House в сосновом бору' },
+  { label: 'Уютные дома для семейного отдыха' },
+  { label: 'Рыбалка на реке Сить' },
+  { label: 'Отдых у костра на берегу' },
+  { label: 'Интерьер гостиной с видом на природу' },
+]
+
+function useSnapCarousel(itemCount) {
+  const scrollerRef = useRef(null)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const targetIndexRef = useRef(null)
+
+  const getSlideMetrics = (scroller) => {
+    const gap = parseFloat(getComputedStyle(scroller).gap) || 0
+    return { slideWidth: scroller.clientWidth + gap }
+  }
+
+  const clampIndex = (index) => Math.max(0, Math.min(index, itemCount - 1))
+
+  const getIndexFromScroll = (scroller) => {
+    const { slideWidth } = getSlideMetrics(scroller)
+    if (!slideWidth) return 0
+    return clampIndex(Math.round(scroller.scrollLeft / slideWidth))
+  }
+
+  useEffect(() => {
+    const scroller = scrollerRef.current
+    if (!scroller) return
+
+    let raf = 0
+
+    const onScroll = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        if (targetIndexRef.current !== null) return
+        setActiveIndex(getIndexFromScroll(scroller))
+      })
+    }
+
+    const onScrollEnd = () => {
+      targetIndexRef.current = null
+      setActiveIndex(getIndexFromScroll(scroller))
+    }
+
+    scroller.addEventListener('scroll', onScroll, { passive: true })
+    scroller.addEventListener('scrollend', onScrollEnd)
+    return () => {
+      scroller.removeEventListener('scroll', onScroll)
+      scroller.removeEventListener('scrollend', onScrollEnd)
+      cancelAnimationFrame(raf)
+    }
+  }, [itemCount])
+
+  const scrollToIndex = (index) => {
+    const scroller = scrollerRef.current
+    if (!scroller) return
+
+    const nextIndex = clampIndex(index)
+    const { slideWidth } = getSlideMetrics(scroller)
+
+    targetIndexRef.current = nextIndex
+    setActiveIndex(nextIndex)
+    scroller.scrollTo({ left: nextIndex * slideWidth, behavior: 'smooth' })
+
+    window.setTimeout(() => {
+      if (targetIndexRef.current === nextIndex) {
+        targetIndexRef.current = null
+      }
+    }, 450)
+  }
+
+  return { scrollerRef, activeIndex, scrollToIndex }
+}
+
+function SnapCarouselNav({
+  activeIndex,
+  total,
+  onPrev,
+  onNext,
+  onSelect,
+  navLabel,
+  prevLabel,
+  nextLabel,
+  itemLabel,
+}) {
+  return (
+    <>
+      <div className="snap-nav" aria-label={navLabel}>
+        <button
+          type="button"
+          className="snap-nav-btn"
+          onClick={onPrev}
+          disabled={activeIndex === 0}
+          aria-label={prevLabel}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15 6l-6 6 6 6" className="icon-stroke" />
+          </svg>
+        </button>
+
+        <div className="snap-dots" role="tablist" aria-label={itemLabel}>
+          {Array.from({ length: total }, (_, index) => (
+            <button
+              key={index}
+              type="button"
+              role="tab"
+              aria-selected={activeIndex === index}
+              aria-label={`${itemLabel} ${index + 1}`}
+              className={`snap-dot${activeIndex === index ? ' is-active' : ''}`}
+              onClick={() => onSelect(index)}
+            />
+          ))}
+        </div>
+
+        <button
+          type="button"
+          className="snap-nav-btn"
+          onClick={onNext}
+          disabled={activeIndex === total - 1}
+          aria-label={nextLabel}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 6l6 6-6 6" className="icon-stroke" />
+          </svg>
+        </button>
+      </div>
+
+      <p className="snap-counter">
+        {activeIndex + 1} / {total}
+      </p>
+    </>
+  )
+}
+
 function App() {
   useHashScroll()
 
@@ -142,44 +278,13 @@ function ServiceIcon({ type }) {
 }
 
 function HousesCarousel({ items }) {
-  const scrollerRef = useRef(null)
-  const [activeIndex, setActiveIndex] = useState(0)
-
-  useEffect(() => {
-    const scroller = scrollerRef.current
-    if (!scroller) return
-
-    const cards = scroller.querySelectorAll('.house-card')
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.55) {
-            const index = Number(entry.target.getAttribute('data-index'))
-            if (!Number.isNaN(index)) setActiveIndex(index)
-          }
-        })
-      },
-      { root: scroller, threshold: [0.55, 0.75] },
-    )
-
-    cards.forEach((card) => observer.observe(card))
-    return () => observer.disconnect()
-  }, [items.length])
-
-  const scrollToIndex = (index) => {
-    const scroller = scrollerRef.current
-    if (!scroller) return
-    const nextIndex = Math.max(0, Math.min(index, items.length - 1))
-    const card = scroller.querySelector(`[data-index="${nextIndex}"]`)
-    card?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' })
-    setActiveIndex(nextIndex)
-  }
+  const { scrollerRef, activeIndex, scrollToIndex } = useSnapCarousel(items.length)
 
   return (
     <div className="houses-carousel">
       <div className="houses-scroller" ref={scrollerRef} aria-label="Список домов для отдыха">
-        {items.map((house, index) => (
-          <article className="house-card" key={house.title} data-index={index}>
+        {items.map((house) => (
+          <article className="house-card" key={house.title}>
             <div
               className="house-photo-placeholder"
               role="img"
@@ -199,49 +304,52 @@ function HousesCarousel({ items }) {
         ))}
       </div>
 
-      <div className="houses-nav" aria-label="Навигация по домам">
-        <button
-          type="button"
-          className="houses-nav-btn"
-          onClick={() => scrollToIndex(activeIndex - 1)}
-          disabled={activeIndex === 0}
-          aria-label="Предыдущий дом"
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M15 6l-6 6 6 6" className="icon-stroke" />
-          </svg>
-        </button>
+      <SnapCarouselNav
+        activeIndex={activeIndex}
+        total={items.length}
+        onPrev={() => scrollToIndex(activeIndex - 1)}
+        onNext={() => scrollToIndex(activeIndex + 1)}
+        onSelect={scrollToIndex}
+        navLabel="Навигация по домам"
+        prevLabel="Предыдущий дом"
+        nextLabel="Следующий дом"
+        itemLabel="Дом"
+      />
+    </div>
+  )
+}
 
-        <div className="houses-dots" role="tablist" aria-label="Выбор дома">
-          {items.map((house, index) => (
-            <button
-              key={house.title}
-              type="button"
-              role="tab"
-              aria-selected={activeIndex === index}
-              aria-label={`Дом ${index + 1}: ${house.title}`}
-              className={`houses-dot${activeIndex === index ? ' is-active' : ''}`}
-              onClick={() => scrollToIndex(index)}
-            />
-          ))}
-        </div>
+function GalleryCarousel({ items }) {
+  const { scrollerRef, activeIndex, scrollToIndex } = useSnapCarousel(items.length)
 
-        <button
-          type="button"
-          className="houses-nav-btn"
-          onClick={() => scrollToIndex(activeIndex + 1)}
-          disabled={activeIndex === items.length - 1}
-          aria-label="Следующий дом"
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M9 6l6 6-6 6" className="icon-stroke" />
-          </svg>
-        </button>
+  return (
+    <div className="gallery-carousel">
+      <div className="gallery-scroller" ref={scrollerRef} aria-label="Галерея фотографий">
+        {items.map((photo) => (
+          <figure className="gallery-slide" key={photo.label}>
+            <div
+              className="gallery-photo-placeholder"
+              role="img"
+              aria-label={`Место для фото: ${photo.label}`}
+            >
+              [ЗДЕСЬ БУДЕТ ФОТО: {photo.label.toUpperCase()}]
+            </div>
+            <figcaption>{photo.label}</figcaption>
+          </figure>
+        ))}
       </div>
 
-      <p className="houses-counter" aria-live="polite">
-        {activeIndex + 1} / {items.length}
-      </p>
+      <SnapCarouselNav
+        activeIndex={activeIndex}
+        total={items.length}
+        onPrev={() => scrollToIndex(activeIndex - 1)}
+        onNext={() => scrollToIndex(activeIndex + 1)}
+        onSelect={scrollToIndex}
+        navLabel="Навигация по галерее"
+        prevLabel="Предыдущее фото"
+        nextLabel="Следующее фото"
+        itemLabel="Фото"
+      />
     </div>
   )
 }
@@ -400,13 +508,11 @@ function HomePage() {
       <section className="content-section section-anchor" id="gallery">
         <p className="hero-kicker">Атмосфера</p>
         <h2>ГАЛЕРЕЯ FAMILY HOUSE</h2>
-        <p>
-          Здесь будут лучшие кадры территории, домов и отдыха у реки. Для демонстрации экрана
-          используется дизайнерская заглушка.
+        <p className="gallery-intro">
+          Лучшие кадры территории, домов и отдыха у реки. Листайте фотографии стрелками,
+          точками или свайпом.
         </p>
-        <div className="gallery-placeholder" role="img" aria-label="Заглушка для галереи фотографий">
-          [ЗДЕСЬ БУДЕТ ФОТОГАЛЕРЕЯ БАЗЫ]
-        </div>
+        <GalleryCarousel items={galleryItems} />
       </section>
 
       <section className="content-section section-anchor" id="contacts">
