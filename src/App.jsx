@@ -71,6 +71,248 @@ const galleryItems = [
   { label: 'Интерьер гостиной с видом на природу' },
 ]
 
+const MONTHS_RU = [
+  'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+  'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь',
+]
+
+const WEEKDAYS_RU = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс']
+
+function toDateKey(date) {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
+function parseDateKey(key) {
+  return new Date(`${key}T00:00:00`)
+}
+
+function formatDateRu(key) {
+  if (!key) return 'Выберите дату'
+  return parseDateKey(key).toLocaleDateString('ru-RU', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+}
+
+function CustomDatePicker({ label, name, value, onChange, minDate, required }) {
+  const containerRef = useRef(null)
+  const [open, setOpen] = useState(false)
+  const [viewDate, setViewDate] = useState(() => (value ? parseDateKey(value) : new Date()))
+
+  useEffect(() => {
+    if (value) setViewDate(parseDateKey(value))
+  }, [value])
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (containerRef.current && !containerRef.current.contains(event.target)) {
+        setOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  const year = viewDate.getFullYear()
+  const month = viewDate.getMonth()
+  const todayKey = toDateKey(new Date())
+
+  const firstDay = new Date(year, month, 1)
+  const startOffset = (firstDay.getDay() + 6) % 7
+  const daysInMonth = new Date(year, month + 1, 0).getDate()
+
+  const days = []
+  for (let i = 0; i < startOffset; i += 1) days.push(null)
+  for (let day = 1; day <= daysInMonth; day += 1) {
+    days.push(new Date(year, month, day))
+  }
+
+  const selectDate = (date) => {
+    onChange(toDateKey(date))
+    setOpen(false)
+  }
+
+  return (
+    <label className="date-picker-field" ref={containerRef}>
+      {label}
+      <input type="hidden" name={name} value={value} required={required} />
+      <button
+        type="button"
+        className={`date-picker-trigger${value ? '' : ' is-empty'}`}
+        onClick={() => setOpen((prev) => !prev)}
+        aria-expanded={open}
+        aria-haspopup="dialog"
+      >
+        {formatDateRu(value)}
+      </button>
+
+      {open && (
+        <div className="date-picker-popup" role="dialog" aria-label={label}>
+          <div className="date-picker-header">
+            <button
+              type="button"
+              className="date-picker-nav"
+              onClick={() => setViewDate(new Date(year, month - 1, 1))}
+              aria-label="Предыдущий месяц"
+            >
+              ‹
+            </button>
+            <span className="date-picker-month">
+              {MONTHS_RU[month]} {year}
+            </span>
+            <button
+              type="button"
+              className="date-picker-nav"
+              onClick={() => setViewDate(new Date(year, month + 1, 1))}
+              aria-label="Следующий месяц"
+            >
+              ›
+            </button>
+          </div>
+
+          <div className="date-picker-weekdays">
+            {WEEKDAYS_RU.map((weekday) => (
+              <span key={weekday}>{weekday}</span>
+            ))}
+          </div>
+
+          <div className="date-picker-days">
+            {days.map((date, index) => {
+              if (!date) {
+                return <span key={`empty-${index}`} className="date-picker-day is-empty" />
+              }
+
+              const key = toDateKey(date)
+              const minKey = minDate || todayKey
+              const isDisabled = key < minKey
+              const isSelected = value === key
+              const isToday = key === todayKey
+
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  className={`date-picker-day${isSelected ? ' is-selected' : ''}${isToday ? ' is-today' : ''}`}
+                  disabled={isDisabled}
+                  onClick={() => selectDate(date)}
+                >
+                  {date.getDate()}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      )}
+    </label>
+  )
+}
+
+function CustomHousePicker({ label, name, value, onChange, houses, required }) {
+  const containerRef = useRef(null)
+  const [open, setOpen] = useState(false)
+
+  const selectedHouse = houses.find((house) => house.title === value)
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (containerRef.current && !containerRef.current.contains(event.target)) {
+        setOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  const selectHouse = (houseTitle) => {
+    onChange(houseTitle)
+    setOpen(false)
+  }
+
+  return (
+    <label className="house-picker-field" ref={containerRef}>
+      {label}
+      <input type="hidden" name={name} value={value} required={required} />
+      <button
+        type="button"
+        className={`house-picker-trigger${value ? '' : ' is-empty'}`}
+        onClick={() => setOpen((prev) => !prev)}
+        aria-expanded={open}
+        aria-haspopup="listbox"
+      >
+        <span className="house-picker-trigger-text">
+          {selectedHouse ? selectedHouse.title : 'Выберите дом'}
+        </span>
+        <span className="house-picker-chevron" aria-hidden="true">
+          {open ? '▲' : '▼'}
+        </span>
+      </button>
+
+      {open && (
+        <div className="house-picker-popup" role="listbox" aria-label={label}>
+          {houses.map((house) => {
+            const isSelected = value === house.title
+
+            return (
+              <button
+                key={house.title}
+                type="button"
+                role="option"
+                aria-selected={isSelected}
+                className={`house-picker-option${isSelected ? ' is-selected' : ''}`}
+                onClick={() => selectHouse(house.title)}
+              >
+                <span className="house-picker-option-title">{house.title}</span>
+                <span className="house-picker-option-meta">{house.details}</span>
+              </button>
+            )
+          })}
+        </div>
+      )}
+    </label>
+  )
+}
+
+function GuestStepper({ label, name, value, onChange, min = 1, max = 20, required }) {
+  const decrease = () => onChange(Math.max(min, value - 1))
+  const increase = () => onChange(Math.min(max, value + 1))
+
+  return (
+    <label className="guest-stepper-field">
+      {label}
+      <input type="hidden" name={name} value={value} required={required} />
+      <div className="guest-stepper">
+        <button
+          type="button"
+          className="guest-stepper-btn"
+          onClick={decrease}
+          disabled={value <= min}
+          aria-label="Уменьшить количество гостей"
+        >
+          −
+        </button>
+        <span className="guest-stepper-value" aria-live="polite">
+          {value}
+        </span>
+        <button
+          type="button"
+          className="guest-stepper-btn"
+          onClick={increase}
+          disabled={value >= max}
+          aria-label="Увеличить количество гостей"
+        >
+          +
+        </button>
+      </div>
+    </label>
+  )
+}
+
 function useSnapCarousel(itemCount) {
   const scrollerRef = useRef(null)
   const [activeIndex, setActiveIndex] = useState(0)
@@ -562,6 +804,22 @@ function HomePage() {
 }
 
 function BookingPage() {
+  const [checkIn, setCheckIn] = useState('')
+  const [checkOut, setCheckOut] = useState('')
+  const [house, setHouse] = useState('')
+  const [guests, setGuests] = useState(4)
+
+  const handleCheckInChange = (value) => {
+    setCheckIn(value)
+    if (checkOut && value && checkOut <= value) {
+      setCheckOut('')
+    }
+  }
+
+  const minCheckOut = checkIn
+    ? toDateKey(new Date(parseDateKey(checkIn).getTime() + 86400000))
+    : toDateKey(new Date())
+
   return (
     <main className="page booking-page">
       <section className="screen booking-screen">
@@ -581,14 +839,39 @@ function BookingPage() {
               Телефон
               <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" required />
             </label>
-            <label>
-              Даты отдыха
-              <input type="text" name="dates" placeholder="Например, 15.07 - 20.07" required />
-            </label>
-            <label>
-              Количество гостей
-              <input type="number" name="guests" min="1" max="20" placeholder="4" required />
-            </label>
+            <CustomDatePicker
+              label="Дата заезда"
+              name="checkIn"
+              value={checkIn}
+              onChange={handleCheckInChange}
+              minDate={toDateKey(new Date())}
+              required
+            />
+            <CustomDatePicker
+              label="Дата выезда"
+              name="checkOut"
+              value={checkOut}
+              onChange={setCheckOut}
+              minDate={minCheckOut}
+              required
+            />
+            <CustomHousePicker
+              label="Дом"
+              name="house"
+              value={house}
+              onChange={setHouse}
+              houses={houseItems}
+              required
+            />
+            <GuestStepper
+              label="Количество гостей"
+              name="guests"
+              value={guests}
+              onChange={setGuests}
+              min={1}
+              max={20}
+              required
+            />
             <label className="full-width">
               Комментарий
               <textarea name="comment" rows="4" placeholder="Пожелания по дому, рыбалке, охоте..." />
