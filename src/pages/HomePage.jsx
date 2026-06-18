@@ -15,6 +15,7 @@ import AdvantagesSection from '../components/AdvantagesSection'
 import MealsSection from '../components/MealsSection'
 import PricingSection from '../components/PricingSection'
 import BookingPoliciesSection from '../components/BookingPoliciesSection'
+import BnovoAvailabilitySection from '../components/BnovoAvailabilitySection'
 import BnovoOverlay from '../components/BnovoOverlay'
 import LeadCaptureModal from '../components/LeadCaptureModal'
 import InquiryForm from '../components/InquiryForm'
@@ -51,6 +52,7 @@ function HomePage() {
       <AdvantagesSection />
       <FishingSeasonsSection onBook={openBooking} />
       <GearAndTransportSection onBook={openBooking} />
+      <BnovoAvailabilitySection />
       <HousesSection onBook={openBooking} />
       <MealsSection />
       <ServicesSection />

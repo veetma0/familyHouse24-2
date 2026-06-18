@@ -21,7 +21,7 @@ function HeroSection({ onBook }) {
             Смотреть форматы рыбалки
           </a>
         </div>
-        <BnovoWidget />
+        <BnovoWidget widgetId="_bn_widget_hero" submitText="Показать варианты" variant="hero" />
       </div>
 
       <div className="trust-bar container" role="list" aria-label="Преимущества базы">

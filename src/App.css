@@ -113,7 +113,8 @@ p {
   color: var(--text-inverse);
   padding-top: 84px;
   padding-bottom: var(--space-8);
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .hero-shell .button-primary {
@@ -350,13 +351,130 @@ p {
 }
 
 .bnovo-widget-shell {
+  --bnovo-widget-height: 84px;
+  --bnovo-widget-padding: var(--space-4);
+  position: relative;
+  z-index: 20;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  height: calc(var(--bnovo-widget-height) + 2 * var(--bnovo-widget-padding));
   margin-top: var(--space-6);
-  background: #fff;
-  border-radius: var(--radius-m);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  padding: var(--space-4);
+  padding: var(--bnovo-widget-padding);
   max-width: 100%;
   overflow: hidden;
+  border-radius: var(--radius-m);
+}
+
+.bnovo-widget-shell.is-expanded {
+  display: block;
+  overflow: visible;
+  z-index: 200;
+}
+
+.bnovo-widget-shell--hero {
+  background: linear-gradient(180deg, #f8fcfa 0%, #eef6f2 100%);
+  border: 1px solid rgba(198, 221, 211, 0.95);
+  box-shadow: 0 10px 28px rgba(22, 58, 46, 0.14);
+}
+
+.bnovo-widget-shell--light {
+  margin-top: var(--space-5);
+  background: #fff;
+  border: 1px solid var(--border-main);
+  box-shadow: var(--shadow-soft);
+}
+
+.bnovo-widget-slot {
+  display: none;
+  height: var(--bnovo-widget-height);
+  pointer-events: none;
+}
+
+.bnovo-widget-shell.is-expanded .bnovo-widget-slot {
+  display: block;
+}
+
+.bnovo-widget-target {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  height: var(--bnovo-widget-height);
+  overflow: hidden;
+}
+
+.bnovo-widget-shell.is-expanded .bnovo-widget-target {
+  position: absolute;
+  top: var(--bnovo-widget-padding);
+  left: var(--bnovo-widget-padding);
+  right: var(--bnovo-widget-padding);
+  flex: none;
+  overflow: visible;
+  z-index: 201;
+}
+
+.bnovo-widget-target:has(iframe) > a {
+  display: none;
+}
+
+.bnovo-widget-target iframe {
+  width: 100% !important;
+  border: 0;
+  display: block;
+  background: transparent;
+}
+
+.bnovo-widget-shell.is-ready:not(.is-expanded) .bnovo-widget-target iframe {
+  height: var(--bnovo-widget-height) !important;
+  max-height: var(--bnovo-widget-height) !important;
+}
+
+.bnovo-widget-shell.is-expanded .bnovo-widget-target iframe {
+  height: min(400px, 75vh) !important;
+  max-height: min(400px, 75vh) !important;
+  min-height: var(--bnovo-widget-height) !important;
+  border-radius: 0 0 var(--radius-s) var(--radius-s);
+  box-shadow: 0 20px 40px rgba(20, 36, 29, 0.22);
+  background: #fff;
+}
+
+.bnovo-availability-section,
+.bnovo-availability-section > .container,
+.hero-content {
+  overflow: visible;
+}
+
+.bnovo-availability-section {
+  position: relative;
+  z-index: 3;
+}
+
+.bnovo-availability-section.is-widget-expanded {
+  z-index: 150;
+}
+
+.hero-shell.is-widget-expanded {
+  overflow: visible;
+  z-index: 50;
+}
+
+.bnovo-availability-section .booking-notes {
+  position: relative;
+  z-index: 1;
+}
+
+.bnovo-availability-section .section-lead {
+  max-width: 62ch;
+  margin-bottom: var(--space-4);
+}
+
+.booking-notes {
+  margin-top: var(--space-5);
+  display: grid;
+  gap: var(--space-2);
+  color: var(--text-muted);
+  font-size: 0.95rem;
 }
 
 .bnovo-placeholder {
@@ -366,6 +484,13 @@ p {
   border-radius: var(--radius-s);
   padding: var(--space-4);
   color: #e8dfd1;
+}
+
+.bnovo-placeholder--light {
+  margin-top: var(--space-5);
+  background: #fff;
+  border: 1px dashed var(--border-main);
+  color: var(--text-muted);
 }
 
 .trust-bar {
@@ -1959,6 +2084,14 @@ main > section.reveal {
   animation-delay: 0.46s;
 }
 
+.hero-content .bnovo-widget-shell {
+  z-index: 20;
+}
+
+.hero-content .bnovo-widget-shell.is-expanded {
+  z-index: 200;
+}
+
 /* ==========================================================================
    Mobile polish (<= 720px / <= 520px)
    ========================================================================== */
@@ -2048,6 +2181,10 @@ main > section.reveal {
 
   .trust-bar {
     margin-top: var(--space-5);
+  }
+
+  .bnovo-widget-shell {
+    --bnovo-widget-height: 148px;
   }
 
   .site-header {
