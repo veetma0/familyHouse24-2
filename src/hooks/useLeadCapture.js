@@ -4,7 +4,12 @@ const storageKey = 'family-house-lead-popup-until'
 const hideForDays = 7
 
 function getStoredUntil() {
-  const value = window.localStorage.getItem(storageKey)
+  let value
+  try {
+    value = window.localStorage.getItem(storageKey)
+  } catch {
+    return 0
+  }
   if (!value) return 0
   const parsed = Number(value)
   return Number.isFinite(parsed) ? parsed : 0
@@ -29,7 +34,11 @@ export function useLeadCapture() {
 
   const snoozePopup = () => {
     const hiddenUntil = Date.now() + hideForDays * 24 * 60 * 60 * 1000
-    window.localStorage.setItem(storageKey, String(hiddenUntil))
+    try {
+      window.localStorage.setItem(storageKey, String(hiddenUntil))
+    } catch {
+      // Storage may be unavailable in private or restricted browser contexts.
+    }
     setLeadOpen(false)
   }
 

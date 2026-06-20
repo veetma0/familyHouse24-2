@@ -25,11 +25,17 @@ import { useScrollReveal } from '../hooks/useScrollReveal'
 
 function HomePage() {
   const [isBookingOpen, setBookingOpen] = useState(false)
+  const [bookingDates, setBookingDates] = useState({})
   const { isLeadOpen, source, openLead, closeLead, snoozePopup } = useLeadCapture()
 
   useScrollReveal()
 
-  const openBooking = () => setBookingOpen(true)
+  const openBooking = (dates) => {
+    if (dates && ('checkIn' in dates || 'checkOut' in dates)) {
+      setBookingDates(dates)
+    }
+    setBookingOpen(true)
+  }
   const closeBooking = () => setBookingOpen(false)
 
   useEffect(() => {
@@ -52,7 +58,7 @@ function HomePage() {
       <AdvantagesSection />
       <FishingSeasonsSection onBook={openBooking} />
       <GearAndTransportSection onBook={openBooking} />
-      <BnovoAvailabilitySection />
+      <BnovoAvailabilitySection onBook={openBooking} />
       <HousesSection onBook={openBooking} />
       <MealsSection />
       <ServicesSection />
@@ -84,7 +90,7 @@ function HomePage() {
         <InquiryForm onBookNow={openBooking} compact />
       </LeadCaptureModal>
 
-      <BnovoOverlay isOpen={isBookingOpen} onClose={closeBooking} />
+      <BnovoOverlay isOpen={isBookingOpen} onClose={closeBooking} dates={bookingDates} />
     </main>
   )
 }

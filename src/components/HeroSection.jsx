@@ -1,4 +1,4 @@
-import BnovoWidget from './BnovoWidget'
+import BnovoBookingLauncher from './BnovoBookingLauncher'
 import { trustFacts } from '../data/siteData'
 
 function HeroSection({ onBook }) {
@@ -21,7 +21,7 @@ function HeroSection({ onBook }) {
             Смотреть форматы рыбалки
           </a>
         </div>
-        <BnovoWidget widgetId="_bn_widget_hero" submitText="Показать варианты" variant="hero" />
+        <BnovoBookingLauncher onOpen={onBook} submitText="Показать наличие" variant="hero" />
       </div>
 
       <div className="trust-bar container" role="list" aria-label="Преимущества базы">

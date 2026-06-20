@@ -13,15 +13,67 @@ export function hasBnovoUid() {
 
 const uuidUidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
-export function getBnovoIframeUrl() {
-  if (bnovoConfig.iframeUrl) return bnovoConfig.iframeUrl
+function getDaysBetween(startKey, endKey) {
+  const start = new Date(`${startKey}T00:00:00`)
+  const end = new Date(`${endKey}T00:00:00`)
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return null
+
+  const startUtc = Date.UTC(start.getFullYear(), start.getMonth(), start.getDate())
+  const endUtc = Date.UTC(end.getFullYear(), end.getMonth(), end.getDate())
+  return Math.max(0, Math.round((endUtc - startUtc) / 86400000))
+}
+
+function appendBookingDates(url, dates = {}) {
+  const { checkIn, checkOut } = dates
+  if (!checkIn && !checkOut) return url
+
+  const nextUrl = new URL(url)
+  if (checkIn) {
+    nextUrl.searchParams.set('date_from', checkIn)
+    nextUrl.searchParams.set('dfrom', checkIn)
+    nextUrl.searchParams.set('checkin', checkIn)
+    nextUrl.searchParams.set('dates_preset', 'on')
+
+    const daysFromToday = getDaysBetween(new Date().toISOString().slice(0, 10), checkIn)
+    if (daysFromToday === 0) {
+      nextUrl.searchParams.set('dfrom_today', 'on')
+    } else if (daysFromToday !== null) {
+      nextUrl.searchParams.set('dfrom_value', String(daysFromToday))
+    }
+  }
+  if (checkOut) {
+    nextUrl.searchParams.set('date_to', checkOut)
+    nextUrl.searchParams.set('dto', checkOut)
+    nextUrl.searchParams.set('checkout', checkOut)
+
+    if (checkIn) {
+      const nights = getDaysBetween(checkIn, checkOut)
+      if (nights === 1) {
+        nextUrl.searchParams.set('dto_nextday', 'on')
+      } else if (nights !== null) {
+        nextUrl.searchParams.set('dto_value', String(nights))
+      }
+    }
+  }
+
+  return nextUrl.toString()
+}
+
+export function getBnovoIframeUrl(dates) {
+  if (bnovoConfig.iframeUrl) return appendBookingDates(bnovoConfig.iframeUrl, dates)
   if (!bnovoConfig.uid) return ''
 
   if (uuidUidPattern.test(bnovoConfig.uid)) {
-    return `https://reservationsteps.ru/rooms/index/${encodeURIComponent(bnovoConfig.uid)}?lang=ru`
+    return appendBookingDates(
+      `https://reservationsteps.ru/rooms/index/${encodeURIComponent(bnovoConfig.uid)}?lang=ru`,
+      dates,
+    )
   }
 
-  return `https://widget.bnovo.ru/?lcode=${encodeURIComponent(bnovoConfig.uid)}&lang=ru`
+  return appendBookingDates(
+    `https://widget.bnovo.ru/?lcode=${encodeURIComponent(bnovoConfig.uid)}&lang=ru`,
+    dates,
+  )
 }
 
 const widgetThemes = {

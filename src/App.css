@@ -319,7 +319,7 @@ p {
 
 .hero-content {
   position: relative;
-  z-index: 1;
+  z-index: 5;
   padding-top: var(--space-4);
   padding-bottom: var(--space-4);
 }
@@ -350,9 +350,226 @@ p {
   flex-wrap: wrap;
 }
 
+.bnovo-launcher {
+  position: relative;
+  z-index: 6000;
+  margin-top: var(--space-6);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(220px, 0.9fr);
+  gap: 8px;
+  padding: var(--space-4);
+  border-radius: var(--radius-m);
+  max-width: 100%;
+  overflow: visible;
+}
+
+.bnovo-launcher-date {
+  position: relative;
+  z-index: 6001;
+  min-width: 0;
+}
+
+.bnovo-launcher--hero {
+  background: linear-gradient(180deg, #f8fcfa 0%, #eef6f2 100%);
+  border: 1px solid rgba(198, 221, 211, 0.95);
+  box-shadow: 0 10px 28px rgba(22, 58, 46, 0.14);
+}
+
+.bnovo-launcher--light {
+  margin-top: var(--space-5);
+  background: #fff;
+  border: 1px solid var(--border-main);
+  box-shadow: var(--shadow-soft);
+}
+
+.bnovo-launcher-field,
+.bnovo-launcher-submit {
+  min-height: 48px;
+  border-radius: 10px;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease,
+    transform 0.18s ease;
+}
+
+.bnovo-launcher-field {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  border: 1px solid #c5ddd3;
+  background: #fff;
+  color: var(--text-muted);
+  padding: 0 14px;
+  text-align: left;
+}
+
+.bnovo-launcher-field.is-open {
+  border-color: var(--accent-water);
+  box-shadow: 0 0 0 3px rgba(43, 166, 184, 0.12);
+}
+
+.bnovo-launcher-field.is-empty {
+  color: #77877f;
+}
+
+.bnovo-launcher-field:hover,
+.bnovo-launcher-field:focus-visible {
+  border-color: var(--accent-water);
+  box-shadow: 0 0 0 3px rgba(43, 166, 184, 0.12);
+  outline: none;
+}
+
+.bnovo-launcher-icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  color: var(--accent-green);
+}
+
+.bnovo-launcher-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.bnovo-launcher-submit {
+  border: 0;
+  background: var(--accent);
+  color: var(--text-inverse);
+  font-weight: 700;
+  padding: 0 20px;
+}
+
+.bnovo-launcher-submit:hover,
+.bnovo-launcher-submit:focus-visible {
+  background: #186347;
+  box-shadow: 0 10px 24px rgba(31, 122, 90, 0.26);
+  outline: none;
+}
+
+.bnovo-launcher-submit:active,
+.bnovo-launcher-field:active {
+  transform: scale(0.98);
+}
+
+.bnovo-launcher-calendar {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 9000;
+  width: min(320px, calc(100vw - 2 * var(--space-4)));
+  padding: var(--space-3);
+  border: 1px solid rgba(43, 166, 184, 0.26);
+  border-radius: var(--radius-m);
+  background: #fff;
+  box-shadow: 0 22px 50px rgba(20, 36, 29, 0.22);
+}
+
+.bnovo-launcher-date:nth-child(2) .bnovo-launcher-calendar {
+  right: 0;
+  left: auto;
+}
+
+.bnovo-launcher-calendar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  color: var(--text-main);
+}
+
+.bnovo-launcher-calendar-head strong {
+  font-family: var(--font-title);
+  font-size: 0.98rem;
+}
+
+.bnovo-launcher-calendar-nav {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border-main);
+  border-radius: 50%;
+  background: var(--bg-soft);
+  color: var(--accent-green);
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.bnovo-launcher-calendar-nav:hover,
+.bnovo-launcher-calendar-nav:focus-visible {
+  border-color: var(--accent-water);
+  outline: none;
+}
+
+.bnovo-launcher-weekdays,
+.bnovo-launcher-days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.bnovo-launcher-weekdays {
+  margin-bottom: 6px;
+}
+
+.bnovo-launcher-weekdays span {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.bnovo-launcher-day {
+  aspect-ratio: 1;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--text-main);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.bnovo-launcher-day:not(:disabled):not(.is-selected):hover,
+.bnovo-launcher-day:not(:disabled):not(.is-selected):focus-visible {
+  border-color: var(--accent-water);
+  background: rgba(43, 166, 184, 0.08);
+  outline: none;
+}
+
+.bnovo-launcher-day.is-empty {
+  pointer-events: none;
+}
+
+.bnovo-launcher-day.is-today {
+  border-color: rgba(31, 122, 90, 0.34);
+}
+
+.bnovo-launcher-day.is-selected {
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+}
+
+.bnovo-launcher-day:disabled {
+  color: #c4ccc8;
+  cursor: not-allowed;
+}
+
 .bnovo-widget-shell {
   --bnovo-widget-height: 84px;
   --bnovo-widget-padding: var(--space-4);
+  --bnovo-widget-expanded-height: min(560px, 85vh);
   position: relative;
   z-index: 20;
   box-sizing: border-box;
@@ -364,12 +581,15 @@ p {
   max-width: 100%;
   overflow: hidden;
   border-radius: var(--radius-m);
+  overflow-anchor: none;
 }
 
 .bnovo-widget-shell.is-expanded {
-  display: block;
+  display: flex;
+  height: calc(var(--bnovo-widget-height) + 2 * var(--bnovo-widget-padding));
+  min-height: 0;
   overflow: visible;
-  z-index: 200;
+  z-index: 5000;
 }
 
 .bnovo-widget-shell--hero {
@@ -392,15 +612,15 @@ p {
 }
 
 .bnovo-widget-shell.is-expanded .bnovo-widget-slot {
-  display: block;
+  display: none;
 }
 
 .bnovo-widget-target {
   position: relative;
   flex: 1;
-  min-width: 0;
   width: 100%;
   height: var(--bnovo-widget-height);
+  min-width: 0;
   overflow: hidden;
 }
 
@@ -410,8 +630,9 @@ p {
   left: var(--bnovo-widget-padding);
   right: var(--bnovo-widget-padding);
   flex: none;
+  height: var(--bnovo-widget-expanded-height);
   overflow: visible;
-  z-index: 201;
+  z-index: 5001;
 }
 
 .bnovo-widget-target:has(iframe) > a {
@@ -431,10 +652,10 @@ p {
 }
 
 .bnovo-widget-shell.is-expanded .bnovo-widget-target iframe {
-  height: min(400px, 75vh) !important;
-  max-height: min(400px, 75vh) !important;
+  height: var(--bnovo-widget-expanded-height) !important;
+  max-height: var(--bnovo-widget-expanded-height) !important;
   min-height: var(--bnovo-widget-height) !important;
-  border-radius: 0 0 var(--radius-s) var(--radius-s);
+  border-radius: var(--radius-s);
   box-shadow: 0 20px 40px rgba(20, 36, 29, 0.22);
   background: #fff;
 }
@@ -447,16 +668,25 @@ p {
 
 .bnovo-availability-section {
   position: relative;
-  z-index: 3;
+  z-index: 6000;
+  overflow-anchor: none;
 }
 
 .bnovo-availability-section.is-widget-expanded {
-  z-index: 150;
+  z-index: 4900;
 }
 
 .hero-shell.is-widget-expanded {
   overflow: visible;
-  z-index: 50;
+  z-index: 4900;
+}
+
+.hero-shell.is-widget-expanded .hero-content {
+  z-index: 5000;
+}
+
+.hero-shell.is-widget-expanded .trust-bar {
+  z-index: 0;
 }
 
 .bnovo-availability-section .booking-notes {
@@ -2080,6 +2310,7 @@ main > section.reveal {
   animation-delay: 0.38s;
 }
 .hero-content .bnovo-widget-shell,
+.hero-content .bnovo-launcher,
 .hero-content .bnovo-placeholder {
   animation-delay: 0.46s;
 }
@@ -2089,7 +2320,7 @@ main > section.reveal {
 }
 
 .hero-content .bnovo-widget-shell.is-expanded {
-  z-index: 200;
+  z-index: 5000;
 }
 
 /* ==========================================================================
@@ -2185,6 +2416,15 @@ main > section.reveal {
 
   .bnovo-widget-shell {
     --bnovo-widget-height: 148px;
+  }
+
+  .bnovo-launcher {
+    grid-template-columns: 1fr;
+  }
+
+  .bnovo-launcher-date:nth-child(2) .bnovo-launcher-calendar {
+    right: auto;
+    left: 0;
   }
 
   .site-header {

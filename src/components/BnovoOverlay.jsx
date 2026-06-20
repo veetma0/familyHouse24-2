@@ -1,9 +1,9 @@
 import { getBnovoIframeUrl, hasBnovoUid } from '../utils/bnovo'
 
-function BnovoOverlay({ isOpen, onClose }) {
+function BnovoOverlay({ isOpen, onClose, dates }) {
   if (!isOpen) return null
 
-  const iframeUrl = getBnovoIframeUrl()
+  const iframeUrl = getBnovoIframeUrl(dates)
 
   return (
     <div className="booking-overlay" role="presentation" onClick={onClose}>
@@ -18,7 +18,12 @@ function BnovoOverlay({ isOpen, onClose }) {
           ×
         </button>
         {hasBnovoUid() ? (
-          <iframe title="Онлайн-бронирование Family House" src={iframeUrl} loading="lazy" />
+          <iframe
+            key={iframeUrl}
+            title="Онлайн-бронирование Family House"
+            src={iframeUrl}
+            loading="lazy"
+          />
         ) : (
           <div className="booking-helper">
             <h2>Нужна настройка Bnovo</h2>
