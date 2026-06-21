@@ -1,0 +1,7 @@
+# Принудительно ставим Node 20 (Vite 8 требует Node 20.19+/22.12+).
+# По умолчанию Nixpacks берёт Node 18, на котором сборка падает
+# с "CustomEvent is not defined".
+providers = ["node"]
+
+[phases.setup]
+nixPkgs = ["nodejs_20", "npm-9_x"]
