@@ -1,36 +1,28 @@
-import BnovoBookingLauncher from './BnovoBookingLauncher'
-import { trustFacts } from '../data/siteData'
+import { useNavigate } from 'react-router-dom'
+import BnovoInlineWidget from './BnovoInlineWidget'
 
 function HeroSection({ onBook }) {
+  const navigate = useNavigate()
+
   return (
     <section className="hero" aria-labelledby="hero-title">
       <div className="hero-bg" />
       <div className="hero-content container">
-        <p className="kicker">Рыбинское водохранилище · река Сить</p>
-        <h1 id="hero-title">Рыболовная база отдыха Family House на Рыбинке</h1>
-        <p className="hero-lead">Трофейная рыбалка с комфортным размещением круглый год</p>
-        <p className="hero-description">
-          Ваш идеальный уикенд на природе: трофейная рыбалка, техника и снасти на базе, а после
-          выезда - тёплый коттедж, баня и ужин из вашего улова.
+        <p className="kicker">Family House · Рыбинское водохранилище</p>
+        <h1 id="hero-title">Где вода встречает тишину</h1>
+        <p>
+          Дома у самой воды, своя техника и снасти, баня и егерь. Трофейная рыбалка и спокойный
+          отдых на берегу Рыбинки — круглый год.
         </p>
         <div className="hero-actions">
-          <button type="button" className="button button-primary" onClick={onBook}>
-            Забронировать
+          <button type="button" className="button button-primary button-lg" onClick={() => onBook?.()}>
+            Забронировать дом
           </button>
-          <a href="#fishing" className="button button-soft">
-            Смотреть форматы рыбалки
-          </a>
+          <button type="button" className="button button-ghost button-lg" onClick={() => navigate('/fishing')}>
+            О рыбалке →
+          </button>
         </div>
-        <BnovoBookingLauncher onOpen={onBook} submitText="Показать наличие" variant="hero" />
-      </div>
-
-      <div className="trust-bar container" role="list" aria-label="Преимущества базы">
-        {trustFacts.map((fact) => (
-          <article key={fact.title} role="listitem" className="trust-card">
-            <strong>{fact.title}</strong>
-            <p>{fact.text}</p>
-          </article>
-        ))}
+        <BnovoInlineWidget submitText="Показать свободные домики" />
       </div>
     </section>
   )

@@ -78,32 +78,32 @@ export function getBnovoIframeUrl(dates) {
 
 const widgetThemes = {
   hero: {
-    background: '#f4f9f7',
+    background: '#faf6ee',
     bg_alpha: '100',
-    title_color: '#14241d',
-    inp_color: '#14241d',
-    inp_bordcolor: '#b8d4c8',
-    inp_bordhover: '#1f7a5a',
-    btn_background: '#1f7a5a',
-    btn_background_over: '#163a2e',
+    title_color: '#2b2620',
+    inp_color: '#2b2620',
+    inp_bordcolor: 'rgba(43,38,32,0.2)',
+    inp_bordhover: '#b8762e',
+    btn_background: '#b8762e',
+    btn_background_over: '#a3661f',
     btn_textcolor: '#ffffff',
     btn_textover: '#ffffff',
-    btn_bordcolor: '#1f7a5a',
-    btn_bordhover: '#163a2e',
+    btn_bordcolor: '#b8762e',
+    btn_bordhover: '#a3661f',
   },
   light: {
     background: '#ffffff',
     bg_alpha: '100',
-    title_color: '#14241d',
-    inp_color: '#14241d',
-    inp_bordcolor: '#c5ddd3',
-    inp_bordhover: '#1f7a5a',
-    btn_background: '#1f7a5a',
-    btn_background_over: '#163a2e',
+    title_color: '#2b2620',
+    inp_color: '#2b2620',
+    inp_bordcolor: 'rgba(43,38,32,0.16)',
+    inp_bordhover: '#b8762e',
+    btn_background: '#b8762e',
+    btn_background_over: '#a3661f',
     btn_textcolor: '#ffffff',
     btn_textover: '#ffffff',
-    btn_bordcolor: '#1f7a5a',
-    btn_bordhover: '#163a2e',
+    btn_bordcolor: '#b8762e',
+    btn_bordhover: '#a3661f',
   },
 }
 
@@ -111,17 +111,27 @@ export function getBnovoWidgetOptions(overrides = {}) {
   const { variant = 'hero', ...rest } = overrides
   const theme = widgetThemes[variant] || widgetThemes.hero
 
+  // Bnovo использует ключ `uid` для UUID-кодов объекта и `lcode` для числовых.
+  const idKey = uuidUidPattern.test(bnovoConfig.uid) ? 'uid' : 'lcode'
+
   return {
     type: 'horizontal',
-    lcode: bnovoConfig.uid,
+    [idKey]: bnovoConfig.uid,
     lang: 'ru',
     width: '100%',
-    border_radius: '10',
-    font_type: 'arial',
+    border_radius: '8',
+    font_type: 'inter',
     font_size: '14',
-    text_submit: 'Показать варианты',
+    button_height: '46',
+    text_submit: 'Показать свободные домики',
     text_concierge: bnovoConfig.conciergeText,
     url: bnovoConfig.bookingPageUrl,
+    dates_preset: 'on',
+    dfrom_today: 'on',
+    dfrom_value: '2',
+    dto_nextday: 'on',
+    dto_value: '2',
+    adults_default: '2',
     ...theme,
     ...rest,
   }
@@ -178,7 +188,7 @@ function loadBnovoScriptAsset() {
   scriptLoading = new Promise((resolve, reject) => {
     const script = document.createElement('script')
     script.id = scriptId
-    script.src = 'https://widget.bnovo.ru/v2/js/bnovo.js'
+    script.src = 'https://widget.reservationsteps.ru/js/bnovo.js'
     script.async = true
     script.onload = () => resolve()
     script.onerror = () => reject(new Error('Bnovo widget script failed to load'))

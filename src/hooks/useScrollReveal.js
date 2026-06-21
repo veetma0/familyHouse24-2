@@ -15,19 +15,18 @@ const AUTO_SELECTORS = [
   'main > section',
   'main > .section',
   '.about-grid',
-  '.trust-card',
-  '.advantage-card',
-  '.format-card',
+  '.stat-item',
+  '.why-card',
   '.house-card',
-  '.service-card',
-  '.comfort-card',
-  '.policy-card',
+  '.season-card',
+  '.tech-card',
   '.amenity-card',
-  '.gallery-item',
+  '.fish-pill',
   '.review-card',
-  '.faq-item',
-  '.contact-card',
 ]
+
+const STAGGER_SELECTOR =
+  '.stat-item, .why-card, .house-card, .season-card, .tech-card, .amenity-card, .fish-pill, .review-card'
 
 export function useScrollReveal() {
   useEffect(() => {
@@ -64,7 +63,7 @@ export function useScrollReveal() {
     elements.forEach((el) => {
       const parent = el.parentElement
       const i = indexByParent.get(parent) ?? 0
-      if (el.matches('.trust-card, .advantage-card, .format-card, .house-card, .service-card, .comfort-card, .policy-card, .amenity-card, .gallery-item, .review-card, .faq-item, .contact-card')) {
+      if (el.matches(STAGGER_SELECTOR)) {
         el.style.setProperty('--reveal-delay', `${Math.min(i, 5) * 70}ms`)
         indexByParent.set(parent, i + 1)
       }

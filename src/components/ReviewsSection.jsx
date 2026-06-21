@@ -1,32 +1,32 @@
 import { reviews } from '../data/siteData'
 
-function ReviewsSection() {
+function ReviewsSection({ limit }) {
+  const items = typeof limit === 'number' ? reviews.slice(0, limit) : reviews
+
   return (
-    <section id="reviews" className="section section-soft">
+    <section className="section section-soft">
       <div className="container">
-        <p className="kicker">Отзывы</p>
-        <h2>Почему гости возвращаются</h2>
+        <div className="section-head">
+          <p className="kicker">Отзывы</p>
+          <h2>Почему гости возвращаются</h2>
+        </div>
+
         <div className="reviews-grid">
-          {reviews.map((review) => (
-            <blockquote key={`${review.author}-${review.date}`} className="review-card">
-              <p>{review.text}</p>
-              <footer>
-                <strong>{review.author}</strong>
-                <span>
+          {items.map((review) => (
+            <article className="review-card" key={`${review.author}-${review.date}`}>
+              <div className="review-stars" aria-label="5 из 5">
+                {review.stars}
+              </div>
+              <p className="review-text">{review.text}</p>
+              <div className="review-foot">
+                <div className="review-name">{review.author}</div>
+                <div className="review-meta">
                   {review.source} · {review.date}
-                </span>
-              </footer>
-            </blockquote>
+                </div>
+              </div>
+            </article>
           ))}
         </div>
-        <a
-          className="button button-link"
-          href="https://yandex.ru/maps/?text=Family%20House%20Брейтово"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Смотреть больше отзывов на Яндексе
-        </a>
       </div>
     </section>
   )

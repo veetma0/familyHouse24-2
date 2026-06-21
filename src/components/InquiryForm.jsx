@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { bnovoConfig } from '../config/bnovo'
+import { contactInfo } from '../data/siteData'
 
 const initialState = {
   name: '',
@@ -37,7 +38,7 @@ function InquiryForm({ onBookNow, compact = false }) {
         const body = encodeURIComponent(
           `Имя: ${formData.name}\nТелефон: ${formData.phone}\nEmail: ${formData.email}\nИнтерес: ${formData.interest}\nКомментарий: ${formData.message}`,
         )
-        window.location.href = `mailto:Familyhouse.baza@gmail.com?subject=${subject}&body=${body}`
+        window.location.href = `mailto:${contactInfo.email}?subject=${subject}&body=${body}`
       }
 
       setStatus('success')
@@ -49,52 +50,51 @@ function InquiryForm({ onBookNow, compact = false }) {
 
   return (
     <form className="inquiry-form" onSubmit={onSubmit}>
-      <label>
-        Имя
-        <input name="name" value={formData.name} onChange={onChange} required />
-      </label>
-      <label>
-        Телефон
-        <input name="phone" value={formData.phone} onChange={onChange} required />
-      </label>
-      <label>
-        Email
-        <input type="email" name="email" value={formData.email} onChange={onChange} required />
-      </label>
-      <label>
-        Что интересно
-        <select name="interest" value={formData.interest} onChange={onChange}>
+      <div className="form-field">
+        <label htmlFor="if-name">Имя</label>
+        <input id="if-name" name="name" value={formData.name} onChange={onChange} required />
+      </div>
+      <div className="form-field">
+        <label htmlFor="if-phone">Телефон</label>
+        <input id="if-phone" name="phone" value={formData.phone} onChange={onChange} required />
+      </div>
+      <div className="form-field">
+        <label htmlFor="if-email">Email</label>
+        <input id="if-email" type="email" name="email" value={formData.email} onChange={onChange} required />
+      </div>
+      <div className="form-field">
+        <label htmlFor="if-interest">Что интересно</label>
+        <select id="if-interest" name="interest" value={formData.interest} onChange={onChange}>
           <option>Летняя рыбалка</option>
           <option>Зимняя рыбалка</option>
-          <option>Котедж для семьи</option>
+          <option>Дом для семьи</option>
           <option>Выезд компанией</option>
         </select>
-      </label>
+      </div>
       {!compact && (
-        <label>
-          Комментарий
-          <textarea name="message" value={formData.message} onChange={onChange} rows={3} />
-        </label>
+        <div className="form-field">
+          <label htmlFor="if-message">Комментарий</label>
+          <textarea id="if-message" name="message" value={formData.message} onChange={onChange} rows={3} />
+        </div>
       )}
 
-      <button type="submit" className="button button-primary" disabled={status === 'loading'}>
+      <button type="submit" className="button button-primary button-block" disabled={status === 'loading'}>
         {status === 'loading' ? 'Отправляем...' : compact ? 'Получить подбор' : 'Получить консультацию'}
       </button>
 
       {status === 'success' && (
-        <p className="form-status success">
-          Спасибо, мы свяжемся с вами в ближайшее время. Если хотите оформить бронь сразу, нажмите
-          кнопку ниже.
-        </p>
+        <div className="form-success">
+          Спасибо! Мы свяжемся с вами в ближайшее время.
+        </div>
       )}
       {status === 'error' && (
-        <p className="form-status error">
-          Не удалось отправить заявку. Позвоните нам по номеру +7 (495) 151-00-82.
+        <p className="form-note">
+          Не удалось отправить заявку. Позвоните нам: {contactInfo.phone}.
         </p>
       )}
 
-      {(status === 'success' || !endpoint) && bnovoConfig.uid && (
-        <button type="button" className="button button-soft" onClick={onBookNow}>
+      {(status === 'success' || !endpoint) && bnovoConfig.uid && onBookNow && (
+        <button type="button" className="button button-outline button-block" onClick={onBookNow}>
           Перейти к бронированию в Bnovo
         </button>
       )}

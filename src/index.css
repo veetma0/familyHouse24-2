@@ -1,29 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@400;500;600;700&display=swap');
 
 :root {
-  --font-base: 'Inter', Arial, sans-serif;
-  --font-title: 'Manrope', 'Inter', Arial, sans-serif;
+  --font-base: 'Manrope', system-ui, -apple-system, Arial, sans-serif;
+  --font-title: 'Playfair Display', Georgia, 'Times New Roman', serif;
 
-  --bg-main: #f7f9f8;
-  --bg-soft: #eef3f2;
-  --bg-card: #ffffff;
-  --bg-dark: #163a2e;
-  --text-main: #14241d;
-  --text-muted: #4f635b;
-  --text-inverse: #f4f9f7;
-  --accent: #1f7a5a;
-  --accent-soft: #d6ece4;
-  --accent-green: #1f7a5a;
-  --accent-water: #2ba6b8;
-  --accent-water-soft: #d4f0f3;
-  --accent-gold: #c7a24a;
-  --border-main: #dde6e2;
-  --shadow-main: 0 10px 36px rgba(20, 36, 29, 0.08);
-  --shadow-soft: 0 4px 18px rgba(20, 36, 29, 0.06);
+  --bg-main: #f3ede0;
+  --bg-soft: #efe6d4;
+  --bg-card: #faf6ee;
+  --bg-dark: #221d18;
+  --bg-dark-2: #2b2620;
+  --bg-dark-3: #2a3a32;
+  --bg-footer: #1c1814;
 
-  --radius-l: 16px;
-  --radius-m: 10px;
-  --radius-s: 6px;
+  --text-main: #2b2620;
+  --text-muted: #6b6157;
+  --text-muted-2: #9a8c74;
+  --text-inverse: #f6efe1;
+
+  --accent: #b8762e;
+  --accent-hover: #a3661f;
+  --accent-soft: rgba(184, 118, 46, 0.12);
+  --accent-success: #4e7c59;
+  --gold-text: #d8b483;
+
+  --border-main: rgba(43, 38, 32, 0.1);
+  --border-dark: rgba(231, 221, 200, 0.12);
+
+  --shadow-main: 0 10px 36px rgba(43, 38, 32, 0.1);
+  --shadow-soft: 0 4px 18px rgba(43, 38, 32, 0.06);
+
+  --radius-l: 8px;
+  --radius-m: 6px;
+  --radius-s: 4px;
 
   --space-2: 8px;
   --space-3: 12px;
@@ -34,9 +42,10 @@
   --space-10: 64px;
   --space-12: 96px;
 
-  --content-width: 1200px;
+  --content-width: 1240px;
+  --header-h: 72px;
 
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: var(--font-base);
   line-height: 1.5;
   font-weight: 400;
   font-synthesis: none;
@@ -56,6 +65,7 @@ body {
   min-height: 100vh;
   background: var(--bg-main);
   color: var(--text-main);
+  font-family: var(--font-base);
   overflow-x: hidden;
 }
 
