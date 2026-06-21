@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { navigationItems } from '../data/siteData'
-import { getBnovoIframeUrl, hasBnovoUid } from '../utils/bnovo'
+import { dateOffset } from '../utils/dates'
 import { ShellContext } from './shellContext'
 
 /* ---------------- Тосты ---------------- */
@@ -77,234 +77,6 @@ function Toasts({ toasts, onClose }) {
           </button>
         </div>
       ))}
-    </div>
-  )
-}
-
-const inputStyle = {
-  width: '100%',
-  background: '#fff',
-  border: '1px solid rgba(43,38,32,0.16)',
-  borderRadius: 8,
-  padding: '13px 16px',
-  fontSize: 15,
-  color: '#2b2620',
-  outline: 'none',
-}
-const labelStyle = {
-  display: 'block',
-  fontSize: 13,
-  fontWeight: 600,
-  color: '#4a4339',
-  marginBottom: 8,
-}
-const errStyle = { display: 'block', fontSize: 13, color: '#a14334', marginTop: 6 }
-
-/* ---------------- Модалка брони ---------------- */
-function BookingModal({ cottage, onClose, addToast }) {
-  const nameRef = useRef(null)
-  const phoneRef = useRef(null)
-  const checkInRef = useRef(null)
-  const checkOutRef = useRef(null)
-  const [errors, setErrors] = useState({})
-
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.key === 'Escape') onClose()
-    }
-    document.addEventListener('keydown', onKey)
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.removeEventListener('keydown', onKey)
-      document.body.style.overflow = prev
-    }
-  }, [onClose])
-
-  const digits = (v) => (v || '').replace(/\D/g, '')
-
-  const onSubmit = (e) => {
-    e.preventDefault()
-    const name = (nameRef.current?.value || '').trim()
-    const phone = (phoneRef.current?.value || '').trim()
-    const errs = {}
-    if (!name) errs.name = true
-    if (digits(phone).length < 10) errs.phone = true
-    if (Object.keys(errs).length) {
-      setErrors(errs)
-      addToast('error', 'Проверьте форму', 'Укажите имя и корректный телефон.')
-      return
-    }
-    setErrors({})
-    onClose()
-    addToast('success', 'Заявка принята', 'Открываем онлайн-бронирование для подтверждения дат.')
-
-    // Дальше — реальная бронь через Bnovo
-    const checkIn = checkInRef.current?.value || ''
-    const checkOut = checkOutRef.current?.value || ''
-    if (hasBnovoUid()) {
-      const url = getBnovoIframeUrl({ checkIn, checkOut })
-      window.setTimeout(() => {
-        window.open(url, '_blank', 'noopener')
-      }, 600)
-    }
-  }
-
-  return (
-    <div
-      onClick={onClose}
-      style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 100,
-        background: 'rgba(28,24,20,0.6)',
-        backdropFilter: 'blur(4px)',
-        WebkitBackdropFilter: 'blur(4px)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 24,
-        animation: 'fh-overlay-in 0.25s ease both',
-      }}
-    >
-      <div
-        className="fh-modal-inner"
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          background: '#f6efe1',
-          borderRadius: 12,
-          width: '100%',
-          maxWidth: 540,
-          maxHeight: '92vh',
-          overflowY: 'auto',
-          boxShadow: '0 30px 80px rgba(0,0,0,0.4)',
-          animation: 'fh-modal-in 0.3s cubic-bezier(.2,.8,.2,1) both',
-        }}
-      >
-        <div
-          style={{
-            padding: '32px 36px 0',
-            display: 'flex',
-            alignItems: 'flex-start',
-            justifyContent: 'space-between',
-            gap: 16,
-          }}
-        >
-          <div>
-            <span
-              style={{
-                fontSize: 12,
-                letterSpacing: '0.2em',
-                textTransform: 'uppercase',
-                color: '#b8762e',
-                fontWeight: 600,
-              }}
-            >
-              Заявка на бронирование
-            </span>
-            <h2
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontWeight: 500,
-                fontSize: 28,
-                color: '#2b2620',
-                margin: '10px 0 0',
-              }}
-            >
-              Забронировать дом
-            </h2>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="fh-close"
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: 26,
-              lineHeight: 1,
-              color: '#9a8c74',
-              padding: 4,
-            }}
-          >
-            ×
-          </button>
-        </div>
-
-        <form
-          onSubmit={onSubmit}
-          style={{ padding: '24px 36px 36px', display: 'flex', flexDirection: 'column', gap: 16 }}
-        >
-          <div>
-            <label style={labelStyle}>Имя</label>
-            <input ref={nameRef} type="text" placeholder="Ваше имя" className="fh-input" style={inputStyle} />
-            {errors.name && <span style={errStyle}>Укажите имя</span>}
-          </div>
-          <div>
-            <label style={labelStyle}>Телефон</label>
-            <input ref={phoneRef} type="tel" placeholder="+7 ___ ___ __ __" className="fh-input" style={inputStyle} />
-            {errors.phone && <span style={errStyle}>Введите корректный телефон</span>}
-          </div>
-          <div className="fh-form-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-            <div>
-              <label style={labelStyle}>Заезд</label>
-              <input ref={checkInRef} type="date" className="fh-input" style={{ ...inputStyle, padding: '12px 14px' }} />
-            </div>
-            <div>
-              <label style={labelStyle}>Выезд</label>
-              <input ref={checkOutRef} type="date" className="fh-input" style={{ ...inputStyle, padding: '12px 14px' }} />
-            </div>
-          </div>
-          <div className="fh-form-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-            <div>
-              <label style={labelStyle}>Гостей</label>
-              <select className="fh-input" style={{ ...inputStyle, padding: '13px 14px' }}>
-                <option>1 гость</option>
-                <option>2 гостя</option>
-                <option>3 гостя</option>
-                <option>4 гостя</option>
-                <option>5 гостей</option>
-                <option>6 гостей</option>
-                <option>7 гостей</option>
-                <option>8+ гостей</option>
-              </select>
-            </div>
-            <div>
-              <label style={labelStyle}>Дом</label>
-              <select defaultValue={cottage || ''} className="fh-input" style={{ ...inputStyle, padding: '13px 14px' }}>
-                <option value="">Выбрать позже</option>
-                <option value="Дом «Рыбацкий»">Дом «Рыбацкий»</option>
-                <option value="Дом «Карелия»">Дом «Карелия»</option>
-                <option value="Дом «Семейный»">Дом «Семейный»</option>
-                <option value="Шале «Тихая бухта»">Шале «Тихая бухта»</option>
-              </select>
-            </div>
-          </div>
-          <button
-            type="submit"
-            className="fh-btn-primary"
-            style={{
-              background: '#b8762e',
-              color: '#fff',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: 16,
-              fontWeight: 600,
-              padding: 15,
-              borderRadius: 999,
-              marginTop: 6,
-              boxShadow: '0 8px 22px rgba(184,118,46,0.3)',
-            }}
-          >
-            Отправить заявку
-          </button>
-          <p style={{ fontSize: 12.5, color: '#9a8c74', textAlign: 'center', margin: '2px 0 0', lineHeight: 1.5 }}>
-            Нажимая кнопку, вы соглашаетесь на обработку данных. Это заявка, а не оплата — менеджер свяжется для
-            подтверждения.
-          </p>
-        </form>
-      </div>
     </div>
   )
 }
@@ -546,7 +318,6 @@ function SiteShell({ activeId, children }) {
   const navigate = useNavigate()
   const location = useLocation()
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [booking, setBooking] = useState({ open: false, cottage: '' })
   const [toasts, setToasts] = useState([])
   const counter = useRef(0)
 
@@ -587,12 +358,18 @@ function SiteShell({ activeId, children }) {
     [dismissToast],
   )
 
-  const openBooking = useCallback((cottage) => {
+  // Все кнопки «Забронировать» ведут на встроенную страницу /booking
+  // (модуль Bnovo внутри сайта) с дефолтными датами — без модалки-заявки
+  // и без ухода на внешнюю вкладку. Дом гость выбирает в самом модуле.
+  const openBooking = useCallback(() => {
     setMobileOpen(false)
-    setBooking({ open: true, cottage: cottage || '' })
-  }, [])
-
-  const closeBooking = useCallback(() => setBooking((b) => ({ ...b, open: false })), [])
+    const search = new URLSearchParams({
+      checkIn: dateOffset(2),
+      checkOut: dateOffset(3),
+      adults: '2',
+    })
+    navigate(`/booking?${search.toString()}`)
+  }, [navigate])
 
   return (
     <ShellContext.Provider value={{ openBooking, addToast, onNav: navigate }}>
@@ -649,9 +426,6 @@ function SiteShell({ activeId, children }) {
         </a>
       </div>
 
-      {booking.open && (
-        <BookingModal cottage={booking.cottage} onClose={closeBooking} addToast={addToast} />
-      )}
       <Toasts toasts={toasts} onClose={dismissToast} />
     </ShellContext.Provider>
   )

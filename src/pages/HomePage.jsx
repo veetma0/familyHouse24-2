@@ -1,4 +1,6 @@
 import SiteShell from '../components/SiteShell'
+import BookingBar from '../components/BookingBar'
+import TimedPromoPopup from '../components/TimedPromoPopup'
 import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import { reasons, statsItems, reviews, cottages } from '../data/siteData'
@@ -11,6 +13,7 @@ function HomeContent() {
 
   return (
     <>
+      <TimedPromoPopup onClose={openBooking} />
       {/* ===== HERO ===== */}
       <section
         className="fh-hero"
@@ -50,6 +53,9 @@ function HomeContent() {
           </div>
         </div>
       </section>
+
+      {/* ===== ПЛАШКА БРОНИРОВАНИЯ (под hero) ===== */}
+      <BookingBar />
 
       {/* ===== STATS ===== */}
       <section style={{ background: '#2b2620' }}>

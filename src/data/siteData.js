@@ -132,5 +132,6 @@ export const navigationItems = [
   { id: 'home', label: 'Главная', path: '/' },
   { id: 'cottages', label: 'Домики', path: '/cottages' },
   { id: 'fishing', label: 'Рыбалка', path: '/fishing' },
+  { id: 'booking', label: 'Бронирование', path: '/booking' },
   { id: 'contacts', label: 'Контакты', path: '/contacts' },
 ]
