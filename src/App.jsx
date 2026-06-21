@@ -1,10 +1,9 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import HomePage from './pages/HomePage'
 import CottagesPage from './pages/CottagesPage'
 import FishingPage from './pages/FishingPage'
 import ContactsPage from './pages/ContactsPage'
-import BookingPage from './pages/BookingPage'
 
 function App() {
   return (
@@ -13,7 +12,7 @@ function App() {
       <Route path="/cottages" element={<CottagesPage />} />
       <Route path="/fishing" element={<FishingPage />} />
       <Route path="/contacts" element={<ContactsPage />} />
-      <Route path="/booking" element={<BookingPage />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
 }

@@ -1,72 +1,32 @@
 import { useEffect } from 'react'
 
 /**
- * Lightweight scroll-reveal. Targets sections (and explicitly tagged
- * `[data-reveal]` elements) and fades/slides them into view once as they
- * enter the viewport. Adds the `reveal` + `is-visible` classes, then stops
- * observing each element so the animation plays only once.
- *
- * Respects `prefers-reduced-motion`: if the user opts out of motion we
- * reveal everything immediately with no transition.
- *
- * No per-component changes needed — it auto-tags the page's main sections.
+ * Плавное появление при скролле. Тегирует элементы с [data-reveal]
+ * (и их группы по родителю — лёгкий каскад) классом fh-reveal и
+ * добавляет is-visible при попадании во вьюпорт. Уважает
+ * prefers-reduced-motion.
  */
-const AUTO_SELECTORS = [
-  'main > section',
-  'main > .section',
-  '.about-grid',
-  '.stat-item',
-  '.why-card',
-  '.house-card',
-  '.season-card',
-  '.tech-card',
-  '.amenity-card',
-  '.fish-pill',
-  '.review-card',
-]
-
-const STAGGER_SELECTOR =
-  '.stat-item, .why-card, .house-card, .season-card, .tech-card, .amenity-card, .fish-pill, .review-card'
-
-export function useScrollReveal() {
+export function useScrollReveal(deps = []) {
   useEffect(() => {
-    const seen = new Set()
-    const elements = []
+    const nodes = Array.from(document.querySelectorAll('[data-reveal]'))
+    if (nodes.length === 0) return undefined
 
-    document.querySelectorAll(AUTO_SELECTORS.join(',')).forEach((el) => {
-      if (seen.has(el)) return
-      seen.add(el)
-      el.classList.add('reveal')
-      elements.push(el)
-    })
+    nodes.forEach((el) => el.classList.add('fh-reveal'))
 
-    document.querySelectorAll('[data-reveal]').forEach((el) => {
-      if (seen.has(el)) return
-      seen.add(el)
-      el.classList.add('reveal')
-      elements.push(el)
-    })
-
-    if (elements.length === 0) return
-
-    const prefersReducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)',
-    ).matches
-
-    if (prefersReducedMotion || typeof IntersectionObserver === 'undefined') {
-      elements.forEach((el) => el.classList.add('is-visible'))
-      return
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduce || typeof IntersectionObserver === 'undefined') {
+      nodes.forEach((el) => el.classList.add('is-visible'))
+      return undefined
     }
 
-    // Stagger children within the same parent for a gentle cascade.
-    const indexByParent = new Map()
-    elements.forEach((el) => {
+    // Лёгкий каскад внутри одного родителя
+    const idxByParent = new Map()
+    nodes.forEach((el) => {
+      if (el.dataset.revealStagger === 'off') return
       const parent = el.parentElement
-      const i = indexByParent.get(parent) ?? 0
-      if (el.matches(STAGGER_SELECTOR)) {
-        el.style.setProperty('--reveal-delay', `${Math.min(i, 5) * 70}ms`)
-        indexByParent.set(parent, i + 1)
-      }
+      const i = idxByParent.get(parent) ?? 0
+      el.style.setProperty('--fh-delay', `${Math.min(i, 6) * 70}ms`)
+      idxByParent.set(parent, i + 1)
     })
 
     const observer = new IntersectionObserver(
@@ -78,10 +38,11 @@ export function useScrollReveal() {
           }
         })
       },
-      { threshold: 0.1, rootMargin: '0px 0px -6% 0px' },
+      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
     )
 
-    elements.forEach((el) => observer.observe(el))
+    nodes.forEach((el) => observer.observe(el))
     return () => observer.disconnect()
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps)
 }
