@@ -309,7 +309,7 @@ function Footer({ onNav }) {
               >
                 Instagram · @{contact.instagram}
               </a>
-              <span style={{ fontSize: 14, color: '#8c8071' }}>Ярославская обл., Брейтовский р-н, д. Набережная</span>
+              <span style={{ fontSize: 14, color: '#8c8071' }}>{contact.address}</span>
             </div>
           </div>
         </div>

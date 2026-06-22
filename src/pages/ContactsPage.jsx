@@ -161,7 +161,7 @@ function ContactsContent() {
                   <a href={`https://instagram.com/${contact.instagram}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: 17, fontWeight: 500, color: '#f6efe1', textDecoration: 'none' }}>@{contact.instagram}</a>
                 ))}
                 {infoBlock('Адрес', (
-                  <div style={{ fontSize: 16, color: '#e7ddc8', lineHeight: 1.5 }}>Ярославская обл., Брейтовский р-н,<br />д. Набережная · р. Сить</div>
+                  <div style={{ fontSize: 16, color: '#e7ddc8', lineHeight: 1.5 }}>{contact.address}</div>
                 ))}
                 {infoBlock('Режим работы офиса', (
                   <div style={{ fontSize: 16, color: '#e7ddc8' }}>{contact.office}</div>

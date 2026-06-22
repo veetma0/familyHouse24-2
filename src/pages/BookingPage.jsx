@@ -85,7 +85,7 @@ function BookingContent() {
           {hasBnovoUid() && iframeUrl ? (
             <div
               className="fh-booking-frame"
-              style={{ position: 'relative', background: '#fff', border: '1px solid rgba(43,38,32,0.1)', borderRadius: 16, boxShadow: '0 30px 70px rgba(28,24,20,0.18)', overflow: 'hidden', marginTop: -64 }}
+              style={{ position: 'relative', background: '#fff', border: '1px solid rgba(43,38,32,0.1)', borderRadius: 16, boxShadow: '0 30px 70px rgba(28,24,20,0.18)', overflow: 'hidden', marginTop: 8 }}
             >
               {!loaded && (
                 <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 18, background: '#faf6ee', zIndex: 2 }}>
@@ -104,7 +104,7 @@ function BookingContent() {
               />
             </div>
           ) : (
-            <div style={{ marginTop: -64, background: '#faf6ee', border: '1px solid rgba(43,38,32,0.1)', borderRadius: 16, padding: '56px 40px', textAlign: 'center', boxShadow: '0 30px 70px rgba(28,24,20,0.12)' }}>
+            <div style={{ marginTop: 8, background: '#faf6ee', border: '1px solid rgba(43,38,32,0.1)', borderRadius: 16, padding: '56px 40px', textAlign: 'center', boxShadow: '0 30px 70px rgba(28,24,20,0.12)' }}>
               <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 26, color: '#2b2620', margin: 0 }}>
                 Онлайн-бронь сейчас отдыхает
               </h2>

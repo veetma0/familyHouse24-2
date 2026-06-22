@@ -14,7 +14,7 @@ export const contact = {
   office: '10:00–20:00, без выходных',
   checkIn: 'после 15:00',
   checkOut: 'до 12:00',
-  address: 'Ярославская обл., Брейтовский р-н, д. Набережная',
+  address: 'Ярославская область, Брейтовское сельское поселение, деревня Набережная, Family House база место отдыха',
 }
 
 // Реквизиты для футера / контактов.
@@ -25,9 +25,9 @@ export const legal = {
 }
 
 // Встраиваемая Яндекс.Карта (один URL для главной и контактов).
-// Сейчас центр на д. Набережная, Ярославская обл.; замените ll/точку-пин на точную после уточнения.
+// Используем точку через поиск по точному адресу, чтобы иконка ставилась в нужное место.
 export const mapEmbedUrl =
-  'https://yandex.ru/map-widget/v1/?ll=38.520000%2C58.300000&z=11&pt=38.520000%2C58.300000%2Cpm2rdm'
+  'https://yandex.ru/map-widget/v1/?text=%D0%AF%D1%80%D0%BE%D1%81%D0%BB%D0%B0%D0%B2%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C%2C%20%D0%91%D1%80%D0%B5%D0%B9%D1%82%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B5%20%D1%81%D0%B5%D0%BB%D1%8C%D1%81%D0%BA%D0%BE%D0%B5%20%D0%BF%D0%BE%D1%81%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%2C%20%D0%B4%D0%B5%D1%80%D0%B5%D0%B2%D0%BD%D1%8F%20%D0%9D%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F%2C%20Family%20House%20%D0%B1%D0%B0%D0%B7%D0%B0%20%D0%BC%D0%B5%D1%81%D1%82%D0%BE%20%D0%BE%D1%82%D0%B4%D1%8B%D1%85%D0%B0&z=15'
 
 // Дома. Цены — из системы бронирования Bnovo (не менять), состав — с основного сайта.
 export const cottages = [
@@ -384,7 +384,7 @@ export const navigationItems = [
   { id: 'home', label: 'Главная', path: '/' },
   { id: 'cottages', label: 'Размещение', path: '/cottages' },
   { id: 'fishing', label: 'Рыбалка', path: '/fishing' },
-  { id: 'services', label: 'Услуги и цены', path: '/services' },
+  { id: 'services', label: 'Услуги', path: '/services' },
   { id: 'booking', label: 'Бронирование', path: '/booking' },
   { id: 'contacts', label: 'Контакты', path: '/contacts' },
 ]

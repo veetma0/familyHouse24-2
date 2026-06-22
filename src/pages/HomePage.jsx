@@ -3,7 +3,7 @@ import BookingBar from '../components/BookingBar'
 import TimedPromoPopup from '../components/TimedPromoPopup'
 import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import { reasons, statsItems, reviews, cottages, mapEmbedUrl, experience } from '../data/siteData'
+import { reasons, statsItems, reviews, cottages, mapEmbedUrl, experience, contact } from '../data/siteData'
 import { wrap, kicker, kickerGold, h2, plhMono, photoPlh } from '../data/styles'
 
 function HomeContent() {
@@ -102,7 +102,7 @@ function HomeContent() {
             {reasons.map((r) => (
               <div key={r.n} data-reveal style={{ background: '#faf6ee', padding: '36px 28px', minHeight: 240, display: 'flex', flexDirection: 'column' }}>
                 <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 28, color: '#cdb88f' }}>{r.n}</span>
-                <h3 style={{ fontSize: 19, fontWeight: 600, color: '#2b2620', margin: '20px 0 12px', lineHeight: 1.25 }}>{r.t}</h3>
+                <h3 style={{ fontSize: 19, fontWeight: 600, color: '#2b2620', margin: '20px 0 12px', lineHeight: 1.25, minHeight: 48 }}>{r.t}</h3>
                 <p style={{ fontSize: 14.5, lineHeight: 1.65, color: '#6b6157', margin: 0 }}>{r.d}</p>
               </div>
             ))}
@@ -250,7 +250,7 @@ function HomeContent() {
           <div className="fh-directions-text" style={{ padding: '64px 56px' }}>
             <span style={kickerGold}>Как добраться</span>
             <h2 style={{ ...h2, fontSize: 'clamp(30px, 3.4vw, 44px)', color: '#f6efe1', margin: '16px 0 0' }}>270 км от Москвы — и город позади</h2>
-            <p style={{ fontSize: 16, lineHeight: 1.7, color: '#b3a68e', margin: '20px 0 0' }}>Ярославская область, Брейтовский район, д. Набережная. Удобный заезд на любом авто, парковка у каждого дома. Пришлём точную геолокацию после брони.</p>
+            <p style={{ fontSize: 16, lineHeight: 1.7, color: '#b3a68e', margin: '20px 0 0' }}>{contact.address}. Удобный заезд на любом авто, парковка у каждого дома. Пришлём точную геолокацию после брони.</p>
             <div className="fh-stack-mobile" style={{ display: 'flex', flexWrap: 'wrap', gap: 14, marginTop: 32 }}>
               <button type="button" onClick={() => openBooking('')} className="fh-btn-primary" style={{ background: '#b8762e', color: '#fff', border: 'none', cursor: 'pointer', fontSize: 15, fontWeight: 600, padding: '14px 28px', borderRadius: 999 }}>Забронировать</button>
               <button type="button" onClick={() => onNav('/contacts')} style={{ background: 'rgba(246,239,225,0.08)', color: '#f6efe1', border: '1px solid rgba(246,239,225,0.3)', cursor: 'pointer', fontSize: 15, fontWeight: 600, padding: '14px 28px', borderRadius: 999 }}>Контакты</button>
