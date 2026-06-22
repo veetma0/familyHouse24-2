@@ -2,7 +2,8 @@ import { useRef, useState } from 'react'
 import SiteShell from '../components/SiteShell'
 import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import { wrap, kickerGold, photoPlh } from '../data/styles'
+import { wrap, kickerGold } from '../data/styles'
+import { contact, mapEmbedUrl } from '../data/siteData'
 
 const inputStyle = {
   width: '100%',
@@ -30,10 +31,12 @@ function ContactsContent() {
 
   const digits = (v) => (v || '').replace(/\D/g, '')
 
-  const onSubmit = (e) => {
-    e.preventDefault()
+  // Собрать заявку из полей и открыть мессенджер с предзаполненным текстом.
+  const send = (channel) => {
     const name = (nameRef.current?.value || '').trim()
     const phone = (phoneRef.current?.value || '').trim()
+    const email = (emailRef.current?.value || '').trim()
+    const topic = (topicRef.current?.value || '').trim()
     const msg = (msgRef.current?.value || '').trim()
     const errs = {}
     if (!name) errs.name = true
@@ -44,12 +47,29 @@ function ContactsContent() {
       addToast('error', 'Не отправлено', 'Заполните имя, телефон и сообщение.')
       return
     }
+
+    const lines = [
+      'Заявка с сайта Family House',
+      `Имя: ${name}`,
+      `Телефон: ${phone}`,
+      email ? `Email: ${email}` : null,
+      topic ? `Тема: ${topic}` : null,
+      `Сообщение: ${msg}`,
+    ].filter(Boolean)
+    const text = encodeURIComponent(lines.join('\n'))
+
+    const url =
+      channel === 'telegram'
+        ? `https://t.me/${contact.telegram}?text=${text}`
+        : `https://wa.me/${contact.phoneDigits}?text=${text}`
+    window.open(url, '_blank', 'noopener,noreferrer')
+
     if (nameRef.current) nameRef.current.value = ''
     if (phoneRef.current) phoneRef.current.value = ''
     if (emailRef.current) emailRef.current.value = ''
     if (msgRef.current) msgRef.current.value = ''
     setErrors({})
-    addToast('success', 'Сообщение отправлено', 'Спасибо! Мы ответим в течение часа в рабочее время.')
+    addToast('success', 'Открываем мессенджер…', 'Заявка подставлена в чат — отправьте её, и мы ответим в течение часа.')
   }
 
   const infoBlock = (label, children) => (
@@ -81,7 +101,7 @@ function ContactsContent() {
           <div data-reveal data-reveal-stagger="off" style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.08)', borderRadius: 8, padding: 40 }}>
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 28, color: '#2b2620', margin: '0 0 6px' }}>Написать нам</h2>
             <p style={{ fontSize: 14.5, color: '#6b6157', margin: '0 0 28px' }}>Ответим в течение часа в рабочее время.</p>
-            <form onSubmit={onSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+            <form onSubmit={(e) => { e.preventDefault(); send('whatsapp') }} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
               <div>
                 <label style={labelStyle}>Имя</label>
                 <input ref={nameRef} type="text" placeholder="Как к вам обращаться" className="fh-input" style={inputStyle} />
@@ -112,9 +132,17 @@ function ContactsContent() {
                 <textarea ref={msgRef} rows={4} placeholder="Когда планируете приехать, сколько гостей, что важно?" className="fh-input" style={{ ...inputStyle, resize: 'vertical', lineHeight: 1.5 }} />
                 {errors.msg && <span style={errStyle}>Напишите пару слов о поездке</span>}
               </div>
-              <button type="submit" className="fh-btn-primary" style={{ background: '#b8762e', color: '#fff', border: 'none', cursor: 'pointer', fontSize: 16, fontWeight: 600, padding: 15, borderRadius: 999, marginTop: 4 }}>
-                Отправить сообщение
-              </button>
+              <div className="fh-form-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginTop: 4 }}>
+                <button type="button" onClick={() => send('whatsapp')} className="fh-btn-primary" style={{ background: '#25a35a', color: '#fff', border: 'none', cursor: 'pointer', fontSize: 15, fontWeight: 600, padding: 15, borderRadius: 999 }}>
+                  Написать в WhatsApp
+                </button>
+                <button type="button" onClick={() => send('telegram')} className="fh-btn-dark" style={{ background: '#2b2620', color: '#f6efe1', border: 'none', cursor: 'pointer', fontSize: 15, fontWeight: 600, padding: 15, borderRadius: 999 }}>
+                  Написать в Telegram
+                </button>
+              </div>
+              <p style={{ fontSize: 13, color: '#9a8c74', margin: '2px 0 0', textAlign: 'center' }}>
+                Заявка откроется в мессенджере с заполненным текстом — останется нажать «Отправить».
+              </p>
             </form>
           </div>
 
@@ -136,8 +164,14 @@ function ContactsContent() {
                 ))}
               </div>
             </div>
-            <div style={{ borderRadius: 8, overflow: 'hidden', border: '1px solid rgba(43,38,32,0.1)', minHeight: 240, backgroundImage: photoPlh('#e4d8c2', '#d8cab0', 14), display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-              <span style={{ fontFamily: 'monospace', fontSize: 12, color: '#8a7a5f' }}>карта проезда · 270 км от Москвы</span>
+            <div style={{ borderRadius: 8, overflow: 'hidden', border: '1px solid rgba(43,38,32,0.1)', minHeight: 240, flex: 1, display: 'flex' }}>
+              <iframe
+                src={mapEmbedUrl}
+                title="Карта проезда — Family House"
+                loading="lazy"
+                allowFullScreen
+                style={{ width: '100%', height: '100%', minHeight: 240, border: 0, display: 'block' }}
+              />
             </div>
           </div>
 

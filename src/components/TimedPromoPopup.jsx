@@ -117,7 +117,7 @@ function TimedPromoPopup({ onClose }) {
               color: '#6b6157',
               lineHeight: 1.5,
             }}>
-              <span style={{ fontWeight: 700, color: '#b8762e' }}>Лето быстро кончается:</span> свободны только выходные в июле
+              <span style={{ fontWeight: 700, color: '#b8762e' }}>Свободных дат всё меньше:</span> популярные выходные бронируют заранее
             </div>
 
             {/* CTA Buttons */}

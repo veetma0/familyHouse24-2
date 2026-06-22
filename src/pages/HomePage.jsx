@@ -3,7 +3,7 @@ import BookingBar from '../components/BookingBar'
 import TimedPromoPopup from '../components/TimedPromoPopup'
 import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import { reasons, statsItems, reviews, cottages } from '../data/siteData'
+import { reasons, statsItems, reviews, cottages, mapEmbedUrl } from '../data/siteData'
 import { wrap, kicker, kickerGold, h2, plhMono, photoPlh } from '../data/styles'
 
 function HomeContent() {
@@ -213,8 +213,14 @@ function HomeContent() {
               <button type="button" onClick={() => onNav('/contacts')} style={{ background: 'rgba(246,239,225,0.08)', color: '#f6efe1', border: '1px solid rgba(246,239,225,0.3)', cursor: 'pointer', fontSize: 15, fontWeight: 600, padding: '14px 28px', borderRadius: 999 }}>Контакты</button>
             </div>
           </div>
-          <div style={{ background: photoPlh('#34302a', '#2f2b25', 14), display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 320 }}>
-            <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(231,221,200,0.4)' }}>карта проезда</span>
+          <div style={{ minHeight: 320, display: 'flex' }}>
+            <iframe
+              src={mapEmbedUrl}
+              title="Карта проезда — Family House"
+              loading="lazy"
+              allowFullScreen
+              style={{ width: '100%', height: '100%', minHeight: 320, border: 0, display: 'block' }}
+            />
           </div>
         </div>
       </section>
