@@ -16,9 +16,9 @@ import { wrap, kickerGold } from '../data/styles'
    ============================================================ */
 
 const trustBadges = [
-  { icon: '🔒', t: 'Безопасная оплата', d: 'Картой онлайн в защищённом модуле' },
-  { icon: '✓', t: 'Мгновенное подтверждение', d: 'Бронь закрепляется сразу' },
-  { icon: '⌫', t: 'Гибкая отмена', d: 'Условия видны при выборе тарифа' },
+  { icon: '🔒', t: 'Оплата без рисков', d: 'Картой онлайн в защищённом модуле' },
+  { icon: '✓', t: 'Бронь сразу за вами', d: 'Подтверждение приходит мгновенно' },
+  { icon: '⌫', t: 'Передумали — не беда', d: 'Условия отмены видны при выборе тарифа' },
 ]
 
 function BookingContent() {
@@ -54,12 +54,12 @@ function BookingContent() {
             className="fh-h1"
             style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400, fontSize: 'clamp(38px, 5vw, 60px)', color: '#f6efe1', margin: '16px 0 0', letterSpacing: '-0.015em' }}
           >
-            Выберите дом и забронируйте
+            Забронируйте свой уголок тишины
           </h1>
           <p style={{ fontSize: 18, lineHeight: 1.7, color: 'rgba(243,237,224,0.8)', margin: '18px 0 0', maxWidth: 600 }}>
             {datesLabel
-              ? <>Свободные дома на даты <strong style={{ color: '#f6efe1' }}>{datesLabel}</strong>. Выбор, бронирование и оплата — прямо здесь, не покидая сайт.</>
-              : <>Календарь, выбор дома и онлайн-оплата — всё на одной странице. Никуда переходить не нужно.</>}
+              ? <>Вот что свободно на даты <strong style={{ color: '#f6efe1' }}>{datesLabel}</strong>. Выбирайте дом, бронируйте и оплачивайте прямо здесь — никуда уходить не нужно.</>
+              : <>Календарь, выбор дома и онлайн-оплата — всё в одном окне. Пара минут, и ваш отдых забронирован.</>}
           </p>
 
           <div className="fh-trust" style={{ display: 'flex', flexWrap: 'wrap', gap: 14, marginTop: 32 }}>
@@ -90,7 +90,7 @@ function BookingContent() {
               {!loaded && (
                 <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 18, background: '#faf6ee', zIndex: 2 }}>
                   <span className="fh-spinner" aria-hidden="true" />
-                  <span style={{ fontSize: 14.5, color: '#9a8c74', fontWeight: 500 }}>Загружаем свободные дома…</span>
+                  <span style={{ fontSize: 14.5, color: '#9a8c74', fontWeight: 500 }}>Подбираем свободные дома для вас…</span>
                 </div>
               )}
               <iframe
@@ -106,10 +106,10 @@ function BookingContent() {
           ) : (
             <div style={{ marginTop: -64, background: '#faf6ee', border: '1px solid rgba(43,38,32,0.1)', borderRadius: 16, padding: '56px 40px', textAlign: 'center', boxShadow: '0 30px 70px rgba(28,24,20,0.12)' }}>
               <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 26, color: '#2b2620', margin: 0 }}>
-                Модуль бронирования временно недоступен
+                Онлайн-бронь сейчас отдыхает
               </h2>
               <p style={{ fontSize: 16, color: '#6b6157', margin: '14px auto 28px', maxWidth: 440, lineHeight: 1.6 }}>
-                Позвоните нам — забронируем дом по телефону и подскажем свободные даты.
+                Ничего страшного — позвоните нам, и мы подберём дом, подскажем свободные даты и забронируем всё за вас.
               </p>
               <a
                 href="tel:+74951510082"

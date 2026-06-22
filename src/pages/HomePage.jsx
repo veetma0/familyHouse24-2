@@ -3,7 +3,7 @@ import BookingBar from '../components/BookingBar'
 import TimedPromoPopup from '../components/TimedPromoPopup'
 import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import { reasons, statsItems, reviews, cottages, mapEmbedUrl } from '../data/siteData'
+import { reasons, statsItems, reviews, cottages, mapEmbedUrl, experience } from '../data/siteData'
 import { wrap, kicker, kickerGold, h2, plhMono, photoPlh } from '../data/styles'
 
 function HomeContent() {
@@ -39,8 +39,8 @@ function HomeContent() {
             <h1 className="fh-h1" style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400, fontSize: 'clamp(44px, 6vw, 82px)', lineHeight: 1.02, color: '#f6efe1', margin: '22px 0 0', letterSpacing: '-0.015em' }}>
               Где вода<br />встречает тишину
             </h1>
-            <p style={{ fontSize: 19, lineHeight: 1.7, color: 'rgba(243,237,224,0.82)', margin: '26px 0 0', maxWidth: 560 }}>
-              Премиальная рыболовная база и эко-дома у воды. Настоящая рыбалка летом и зимой, дровяная баня, причал и катера — для семьи и хорошей компании.
+            <p style={{ fontSize: 19, lineHeight: 1.7, color: 'rgba(243,237,224,0.82)', margin: '26px 0 0', maxWidth: 580 }}>
+              Эко-отель на берегу реки Сить, в сосновом бору, в 10 км от Рыбинского водохранилища. Дома и номера у воды, русская баня на кедре, катера с егерем и домашняя кухня — для рыбаков, семей и хорошей компании.
             </p>
             <div className="fh-hero-actions" style={{ display: 'flex', flexWrap: 'wrap', gap: 14, marginTop: 38 }}>
               <button type="button" onClick={() => openBooking('')} className="fh-btn-primary" style={{ background: '#b8762e', color: '#fff', border: 'none', cursor: 'pointer', fontSize: 16, fontWeight: 600, padding: '16px 32px', borderRadius: 999, boxShadow: '0 10px 28px rgba(184,118,46,0.36)' }}>
@@ -77,10 +77,10 @@ function HomeContent() {
               <span style={kicker}>О базе</span>
               <h2 style={{ ...h2, fontSize: 'clamp(34px, 4vw, 52px)', lineHeight: 1.08, color: '#2b2620', margin: '18px 0 0' }}>Место, куда хочется возвращаться</h2>
               <p style={{ fontSize: 17, lineHeight: 1.8, color: '#6b6157', margin: '24px 0 0' }}>
-                Family House — это тихая бухта на Рыбинском водохранилище, где утро начинается с тумана над водой, а вечер — с дровяной бани и ухи на костре. Мы создали место и для заядлых рыбаков, и для семей, которые ищут тишину, природу и комфорт.
+                Family House — эко-отель в Ярославской области, в деревне Набережная Брейтовского района. Он стоит на берегу реки Сить, в окружении соснового бора, в 10 км от Рыбинского водохранилища. Утро здесь начинается с тумана над водой, а вечер — с русской бани на кедре и ухи из свежего улова.
               </p>
               <p style={{ fontSize: 17, lineHeight: 1.8, color: '#6b6157', margin: '18px 0 0' }}>
-                Здесь не нужно ничего везти с собой — катера, снасти и опытный егерь уже ждут вас на берегу.
+                Мы принимаем рыбаков, охотников, яхтсменов и семьи с детьми. Везти с собой ничего не нужно — катера, лодки, снасти и опытный егерь уже ждут вас на берегу, а на кухне готовят домашние блюда трижды в день.
               </p>
               <button type="button" onClick={() => onNav('/contacts')} style={{ marginTop: 30, background: 'none', border: 'none', borderBottom: '2px solid #b8762e', cursor: 'pointer', fontSize: 16, fontWeight: 600, color: '#2b2620', padding: '0 0 6px' }}>
                 Как добраться →
@@ -96,8 +96,8 @@ function HomeContent() {
       {/* ===== REASONS ===== */}
       <section className="fh-section-pad" style={{ padding: '0 32px 120px' }}>
         <div style={wrap}>
-          <span style={kicker}>Почему Family House</span>
-          <h2 style={{ ...h2, fontSize: 'clamp(32px, 3.6vw, 46px)', color: '#2b2620', margin: '16px 0 48px' }}>Четыре причины приехать</h2>
+          <span style={kicker}>Почему гости влюбляются в это место</span>
+          <h2 style={{ ...h2, fontSize: 'clamp(32px, 3.6vw, 46px)', color: '#2b2620', margin: '16px 0 48px' }}>Четыре причины собрать чемодан</h2>
           <div className="fh-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 1, background: 'rgba(43,38,32,0.1)', border: '1px solid rgba(43,38,32,0.1)', borderRadius: 4, overflow: 'hidden' }}>
             {reasons.map((r) => (
               <div key={r.n} data-reveal style={{ background: '#faf6ee', padding: '36px 28px', minHeight: 240, display: 'flex', flexDirection: 'column' }}>
@@ -148,12 +148,55 @@ function HomeContent() {
         </div>
       </section>
 
+      {/* ===== ЧЕМ ЗАНЯТЬСЯ / НА ТЕРРИТОРИИ ===== */}
+      <section className="fh-section-pad" style={{ padding: '0 32px 120px' }}>
+        <div style={wrap}>
+          <span style={kicker}>Не только рыбалка</span>
+          <h2 style={{ ...h2, fontSize: 'clamp(32px, 3.6vw, 46px)', color: '#2b2620', margin: '16px 0 48px' }}>Чем заняться на базе</h2>
+          <div className="fh-grid-3 fh-experience" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+            {experience.map((e) => (
+              <button
+                key={e.t}
+                type="button"
+                data-reveal
+                onClick={() => onNav(e.path)}
+                className="fh-card-hover"
+                style={{ textAlign: 'left', cursor: 'pointer', background: '#faf6ee', border: '1px solid rgba(43,38,32,0.08)', borderRadius: 6, padding: '30px 28px', display: 'flex', flexDirection: 'column', minHeight: 150 }}
+              >
+                <h3 style={{ fontSize: 19, fontWeight: 600, color: '#2b2620', margin: '0 0 10px' }}>{e.t}</h3>
+                <p style={{ fontSize: 14.5, lineHeight: 1.6, color: '#6b6157', margin: 0, flex: 1 }}>{e.d}</p>
+                <span style={{ fontSize: 14, fontWeight: 600, color: '#b8762e', marginTop: 16 }}>Подробнее →</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== ПИТАНИЕ (тизер) ===== */}
+      <section className="fh-section-pad" style={{ padding: '0 32px 120px' }}>
+        <div className="fh-directions" style={{ ...wrap, background: '#2b2620', borderRadius: 8, overflow: 'hidden', display: 'grid', gridTemplateColumns: '1fr 1.1fr' }}>
+          <div style={{ minHeight: 280, background: photoPlh('#3a342b', '#332e26'), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(231,221,200,0.5)' }}>фото · домашняя кухня, уха и рыба</span>
+          </div>
+          <div className="fh-directions-text" style={{ padding: '56px 56px' }}>
+            <span style={kickerGold}>Питание</span>
+            <h2 style={{ ...h2, fontSize: 'clamp(28px, 3.2vw, 42px)', color: '#f6efe1', margin: '16px 0 0' }}>Домашняя кухня и ваш улов</h2>
+            <p style={{ fontSize: 16, lineHeight: 1.75, color: '#b3a68e', margin: '18px 0 0' }}>
+              Трёхразовое питание на основе традиционной домашней кухни: свежие продукты из подсобного хозяйства, рыба из Рыбинского водохранилища. Приготовим даже пойманный вами трофей.
+            </p>
+            <button type="button" onClick={() => onNav('/services')} className="fh-btn-primary" style={{ marginTop: 28, background: '#b8762e', color: '#fff', border: 'none', cursor: 'pointer', fontSize: 15, fontWeight: 600, padding: '14px 28px', borderRadius: 999 }}>
+              Питание и услуги →
+            </button>
+          </div>
+        </div>
+      </section>
+
       {/* ===== SEASONS ===== */}
       <section style={{ background: '#221d18', padding: '120px 32px' }} className="fh-section-pad">
         <div style={wrap}>
           <div style={{ textAlign: 'center', maxWidth: 640, margin: '0 auto 56px' }}>
             <span style={kickerGold}>Круглый год</span>
-            <h2 style={{ ...h2, fontSize: 'clamp(32px, 3.8vw, 50px)', color: '#f6efe1', margin: '16px 0 0' }}>Рыбалка в любой сезон</h2>
+            <h2 style={{ ...h2, fontSize: 'clamp(32px, 3.8vw, 50px)', color: '#f6efe1', margin: '16px 0 0' }}>Клюёт и летом, и в мороз</h2>
           </div>
           <div className="fh-seasons" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28 }}>
             <div data-reveal style={{ border: '1px solid rgba(231,221,200,0.16)', borderRadius: 6, overflow: 'hidden' }}>
@@ -162,7 +205,7 @@ function HomeContent() {
               </div>
               <div style={{ padding: 32 }}>
                 <h3 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 28, color: '#f6efe1', margin: 0 }}>Лето на воде</h3>
-                <p style={{ fontSize: 15, lineHeight: 1.7, color: '#b3a68e', margin: '12px 0 0' }}>Троллинг и спиннинг с катера, ночная ловля налима, тихие заводи на утренней зорьке. Судак и щука — главные трофеи сезона.</p>
+                <p style={{ fontSize: 15, lineHeight: 1.7, color: '#b3a68e', margin: '12px 0 0' }}>Утренняя зорька в тихой заводи, троллинг и спиннинг с катера, азартная ночная ловля налима. Судак и щука сами просятся в садок.</p>
               </div>
             </div>
             <div data-reveal style={{ border: '1px solid rgba(231,221,200,0.16)', borderRadius: 6, overflow: 'hidden' }}>
@@ -171,7 +214,7 @@ function HomeContent() {
               </div>
               <div style={{ padding: 32 }}>
                 <h3 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 28, color: '#f6efe1', margin: 0 }}>Зима подо льдом</h3>
-                <p style={{ fontSize: 15, lineHeight: 1.7, color: '#b3a68e', margin: '12px 0 0' }}>Снегоходы довезут к дальним лункам, егерь покажет точки. Подлёдный судак, жерлицы на щуку и тёплый дом с баней после.</p>
+                <p style={{ fontSize: 15, lineHeight: 1.7, color: '#b3a68e', margin: '12px 0 0' }}>Снегоход домчит к дальним лункам, егерь покажет уловистые точки. Подлёдный судак, жерлицы на щуку — а вечером тёплый дом и жаркая баня.</p>
               </div>
             </div>
           </div>
@@ -187,7 +230,7 @@ function HomeContent() {
       <section className="fh-section fh-section-pad" style={{ padding: '120px 32px' }}>
         <div style={wrap}>
           <span style={kicker}>Отзывы гостей</span>
-          <h2 style={{ ...h2, fontSize: 'clamp(32px, 3.6vw, 46px)', color: '#2b2620', margin: '16px 0 48px' }}>Им у нас понравилось</h2>
+          <h2 style={{ ...h2, fontSize: 'clamp(32px, 3.6vw, 46px)', color: '#2b2620', margin: '16px 0 48px' }}>За что нас любят и возвращаются</h2>
           <div className="fh-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28 }}>
             {reviews.map((rv) => (
               <div key={rv.name} data-reveal style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.08)', borderRadius: 6, padding: 32 }}>
@@ -206,8 +249,8 @@ function HomeContent() {
         <div className="fh-directions" style={{ ...wrap, background: '#2b2620', borderRadius: 8, overflow: 'hidden', display: 'grid', gridTemplateColumns: '1.1fr 1fr' }}>
           <div className="fh-directions-text" style={{ padding: '64px 56px' }}>
             <span style={kickerGold}>Как добраться</span>
-            <h2 style={{ ...h2, fontSize: 'clamp(30px, 3.4vw, 44px)', color: '#f6efe1', margin: '16px 0 0' }}>270 км от Москвы — и вы на месте</h2>
-            <p style={{ fontSize: 16, lineHeight: 1.7, color: '#b3a68e', margin: '20px 0 0' }}>Ярославская область, д. Набережная. Удобный заезд на любом авто, парковка у каждого дома. Пришлём точную геолокацию после брони.</p>
+            <h2 style={{ ...h2, fontSize: 'clamp(30px, 3.4vw, 44px)', color: '#f6efe1', margin: '16px 0 0' }}>270 км от Москвы — и город позади</h2>
+            <p style={{ fontSize: 16, lineHeight: 1.7, color: '#b3a68e', margin: '20px 0 0' }}>Ярославская область, Брейтовский район, д. Набережная. Удобный заезд на любом авто, парковка у каждого дома. Пришлём точную геолокацию после брони.</p>
             <div className="fh-stack-mobile" style={{ display: 'flex', flexWrap: 'wrap', gap: 14, marginTop: 32 }}>
               <button type="button" onClick={() => openBooking('')} className="fh-btn-primary" style={{ background: '#b8762e', color: '#fff', border: 'none', cursor: 'pointer', fontSize: 15, fontWeight: 600, padding: '14px 28px', borderRadius: 999 }}>Забронировать</button>
               <button type="button" onClick={() => onNav('/contacts')} style={{ background: 'rgba(246,239,225,0.08)', color: '#f6efe1', border: '1px solid rgba(246,239,225,0.3)', cursor: 'pointer', fontSize: 15, fontWeight: 600, padding: '14px 28px', borderRadius: 999 }}>Контакты</button>

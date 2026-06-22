@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { navigationItems } from '../data/siteData'
+import { navigationItems, contact, legal } from '../data/siteData'
 import { dateOffset } from '../utils/dates'
 import { ShellContext } from './shellContext'
 
@@ -278,7 +278,7 @@ function Footer({ onNav }) {
               <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: '#f6efe1' }}>Family House</span>
             </div>
             <p style={{ fontSize: 14.5, lineHeight: 1.7, color: '#8c8071', margin: '18px 0 0', maxWidth: 320 }}>
-              Премиальная рыболовная база на Рыбинском водохранилище. Тишина, вода и настоящая рыбалка — круглый год.
+              Эко-отель на реке Сить, в 10 км от Рыбинского водохранилища. Дома и баня, домашняя кухня и настоящая рыбалка — круглый год.
             </p>
           </div>
           <div>
@@ -300,13 +300,24 @@ function Footer({ onNav }) {
               <a href="mailto:Familyhouse.baza@gmail.com" style={{ fontSize: 14, color: '#cabfae', textDecoration: 'none' }}>
                 Familyhouse.baza@gmail.com
               </a>
-              <span style={{ fontSize: 14, color: '#8c8071' }}>Ярославская обл., д. Набережная</span>
+              <a
+                href={`https://instagram.com/${contact.instagram}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="fh-link-underline"
+                style={{ fontSize: 14, color: '#cabfae', textDecoration: 'none' }}
+              >
+                Instagram · @{contact.instagram}
+              </a>
+              <span style={{ fontSize: 14, color: '#8c8071' }}>Ярославская обл., Брейтовский р-н, д. Набережная</span>
             </div>
           </div>
         </div>
         <div style={{ paddingTop: 28, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
           <span style={{ fontSize: 13, color: '#6f655a' }}>© 2026 Family House. Все права защищены.</span>
-          <span style={{ fontSize: 13, color: '#6f655a' }}>Family House · рыболовная база на Рыбинке</span>
+          <span style={{ fontSize: 13, color: '#6f655a' }}>
+            {legal.company} · ИНН {legal.inn} · ОГРН {legal.ogrn}
+          </span>
         </div>
       </div>
     </footer>

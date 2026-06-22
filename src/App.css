@@ -89,36 +89,54 @@ a {
 }
 
 /* ---------- Hover / focus (инлайн их не покрывает) ---------- */
+/* Тач-устройства не знают :hover — поэтому ключевая обратная связь
+   на мобильном живёт в :active. Упругий cubic-bezier + transform даёт
+   ощущение «нажатия» нативного приложения. */
 .fh-btn-primary {
-  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  transition: background 0.2s ease, box-shadow 0.2s ease,
+    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .fh-btn-primary:hover {
   background: #a3661f !important;
 }
 .fh-btn-primary:active {
-  transform: translateY(1px);
+  transform: scale(0.96);
+  box-shadow: 0 4px 12px rgba(184, 118, 46, 0.24) !important;
 }
 
 .fh-btn-ghost {
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease,
+    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .fh-btn-ghost:hover {
   background: rgba(246, 239, 225, 0.16) !important;
 }
+.fh-btn-ghost:active {
+  transform: scale(0.96);
+  background: rgba(246, 239, 225, 0.16) !important;
+}
 
 .fh-btn-outline {
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease,
+    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .fh-btn-outline:hover {
   background: #2b2620 !important;
   color: #f6efe1 !important;
 }
+.fh-btn-outline:active {
+  transform: scale(0.96);
+}
 
 .fh-btn-dark {
-  transition: background 0.2s ease;
+  transition: background 0.2s ease,
+    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .fh-btn-dark:hover {
   background: #b8762e !important;
+}
+.fh-btn-dark:active {
+  transform: scale(0.96);
 }
 
 .fh-link-underline {
@@ -143,7 +161,8 @@ a {
 }
 
 .fh-card-hover {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 @media (hover: hover) {
   .fh-card-hover:hover {
@@ -151,8 +170,13 @@ a {
     box-shadow: 0 14px 40px rgba(43, 38, 32, 0.12);
   }
 }
-.fh-card-hover:active {
-  transform: scale(0.995);
+/* На тач-устройствах карточка не «зависает», но даёт мягкий отклик
+   на нажатие — лёгкое сжатие + притопленная тень. */
+@media (hover: none) {
+  .fh-card-hover:active {
+    transform: scale(0.975);
+    box-shadow: 0 6px 18px rgba(43, 38, 32, 0.1);
+  }
 }
 
 .fh-input {
@@ -176,6 +200,16 @@ a {
   opacity: 1;
   transform: none;
 }
+/* На мобильном длинная анимация в 0.7s читается «тягуче»: короче путь,
+   живее тайминг, чуть короче каскад между соседями — появление остаётся
+   плавным, но поспевает за быстрым скроллом пальцем. */
+@media (max-width: 720px) {
+  .fh-reveal {
+    transform: translateY(18px);
+    transition: opacity 0.55s cubic-bezier(0.22, 0.61, 0.36, 1),
+      transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+}
 
 /* ---------- Бургер (только мобайл) ---------- */
 .fh-burger {
@@ -190,6 +224,12 @@ a {
   cursor: pointer;
   padding: 0;
 }
+.fh-burger:active {
+  transform: scale(0.92);
+}
+.fh-burger {
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
 .fh-burger span {
   display: block;
   height: 2px;
@@ -198,14 +238,16 @@ a {
   background: #2b2620;
   border-radius: 2px;
   transform-origin: center;
-  transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.2s ease;
+  /* Упругое easing на средней линии — палочки «защёлкиваются» в крест */
+  transition: transform 0.4s cubic-bezier(0.68, -0.4, 0.27, 1.4),
+    opacity 0.2s ease, width 0.3s ease;
 }
 .fh-burger.is-open span:nth-child(1) {
   transform: translateY(7px) rotate(45deg);
 }
 .fh-burger.is-open span:nth-child(2) {
   opacity: 0;
-  transform: scaleX(0.4);
+  transform: scaleX(0.2);
 }
 .fh-burger.is-open span:nth-child(3) {
   transform: translateY(-7px) rotate(-45deg);
@@ -226,9 +268,12 @@ a {
   padding: 96px 30px 44px;
   opacity: 0;
   visibility: hidden;
-  transform: translateX(8%);
+  /* Лёгкое всплытие снизу + микро-зум: полотно «раскрывается»,
+     а не просто прилетает сбоку — мягче и дороже на ощупь. */
+  transform: translateY(2%) scale(1.04);
   transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
-    opacity 0.35s ease, visibility 0s linear 0.45s;
+    opacity 0.35s ease, -webkit-backdrop-filter 0.45s ease,
+    backdrop-filter 0.45s ease, visibility 0s linear 0.45s;
 }
 .fh-mobile-nav.is-open {
   opacity: 1;
@@ -239,30 +284,38 @@ a {
 }
 .fh-mobile-nav > * {
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transform: translateY(22px) scale(0.96);
+  transition: opacity 0.45s ease,
+    transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 .fh-mobile-nav.is-open > * {
   opacity: 1;
   transform: none;
 }
 .fh-mobile-nav.is-open > *:nth-child(1) {
-  transition-delay: 0.08s;
+  transition-delay: 0.1s;
 }
 .fh-mobile-nav.is-open > *:nth-child(2) {
-  transition-delay: 0.14s;
+  transition-delay: 0.16s;
 }
 .fh-mobile-nav.is-open > *:nth-child(3) {
-  transition-delay: 0.2s;
+  transition-delay: 0.22s;
 }
 .fh-mobile-nav.is-open > *:nth-child(4) {
-  transition-delay: 0.26s;
+  transition-delay: 0.28s;
 }
 .fh-mobile-nav.is-open > *:nth-child(5) {
-  transition-delay: 0.34s;
+  transition-delay: 0.36s;
 }
 .fh-mobile-nav.is-open > *:nth-child(6) {
-  transition-delay: 0.4s;
+  transition-delay: 0.44s;
+}
+.fh-mobile-nav.is-open > *:nth-child(7) {
+  transition-delay: 0.5s;
+}
+/* Закрытие происходит без задержек — реверс ощущается мгновенным */
+.fh-mobile-nav:not(.is-open) > * {
+  transition-delay: 0s;
 }
 .fh-mobile-link {
   font-family: 'Playfair Display', serif;
@@ -274,9 +327,15 @@ a {
   padding: 14px 0;
   cursor: pointer;
   border-bottom: 1px solid rgba(246, 239, 225, 0.12);
+  transition: color 0.25s ease, padding-left 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 .fh-mobile-link.is-active {
   color: #d8b483;
+}
+/* Тап по пункту меню: золотится и слегка «выезжает» вправо */
+.fh-mobile-link:active {
+  color: #d8b483;
+  padding-left: 8px;
 }
 
 /* ============================================================
@@ -372,6 +431,15 @@ a {
 }
 
 /* ---- Плашка бронирования под hero ---- */
+/* Тап по ячейке (дата/гости) мягко подсвечивает её — видно, что поле
+   активно. Особенно полезно на мобильном, где нет ховера. */
+.fh-bookingbar-cell {
+  transition: background 0.25s ease;
+}
+.fh-bookingbar-cell:focus-within {
+  background: rgba(184, 118, 46, 0.06);
+}
+
 @media (max-width: 860px) {
   .fh-bookingbar {
     grid-template-columns: 1fr 1fr !important;
@@ -431,5 +499,16 @@ a {
     transition: opacity 0.2s ease !important;
     transform: none !important;
     animation: none !important;
+  }
+  /* Никаких пружинок и сжатий при нажатии для тех, кто просит покой */
+  .fh-btn-primary:active,
+  .fh-btn-ghost:active,
+  .fh-btn-outline:active,
+  .fh-btn-dark:active,
+  .fh-card-hover:active,
+  .fh-burger:active,
+  .fh-burger span,
+  .fh-mobile-link:active {
+    transform: none !important;
   }
 }

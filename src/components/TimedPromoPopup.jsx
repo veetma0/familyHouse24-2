@@ -48,8 +48,8 @@ function TimedPromoPopup({ onClose }) {
             </div>
             {/* Badge */}
             <div className="fh-popup-badge">
-              <span style={{ fontSize: 11, fontWeight: 700, color: '#fff', letterSpacing: '0.1em' }}>✓ Забронировано</span>
-              <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.85)', marginTop: 4 }}>3 из 5 домов</span>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#fff', letterSpacing: '0.1em' }}>✓ Уже разобрали</span>
+              <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.85)', marginTop: 4 }}>3 из 4 домов</span>
             </div>
           </div>
 
@@ -64,7 +64,7 @@ function TimedPromoPopup({ onClose }) {
                 color: '#b8762e',
                 textTransform: 'uppercase',
               }}>
-                Специальное предложение
+                Только честные цены
               </span>
 
               {/* Heading */}
@@ -76,7 +76,7 @@ function TimedPromoPopup({ onClose }) {
                 margin: '12px 0 0',
                 lineHeight: 1.15,
               }}>
-                Гарантия<br />лучшей цены
+                Лучшая цена —<br />здесь и сейчас
               </h2>
 
               {/* Subheading */}
@@ -86,22 +86,22 @@ function TimedPromoPopup({ onClose }) {
                 color: '#6b6157',
                 margin: '14px 0 0',
               }}>
-                Закажите прямо сейчас — рассчитаем финальную стоимость без переплат и промежуточных комиссий.
+                Бронируйте напрямую у нас — посчитаем итог без переплат и комиссий посредников. Дешевле не найдёте.
               </p>
 
               {/* Features */}
               <div style={{ marginTop: 20, display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
                   <span style={{ color: '#b8762e', fontWeight: 700, fontSize: 18, lineHeight: 1, marginTop: 2 }}>✓</span>
-                  <span style={{ fontSize: 14, color: '#3a352e' }}>Без скрытых комиссий</span>
+                  <span style={{ fontSize: 14, color: '#3a352e' }}>Никаких скрытых комиссий</span>
                 </div>
                 <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
                   <span style={{ color: '#b8762e', fontWeight: 700, fontSize: 18, lineHeight: 1, marginTop: 2 }}>✓</span>
-                  <span style={{ fontSize: 14, color: '#3a352e' }}>Подтвердим за 15 минут</span>
+                  <span style={{ fontSize: 14, color: '#3a352e' }}>Подтвердим бронь за 15 минут</span>
                 </div>
                 <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
                   <span style={{ color: '#b8762e', fontWeight: 700, fontSize: 18, lineHeight: 1, marginTop: 2 }}>✓</span>
-                  <span style={{ fontSize: 14, color: '#3a352e' }}>Отмена бесплатно за 7 дней</span>
+                  <span style={{ fontSize: 14, color: '#3a352e' }}>Передумаете — отменим бесплатно</span>
                 </div>
               </div>
             </div>
@@ -117,7 +117,7 @@ function TimedPromoPopup({ onClose }) {
               color: '#6b6157',
               lineHeight: 1.5,
             }}>
-              <span style={{ fontWeight: 700, color: '#b8762e' }}>Свободных дат всё меньше:</span> популярные выходные бронируют заранее
+              <span style={{ fontWeight: 700, color: '#b8762e' }}>Хорошие даты разбирают быстро:</span> лучшие выходные бронируют заранее
             </div>
 
             {/* CTA Buttons */}

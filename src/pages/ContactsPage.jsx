@@ -2,8 +2,8 @@ import { useRef, useState } from 'react'
 import SiteShell from '../components/SiteShell'
 import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import { wrap, kickerGold } from '../data/styles'
-import { contact, mapEmbedUrl } from '../data/siteData'
+import { wrap, kicker, kickerGold, h2 } from '../data/styles'
+import { contact, mapEmbedUrl, faq, legal } from '../data/siteData'
 
 const inputStyle = {
   width: '100%',
@@ -28,6 +28,7 @@ function ContactsContent() {
   const topicRef = useRef(null)
   const msgRef = useRef(null)
   const [errors, setErrors] = useState({})
+  const [openFaq, setOpenFaq] = useState(null)
 
   const digits = (v) => (v || '').replace(/\D/g, '')
 
@@ -86,10 +87,10 @@ function ContactsContent() {
         <div style={wrap}>
           <span style={kickerGold}>Связаться с нами</span>
           <h1 className="fh-h1" style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400, fontSize: 'clamp(40px, 5vw, 64px)', color: '#f6efe1', margin: '16px 0 0', letterSpacing: '-0.015em' }}>
-            Контакты и поддержка
+            Напишите — и мы всё устроим
           </h1>
           <p style={{ fontSize: 18, lineHeight: 1.7, color: 'rgba(243,237,224,0.78)', margin: '18px 0 0', maxWidth: 560 }}>
-            Ответим на вопросы о бронировании, рыбалке и проезде. Напишите — поможем выбрать дом и спланировать поездку.
+            Подберём дом, подскажем про рыбалку и дорогу, забронируем удобные даты. Просто напишите нам — а дальше дело за нами.
           </p>
         </div>
       </section>
@@ -99,8 +100,8 @@ function ContactsContent() {
         <div className="fh-contacts" style={{ ...wrap, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'start' }}>
 
           <div data-reveal data-reveal-stagger="off" style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.08)', borderRadius: 8, padding: 40 }}>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 28, color: '#2b2620', margin: '0 0 6px' }}>Написать нам</h2>
-            <p style={{ fontSize: 14.5, color: '#6b6157', margin: '0 0 28px' }}>Ответим в течение часа в рабочее время.</p>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 28, color: '#2b2620', margin: '0 0 6px' }}>Расскажите о поездке</h2>
+            <p style={{ fontSize: 14.5, color: '#6b6157', margin: '0 0 28px' }}>Прочитаем и ответим в течение часа в рабочее время.</p>
             <form onSubmit={(e) => { e.preventDefault(); send('whatsapp') }} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
               <div>
                 <label style={labelStyle}>Имя</label>
@@ -148,7 +149,7 @@ function ContactsContent() {
 
           <div data-reveal data-reveal-stagger="off" style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
             <div style={{ background: '#2b2620', borderRadius: 8, padding: 36 }}>
-              <h3 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 24, color: '#f6efe1', margin: '0 0 24px' }}>Прямой контакт</h3>
+              <h3 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 24, color: '#f6efe1', margin: '0 0 24px' }}>Позвоните или напишите</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
                 {infoBlock('Телефон', (
                   <a href="tel:+74951510082" style={{ fontSize: 20, fontWeight: 600, color: '#f6efe1', textDecoration: 'none' }}>+7 (495) 151-00-82</a>
@@ -156,11 +157,17 @@ function ContactsContent() {
                 {infoBlock('Email', (
                   <a href="mailto:Familyhouse.baza@gmail.com" style={{ fontSize: 17, fontWeight: 500, color: '#f6efe1', textDecoration: 'none' }}>Familyhouse.baza@gmail.com</a>
                 ))}
-                {infoBlock('Адрес', (
-                  <div style={{ fontSize: 16, color: '#e7ddc8', lineHeight: 1.5 }}>Ярославская область,<br />д. Набережная · Рыбинское вдхр.</div>
+                {infoBlock('Instagram', (
+                  <a href={`https://instagram.com/${contact.instagram}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: 17, fontWeight: 500, color: '#f6efe1', textDecoration: 'none' }}>@{contact.instagram}</a>
                 ))}
-                {infoBlock('Приём гостей', (
-                  <div style={{ fontSize: 16, color: '#e7ddc8' }}>Ежедневно, 8:00 – 22:00</div>
+                {infoBlock('Адрес', (
+                  <div style={{ fontSize: 16, color: '#e7ddc8', lineHeight: 1.5 }}>Ярославская обл., Брейтовский р-н,<br />д. Набережная · р. Сить</div>
+                ))}
+                {infoBlock('Режим работы офиса', (
+                  <div style={{ fontSize: 16, color: '#e7ddc8' }}>{contact.office}</div>
+                ))}
+                {infoBlock('Заезд и выезд', (
+                  <div style={{ fontSize: 16, color: '#e7ddc8' }}>Заезд {contact.checkIn}, выезд {contact.checkOut}</div>
                 ))}
               </div>
             </div>
@@ -175,6 +182,45 @@ function ContactsContent() {
             </div>
           </div>
 
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="fh-section-pad" style={{ padding: '0 32px 90px' }}>
+        <div style={{ ...wrap, maxWidth: 860 }}>
+          <span style={kicker}>Частые вопросы</span>
+          <h2 style={{ ...h2, fontSize: 'clamp(30px, 3.4vw, 44px)', color: '#2b2620', margin: '16px 0 36px' }}>Отвечаем заранее</h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {faq.map((item, i) => {
+              const open = openFaq === i
+              return (
+                <div key={item.q} data-reveal style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.1)', borderRadius: 8, overflow: 'hidden' }}>
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq(open ? null : i)}
+                    aria-expanded={open}
+                    style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: '20px 24px' }}
+                  >
+                    <span style={{ fontSize: 16.5, fontWeight: 600, color: '#2b2620' }}>{item.q}</span>
+                    <span style={{ flex: 'none', fontSize: 22, lineHeight: 1, color: '#b8762e', transform: open ? 'rotate(45deg)' : 'none', transition: 'transform 0.2s ease' }}>+</span>
+                  </button>
+                  {open && (
+                    <p style={{ fontSize: 15, lineHeight: 1.7, color: '#6b6157', margin: 0, padding: '0 24px 22px' }}>{item.a}</p>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* РЕКВИЗИТЫ */}
+      <section className="fh-section-pad" style={{ padding: '0 32px 80px' }}>
+        <div style={{ ...wrap, paddingTop: 28, borderTop: '1px solid rgba(43,38,32,0.1)' }}>
+          <div style={{ fontSize: 12, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#9a8c74', marginBottom: 8 }}>Реквизиты</div>
+          <p style={{ fontSize: 13.5, color: '#8a7a5f', margin: 0, lineHeight: 1.7 }}>
+            {legal.company} · ИНН {legal.inn} · ОГРН {legal.ogrn}
+          </p>
         </div>
       </section>
     </>

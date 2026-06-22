@@ -132,11 +132,18 @@
   }
 }
 
-/* RESPONSIVE */
+/* RESPONSIVE — на телефоне поп-ап превращается в «шторку» снизу
+   (bottom sheet) с выезжающей анимацией: привычный мобильный паттерн. */
 @media (max-width: 700px) {
   .fh-popup-container {
-    width: 95%;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
     max-width: none;
+    border-radius: 18px 18px 0 0;
+    animation: fh-popup-sheet-up 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
   }
 
   .fh-popup-content {
@@ -145,10 +152,46 @@
   }
 
   .fh-popup-visual {
-    min-height: 200px;
+    min-height: 160px;
+  }
+
+  /* Маленький «хват» сверху, как у нативных шторок */
+  .fh-popup-container::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.55);
+    z-index: 1002;
   }
 
   .fh-popup-text {
     padding: 24px;
+  }
+}
+
+@keyframes fh-popup-sheet-up {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fh-popup-overlay,
+  .fh-popup-container,
+  .fh-popup-badge,
+  .fh-popup-text,
+  .fh-popup-close {
+    animation: none !important;
+    transition: none !important;
   }
 }
