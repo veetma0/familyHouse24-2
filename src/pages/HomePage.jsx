@@ -3,12 +3,14 @@ import BookingBar from '../components/BookingBar'
 import TimedPromoPopup from '../components/TimedPromoPopup'
 import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import { reasons, statsItems, reviews, cottages, mapEmbedUrl, experience, contact } from '../data/siteData'
-import { wrap, kicker, kickerGold, h2, plhMono, photoPlh } from '../data/styles'
+import { reasons, statsItems, reviews, cottages, mapEmbedUrl, experience, contact, dining, fishingImages } from '../data/siteData'
+import { wrap, kicker, kickerGold, h2, photoPlh } from '../data/styles'
 
 function HomeContent() {
   const { openBooking, onNav } = useShell()
   const homeCottages = cottages.slice(0, 3)
+  const heroImage = '/images/old-site/activities/extra-19019454.jpg'
+  const aboutImage = '/images/old-site/activities/g-25758067.jpg'
   useScrollReveal()
 
   return (
@@ -26,12 +28,7 @@ function HomeContent() {
           background: '#221d18',
         }}
       >
-        <div style={{ position: 'absolute', inset: 0, background: 'repeating-linear-gradient(125deg, #2a241d, #2a241d 22px, #25201a 22px, #25201a 44px)' }} />
-        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <span style={{ fontFamily: 'monospace', fontSize: 13, letterSpacing: '0.1em', color: 'rgba(231,221,200,0.32)' }}>
-            фото на всю ширину · рассвет на воде, дом и причал
-          </span>
-        </div>
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(34,29,24,0.45) 0%, rgba(34,29,24,0.2) 40%, rgba(34,29,24,0.86) 100%)' }} />
         <div className="fh-section-pad" style={{ position: 'relative', ...wrap, width: '100%', padding: '0 32px 80px' }}>
           <div style={{ maxWidth: 720, animation: 'fh-fade-up 0.8s ease both' }}>
@@ -86,9 +83,18 @@ function HomeContent() {
                 Как добраться →
               </button>
             </div>
-            <div data-reveal data-reveal-stagger="off" style={{ aspectRatio: '4 / 5', borderRadius: 4, background: photoPlh('#e4d8c2', '#ddcfb4'), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={plhMono}>фото · дом у воды на закате</span>
-            </div>
+            <div
+              data-reveal
+              data-reveal-stagger="off"
+              style={{
+                aspectRatio: '4 / 5',
+                borderRadius: 4,
+                background: '#e4d8c2',
+                backgroundImage: `url(${aboutImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+            />
           </div>
         </div>
       </section>
@@ -125,8 +131,20 @@ function HomeContent() {
           <div className="fh-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28 }}>
             {homeCottages.map((c) => (
               <div key={c.id} data-reveal className="fh-card-hover" style={{ background: '#faf6ee', borderRadius: 6, overflow: 'hidden', border: '1px solid rgba(43,38,32,0.08)', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ position: 'relative', aspectRatio: '3 / 2', background: photoPlh('#e4d8c2', '#ddcfb4', 11), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#8a7a5f' }}>{c.plh}</span>
+                <div
+                  style={{
+                    position: 'relative',
+                    aspectRatio: '3 / 2',
+                    background: c.image ? '#e4d8c2' : photoPlh('#e4d8c2', '#ddcfb4', 11),
+                    backgroundImage: c.image ? `url(${c.image})` : undefined,
+                    backgroundSize: c.image ? 'cover' : undefined,
+                    backgroundPosition: c.image ? 'center' : undefined,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  {!c.image && <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#8a7a5f' }}>{c.plh}</span>}
                   <span style={{ position: 'absolute', top: 14, left: 14, background: 'rgba(34,29,24,0.85)', color: '#e7ddc8', fontSize: 11, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '6px 12px', borderRadius: 999 }}>{c.tag}</span>
                 </div>
                 <div style={{ padding: '24px 24px 26px', display: 'flex', flexDirection: 'column', flex: 1 }}>
@@ -175,9 +193,18 @@ function HomeContent() {
       {/* ===== ПИТАНИЕ (тизер) ===== */}
       <section className="fh-section-pad" style={{ padding: '0 32px 120px' }}>
         <div className="fh-directions" style={{ ...wrap, background: '#2b2620', borderRadius: 8, overflow: 'hidden', display: 'grid', gridTemplateColumns: '1fr 1.1fr' }}>
-          <div style={{ minHeight: 280, background: photoPlh('#3a342b', '#332e26'), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(231,221,200,0.5)' }}>фото · домашняя кухня, уха и рыба</span>
-          </div>
+          <div
+            style={{
+              minHeight: 280,
+              background: dining.image ? '#3a342b' : photoPlh('#3a342b', '#332e26'),
+              backgroundImage: dining.image ? `url(${dining.image})` : undefined,
+              backgroundSize: dining.image ? 'cover' : undefined,
+              backgroundPosition: dining.image ? 'center' : undefined,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          />
           <div className="fh-directions-text" style={{ padding: '56px 56px' }}>
             <span style={kickerGold}>Питание</span>
             <h2 style={{ ...h2, fontSize: 'clamp(28px, 3.2vw, 42px)', color: '#f6efe1', margin: '16px 0 0' }}>Домашняя кухня и ваш улов</h2>
@@ -200,18 +227,30 @@ function HomeContent() {
           </div>
           <div className="fh-seasons" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28 }}>
             <div data-reveal style={{ border: '1px solid rgba(231,221,200,0.16)', borderRadius: 6, overflow: 'hidden' }}>
-              <div style={{ aspectRatio: '16 / 8', background: photoPlh('#3a4a3f', '#34433a'), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(231,221,200,0.5)' }}>фото · летняя рыбалка с катера</span>
-              </div>
+              <div
+                style={{
+                  aspectRatio: '16 / 8',
+                  background: fishingImages.summer ? '#3a4a3f' : photoPlh('#3a4a3f', '#34433a'),
+                  backgroundImage: fishingImages.summer ? `url(${fishingImages.summer})` : undefined,
+                  backgroundSize: fishingImages.summer ? 'cover' : undefined,
+                  backgroundPosition: fishingImages.summer ? 'center' : undefined,
+                }}
+              />
               <div style={{ padding: 32 }}>
                 <h3 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 28, color: '#f6efe1', margin: 0 }}>Лето на воде</h3>
                 <p style={{ fontSize: 15, lineHeight: 1.7, color: '#b3a68e', margin: '12px 0 0' }}>Утренняя зорька в тихой заводи, троллинг и спиннинг с катера, азартная ночная ловля налима. Судак и щука сами просятся в садок.</p>
               </div>
             </div>
             <div data-reveal style={{ border: '1px solid rgba(231,221,200,0.16)', borderRadius: 6, overflow: 'hidden' }}>
-              <div style={{ aspectRatio: '16 / 8', background: photoPlh('#44505a', '#3d4951'), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(231,221,200,0.5)' }}>фото · зимняя подлёдная рыбалка</span>
-              </div>
+              <div
+                style={{
+                  aspectRatio: '16 / 8',
+                  background: fishingImages.winter ? '#44505a' : photoPlh('#44505a', '#3d4951'),
+                  backgroundImage: fishingImages.winter ? `url(${fishingImages.winter})` : undefined,
+                  backgroundSize: fishingImages.winter ? 'cover' : undefined,
+                  backgroundPosition: fishingImages.winter ? 'center' : undefined,
+                }}
+              />
               <div style={{ padding: 32 }}>
                 <h3 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 28, color: '#f6efe1', margin: 0 }}>Зима подо льдом</h3>
                 <p style={{ fontSize: 15, lineHeight: 1.7, color: '#b3a68e', margin: '12px 0 0' }}>Снегоход домчит к дальним лункам, егерь покажет уловистые точки. Подлёдный судак, жерлицы на щуку — а вечером тёплый дом и жаркая баня.</p>

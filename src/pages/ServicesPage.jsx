@@ -42,8 +42,22 @@ function ServicesContent() {
             </div>
             <p style={{ fontSize: 14, color: '#9a8c74', margin: '20px 0 0', lineHeight: 1.6 }}>{dining.note}</p>
           </div>
-          <div data-reveal data-reveal-stagger="off" style={{ aspectRatio: '4 / 5', borderRadius: 6, background: photoPlh('#e4d8c2', '#ddcfb4'), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <span style={{ fontFamily: 'monospace', fontSize: 12, color: '#8a7a5f' }}>{dining.plh}</span>
+          <div
+            data-reveal
+            data-reveal-stagger="off"
+            style={{
+              aspectRatio: '4 / 5',
+              borderRadius: 6,
+              background: dining.image ? '#e4d8c2' : photoPlh('#e4d8c2', '#ddcfb4'),
+              backgroundImage: dining.image ? `url(${dining.image})` : undefined,
+              backgroundSize: dining.image ? 'cover' : undefined,
+              backgroundPosition: dining.image ? 'center' : undefined,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            {!dining.image && <span style={{ fontFamily: 'monospace', fontSize: 12, color: '#8a7a5f' }}>{dining.plh}</span>}
           </div>
         </div>
       </section>

@@ -39,6 +39,7 @@ export const cottages = [
     beds: '4 спальни · 290 м²',
     extra: 'Каминный зал, зимний сад, гараж 25 м²',
     price: '12 750',
+    image: '/images/houses/american-house.png',
     features: ['Каминный зал', 'Зимний сад', '3 санузла', 'Гараж 25 м²'],
     plh: 'фото · Американский дом',
   },
@@ -50,6 +51,7 @@ export const cottages = [
     beds: '4 спальни · 180 м²',
     extra: 'Сруб из карельской сосны, 2 балкона',
     price: '12 750',
+    image: '/images/houses/hunting-house.png',
     features: ['Сруб', '2 балкона', 'Кухня', '2 санузла'],
     plh: 'фото · Охотничий дом',
   },
@@ -61,6 +63,7 @@ export const cottages = [
     beds: '2 спальни · 120 м²',
     extra: 'Сруб карельской сосны, балкон',
     price: '11 050',
+    image: '/images/houses/scandi-house.png',
     features: ['Сруб', 'Балкон', 'Кухня', 'Wi-Fi'],
     plh: 'фото · Скандинавский дом',
   },
@@ -72,6 +75,7 @@ export const cottages = [
     beds: '310 м² · европейский стиль',
     extra: '2 люкса, 3 стандарта, винный погреб',
     price: '3 400',
+    image: '/images/houses/guest-house.png',
     features: ['Игровая 100 м²', 'Обеденная зона 50 м²', 'Винный погреб', 'Wi-Fi'],
     plh: 'фото · Гостевой дом',
   },
@@ -87,6 +91,7 @@ export const guestHouseRooms = [
     bath: '2 общих санузла на этаже',
     price: '3 400',
     note: 'Уютный номер в европейском стиле',
+    image: '/images/old-site/rooms/room-25758005.jpg',
     plh: 'фото · номер Стандарт',
   },
   {
@@ -97,6 +102,7 @@ export const guestHouseRooms = [
     bath: 'Собственный санузел',
     price: '4 250',
     note: 'Повышенный комфорт и уединение',
+    image: '/images/old-site/rooms/room-25758011.jpg',
     plh: 'фото · номер Люкс',
   },
   {
@@ -107,6 +113,7 @@ export const guestHouseRooms = [
     bath: 'Игровая 100 м², обеденная зона 50 м², винный погреб',
     price: 'по запросу',
     note: 'Идеально для большой компании или события',
+    image: '/images/old-site/activities/extra-25757931.jpg',
     plh: 'фото · гостиная Гостевого дома',
   },
 ]
@@ -125,6 +132,7 @@ export const banya = {
     { t: 'Простыня', d: '100 ₽' },
     { t: 'Полотенце', d: '100 ₽' },
   ],
+  image: '/images/old-site/activities/extra-19018927.jpg',
   plh: 'фото · русская баня, парилка и каминный зал',
 }
 
@@ -192,6 +200,11 @@ export const winter = [
   'Зимний фидер на леща',
   'Выезды на снегоходах к дальним точкам',
 ]
+
+export const fishingImages = {
+  summer: '/images/old-site/activities/fishing-25757752.jpg',
+  winter: '/images/old-site/activities/g-25761308.jpg',
+}
 
 // Техника и прокат (используется на /fishing и /services).
 export const techFleet = [
@@ -267,6 +280,7 @@ export const dining = {
     { t: 'Обед', d: '13:00', price: 'от 500 ₽' },
     { t: 'Ужин', d: '18:00', price: 'от 500 ₽' },
   ],
+  image: '/images/old-site/activities/extra-19014933.jpg',
   note: 'Чтобы всё было свежим и горячим, скажите о завтраке, обеде или ужине заранее — лучше накануне вечером.',
   plh: 'фото · домашняя кухня, уха и рыба',
 }

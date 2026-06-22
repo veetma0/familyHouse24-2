@@ -28,8 +28,20 @@ function CottagesContent() {
         <div className="fh-grid-2" style={{ ...wrap, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 32 }}>
           {cottages.map((c) => (
             <div key={c.id} data-reveal className="fh-card-hover" style={{ background: '#faf6ee', borderRadius: 6, overflow: 'hidden', border: '1px solid rgba(43,38,32,0.08)', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ position: 'relative', aspectRatio: '16 / 9', background: photoPlh('#e4d8c2', '#ddcfb4'), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#8a7a5f' }}>{c.plh}</span>
+              <div
+                style={{
+                  position: 'relative',
+                  aspectRatio: '16 / 9',
+                  background: c.image ? '#e4d8c2' : photoPlh('#e4d8c2', '#ddcfb4'),
+                  backgroundImage: c.image ? `url(${c.image})` : undefined,
+                  backgroundSize: c.image ? 'cover' : undefined,
+                  backgroundPosition: c.image ? 'center' : undefined,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                {!c.image && <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#8a7a5f' }}>{c.plh}</span>}
                 <span style={{ position: 'absolute', top: 16, left: 16, background: 'rgba(34,29,24,0.85)', color: '#e7ddc8', fontSize: 11, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '6px 12px', borderRadius: 999 }}>{c.tag}</span>
               </div>
               <div style={{ padding: '28px 28px 30px', display: 'flex', flexDirection: 'column', flex: 1 }}>
@@ -68,8 +80,19 @@ function CottagesContent() {
           <div className="fh-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28 }}>
             {guestHouseRooms.map((r) => (
               <div key={r.id} data-reveal className="fh-card-hover" style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.08)', borderRadius: 6, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ aspectRatio: '16 / 10', background: photoPlh('#e4d8c2', '#ddcfb4', 11), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#8a7a5f' }}>{r.plh}</span>
+                <div
+                  style={{
+                    aspectRatio: '16 / 10',
+                    background: r.image ? '#e4d8c2' : photoPlh('#e4d8c2', '#ddcfb4', 11),
+                    backgroundImage: r.image ? `url(${r.image})` : undefined,
+                    backgroundSize: r.image ? 'cover' : undefined,
+                    backgroundPosition: r.image ? 'center' : undefined,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  {!r.image && <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#8a7a5f' }}>{r.plh}</span>}
                 </div>
                 <div style={{ padding: '24px 26px 26px', display: 'flex', flexDirection: 'column', flex: 1 }}>
                   <h3 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 24, color: '#2b2620', margin: 0 }}>{r.name}</h3>
@@ -96,8 +119,19 @@ function CottagesContent() {
       {/* РУССКАЯ БАНЯ */}
       <section className="fh-section-pad" style={{ padding: '56px 32px 40px' }}>
         <div className="fh-directions" style={{ ...wrap, background: '#221d18', borderRadius: 8, overflow: 'hidden', display: 'grid', gridTemplateColumns: '1fr 1.05fr' }}>
-          <div style={{ minHeight: 360, background: photoPlh('#3a342b', '#332e26'), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(231,221,200,0.5)', textAlign: 'center', padding: '0 16px' }}>{banya.plh}</span>
+          <div
+            style={{
+              minHeight: 360,
+              background: banya.image ? '#3a342b' : photoPlh('#3a342b', '#332e26'),
+              backgroundImage: banya.image ? `url(${banya.image})` : undefined,
+              backgroundSize: banya.image ? 'cover' : undefined,
+              backgroundPosition: banya.image ? 'center' : undefined,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            {!banya.image && <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(231,221,200,0.5)', textAlign: 'center', padding: '0 16px' }}>{banya.plh}</span>}
           </div>
           <div className="fh-directions-text" style={{ padding: '56px 56px' }}>
             <span style={kickerGold}>Баня</span>

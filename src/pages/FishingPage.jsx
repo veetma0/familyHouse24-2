@@ -1,7 +1,7 @@
 import SiteShell from '../components/SiteShell'
 import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import { summer, winter, techFleet, catchSpecies, fishingServices, excursions } from '../data/siteData'
+import { summer, winter, techFleet, catchSpecies, fishingServices, excursions, fishingImages } from '../data/siteData'
 import { wrap, kicker, kickerGold, h2, photoPlh } from '../data/styles'
 
 function FishingContent() {
@@ -28,9 +28,15 @@ function FishingContent() {
       <section className="fh-section-pad" style={{ padding: '100px 32px' }}>
         <div className="fh-fishing-cols" style={{ ...wrap, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28 }}>
           <div data-reveal style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.08)', borderRadius: 6, overflow: 'hidden' }}>
-            <div style={{ aspectRatio: '16 / 8', backgroundImage: photoPlh('#ddcfb4', '#d3c4a6'), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ fontFamily: 'monospace', fontSize: 12, color: '#8a7a5f' }}>фото · лето, катер, трофей</span>
-            </div>
+            <div
+              style={{
+                aspectRatio: '16 / 8',
+                background: fishingImages.summer ? '#ddcfb4' : photoPlh('#ddcfb4', '#d3c4a6'),
+                backgroundImage: fishingImages.summer ? `url(${fishingImages.summer})` : undefined,
+                backgroundSize: fishingImages.summer ? 'cover' : undefined,
+                backgroundPosition: fishingImages.summer ? 'center' : undefined,
+              }}
+            />
             <div style={{ padding: 36 }}>
               <span style={{ fontSize: 12, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#b8762e', fontWeight: 600 }}>Тёплый сезон</span>
               <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 30, color: '#2b2620', margin: '12px 0 18px' }}>Летняя рыбалка</h2>
@@ -45,9 +51,15 @@ function FishingContent() {
             </div>
           </div>
           <div data-reveal style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.08)', borderRadius: 6, overflow: 'hidden' }}>
-            <div style={{ aspectRatio: '16 / 8', backgroundImage: photoPlh('#dfe3e6', '#d2d8dc'), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span style={{ fontFamily: 'monospace', fontSize: 12, color: '#7e8890' }}>фото · зима, лунки, снегоход</span>
-            </div>
+            <div
+              style={{
+                aspectRatio: '16 / 8',
+                background: fishingImages.winter ? '#dfe3e6' : photoPlh('#dfe3e6', '#d2d8dc'),
+                backgroundImage: fishingImages.winter ? `url(${fishingImages.winter})` : undefined,
+                backgroundSize: fishingImages.winter ? 'cover' : undefined,
+                backgroundPosition: fishingImages.winter ? 'center' : undefined,
+              }}
+            />
             <div style={{ padding: 36 }}>
               <span style={{ fontSize: 12, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#5b7d99', fontWeight: 600 }}>Холодный сезон</span>
               <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 30, color: '#2b2620', margin: '12px 0 18px' }}>Зимняя рыбалка</h2>
