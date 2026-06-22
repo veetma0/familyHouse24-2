@@ -1,11 +1,12 @@
 import SiteShell from '../components/SiteShell'
 import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import { cottages, cottageAmenities, guestHouseRooms, banya } from '../data/siteData'
+import { cottages, cottageAmenities, guestHouseRooms, banya, priceList } from '../data/siteData'
 import { wrap, kicker, kickerGold, h2, photoPlh } from '../data/styles'
 
 function CottagesContent() {
   const { openBooking } = useShell()
+  const accommodationExtras = priceList.find((group) => group.group === 'Проживание — дополнительно')?.items ?? []
   useScrollReveal()
 
   return (
@@ -67,6 +68,22 @@ function CottagesContent() {
             </div>
           ))}
         </div>
+        {accommodationExtras.length > 0 && (
+          <div style={{ ...wrap, marginTop: 24 }}>
+            <div style={{ background: '#faf6ee', borderRadius: 6, border: '1px solid rgba(43,38,32,0.08)', padding: '20px 24px' }}>
+              <div style={{ fontSize: 12, color: '#9a8c74', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 700 }}>
+                Доп. услуги размещения
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 18, marginTop: 10 }}>
+                {accommodationExtras.map((item) => (
+                  <span key={item.t} style={{ fontSize: 14.5, color: '#4a4339' }}>
+                    {item.t}: <strong>{item.price}</strong>
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* ГОСТЕВОЙ ДОМ — ВАРИАНТЫ РАЗМЕЩЕНИЯ */}

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import SiteShell from '../components/SiteShell'
 import BookingBar from '../components/BookingBar'
 import TimedPromoPopup from '../components/TimedPromoPopup'
@@ -8,6 +9,7 @@ import { wrap, kicker, kickerGold, h2, photoPlh } from '../data/styles'
 
 function HomeContent() {
   const { openBooking, onNav } = useShell()
+  const [hoveredCottageId, setHoveredCottageId] = useState('')
   const homeCottages = cottages.slice(0, 3)
   const heroImage = '/images/old-site/activities/extra-19019454.jpg'
   const aboutImage = '/images/old-site/activities/g-25758067.jpg'
@@ -132,18 +134,44 @@ function HomeContent() {
             {homeCottages.map((c) => (
               <div key={c.id} data-reveal className="fh-card-hover" style={{ background: '#faf6ee', borderRadius: 6, overflow: 'hidden', border: '1px solid rgba(43,38,32,0.08)', display: 'flex', flexDirection: 'column' }}>
                 <div
+                  onMouseEnter={() => setHoveredCottageId(c.id)}
+                  onMouseLeave={() => setHoveredCottageId('')}
+                  onFocus={() => setHoveredCottageId(c.id)}
+                  onBlur={() => setHoveredCottageId('')}
                   style={{
                     position: 'relative',
                     aspectRatio: '3 / 2',
-                    background: c.image ? '#e4d8c2' : photoPlh('#e4d8c2', '#ddcfb4', 11),
-                    backgroundImage: c.image ? `url(${c.image})` : undefined,
-                    backgroundSize: c.image ? 'cover' : undefined,
-                    backgroundPosition: c.image ? 'center' : undefined,
+                    background: '#e4d8c2',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}
                 >
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: c.image ? '#e4d8c2' : photoPlh('#e4d8c2', '#ddcfb4', 11),
+                      backgroundImage: c.image ? `url(${c.image})` : undefined,
+                      backgroundSize: c.image ? 'cover' : undefined,
+                      backgroundPosition: c.image ? 'center' : undefined,
+                      transition: 'opacity 260ms ease',
+                      opacity: c.interiorImage ? (hoveredCottageId === c.id ? 0 : 1) : 1,
+                    }}
+                  />
+                  {c.interiorImage && (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        backgroundImage: `url(${c.interiorImage})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        transition: 'opacity 260ms ease',
+                        opacity: hoveredCottageId === c.id ? 1 : 0,
+                      }}
+                    />
+                  )}
                   {!c.image && <span style={{ fontFamily: 'monospace', fontSize: 11, color: '#8a7a5f' }}>{c.plh}</span>}
                   <span style={{ position: 'absolute', top: 14, left: 14, background: 'rgba(34,29,24,0.85)', color: '#e7ddc8', fontSize: 11, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '6px 12px', borderRadius: 999 }}>{c.tag}</span>
                 </div>
