@@ -140,7 +140,7 @@ function Header({ activeId, onNav, onBook, onBurger, mobileOpen }) {
           </span>
           <span style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1 }}>
             <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, color: '#2b2620', letterSpacing: '0.01em' }}>
-              Семейным дом
+              Семейный дом
             </span>
             <span style={{ fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#9a8c74' }}>
               рыболовная база · рыбинка

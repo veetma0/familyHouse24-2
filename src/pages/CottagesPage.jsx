@@ -1,12 +1,13 @@
 import SiteShell from '../components/SiteShell'
 import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import { cottages, cottageAmenities, guestHouseRooms, banya, priceList } from '../data/siteData'
+import { cottages, cottageAmenities, guestHouseRooms, priceList, rules } from '../data/siteData'
 import { wrap, kicker, kickerGold, h2, photoPlh } from '../data/styles'
 
 function CottagesContent() {
   const { openBooking } = useShell()
   const accommodationExtras = priceList.find((group) => group.group === 'Проживание — дополнительно')?.items ?? []
+  const petExtras = priceList.find((group) => group.group === 'Размещение с животными (только собаки)')?.items ?? []
   useScrollReveal()
 
   return (
@@ -133,47 +134,46 @@ function CottagesContent() {
         </div>
       </section>
 
-      {/* РУССКАЯ БАНЯ */}
-      <section className="fh-section-pad" style={{ padding: '56px 32px 40px' }}>
-        <div className="fh-directions" style={{ ...wrap, background: '#221d18', borderRadius: 8, overflow: 'hidden', display: 'grid', gridTemplateColumns: '1fr 1.05fr' }}>
-          <div
-            style={{
-              minHeight: 360,
-              background: banya.image ? '#3a342b' : photoPlh('#3a342b', '#332e26'),
-              backgroundImage: banya.image ? `url(${banya.image})` : undefined,
-              backgroundSize: banya.image ? 'cover' : undefined,
-              backgroundPosition: banya.image ? 'center' : undefined,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            {!banya.image && <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(231,221,200,0.5)', textAlign: 'center', padding: '0 16px' }}>{banya.plh}</span>}
+      {/* РАЗМЕЩЕНИЕ С СОБАКАМИ */}
+      {petExtras.length > 0 && (
+        <section className="fh-section-pad" style={{ padding: '32px 32px 24px' }}>
+          <div style={{ ...wrap, background: '#faf6ee', border: '1px solid rgba(43,38,32,0.08)', borderRadius: 8, padding: '42px 46px' }} className="fh-block-pad">
+            <span style={kicker}>Можно с питомцем</span>
+            <div className="fh-about" style={{ display: 'grid', gridTemplateColumns: '0.9fr 1.1fr', gap: 42, alignItems: 'start', marginTop: 14 }}>
+              <div>
+                <h2 style={{ ...h2, fontSize: 'clamp(28px, 3vw, 40px)', color: '#2b2620', margin: 0 }}>Размещение с собаками</h2>
+                <p style={{ fontSize: 15.5, color: '#6b6157', margin: '16px 0 0', lineHeight: 1.7 }}>
+                  Мы рады гостям с собаками. Предупредите администратора заранее, чтобы мы подобрали удобный вариант размещения и подготовили дом к приезду.
+                </p>
+              </div>
+              <div className="fh-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
+                {petExtras.map((item) => (
+                  <div key={item.t} data-reveal style={{ background: '#fff', border: '1px solid rgba(43,38,32,0.08)', borderRadius: 6, padding: '20px 18px' }}>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: '#2b2620' }}>{item.t}</div>
+                    <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 24, color: '#b8762e', marginTop: 10 }}>{item.price}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          <div className="fh-directions-text" style={{ padding: '56px 56px' }}>
-            <span style={kickerGold}>Баня</span>
-            <h2 style={{ ...h2, fontSize: 'clamp(30px, 3.4vw, 44px)', color: '#f6efe1', margin: '14px 0 0' }}>{banya.name}</h2>
-            <p style={{ fontSize: 16, lineHeight: 1.7, color: '#b3a68e', margin: '16px 0 24px' }}>
-              {banya.area} · {banya.cap}. Жаркий пар, аромат кедра и потрескивание камина — лучший способ завершить день на воде.
-            </p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 28 }}>
-              {banya.features.map((f) => (
-                <span key={f} style={{ fontSize: 13.5, color: '#e7ddc8', background: 'rgba(231,221,200,0.1)', border: '1px solid rgba(231,221,200,0.18)', padding: '7px 15px', borderRadius: 999 }}>{f}</span>
-              ))}
-            </div>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 6 }}>
-              <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 36, color: '#f6efe1' }}>{banya.price}</span>
-              <span style={{ fontSize: 15, color: '#d8b483' }}>{banya.priceUnit}</span>
-              <span style={{ fontSize: 14, color: '#8c8071' }}>· {banya.minNote}</span>
-            </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, margin: '14px 0 28px' }}>
-              {banya.extras.map((e) => (
-                <span key={e.t} style={{ fontSize: 13.5, color: '#b3a68e' }}>{e.t} — <span style={{ color: '#e7ddc8', fontWeight: 600 }}>{e.d}</span></span>
-              ))}
-            </div>
-            <button type="button" onClick={() => openBooking('Русская баня')} className="fh-btn-primary" style={{ background: '#b8762e', color: '#fff', border: 'none', cursor: 'pointer', fontSize: 15, fontWeight: 600, padding: '14px 30px', borderRadius: 999 }}>
-              Забронировать баню
-            </button>
+        </section>
+      )}
+
+      {/* ПРАВИЛА */}
+      <section className="fh-section-pad" style={{ padding: '0 32px 40px' }}>
+        <div style={{ ...wrap, background: '#faf6ee', border: '1px solid rgba(43,38,32,0.08)', borderRadius: 8, padding: '44px 48px' }} className="fh-block-pad">
+          <span style={kicker}>Чтобы всё прошло гладко</span>
+          <h2 style={{ ...h2, fontSize: 'clamp(28px, 3vw, 40px)', color: '#2b2620', margin: '16px 0 32px' }}>Несколько простых моментов</h2>
+          <div className="fh-grid-2" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px 48px' }}>
+            {rules.map((r) => (
+              <div key={r.t} data-reveal style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+                <span style={{ color: '#b8762e', fontWeight: 700, flex: 'none', marginTop: 1 }}>—</span>
+                <div>
+                  <h4 style={{ fontSize: 16, fontWeight: 700, color: '#2b2620', margin: '0 0 4px' }}>{r.t}</h4>
+                  <p style={{ fontSize: 14.5, color: '#6b6157', margin: 0, lineHeight: 1.6 }}>{r.d}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

@@ -387,8 +387,8 @@ export const experience = [
   { t: 'Русская баня', d: 'Жаркий пар на кедре и каминный зал — лучший финал дня.', path: '/cottages' },
   { t: 'Домашняя кухня', d: 'Трёхразовый стол по-домашнему и уха из вашего улова.', path: '/services' },
   { t: 'Катера и техника', d: 'Silver Shark, лодки, снегоходы и велосипеды наготове.', path: '/fishing' },
-  { t: 'Время для своих', d: 'Бильярд, батуты для детей, спорт и прогулки по бору.', path: '/services' },
-  { t: 'Прогулки по воде', d: 'Затонувшая деревня, старый шлюз и тихие храмы.', path: '/fishing' },
+  { t: 'Время для своих', d: 'Бильярд, батуты для детей, спорт и прогулки по бору.', path: '/entertainment' },
+  { t: 'Прогулки по воде', d: 'Затонувшая деревня, старый шлюз и тихие храмы.', path: '/entertainment' },
 ]
 
 export const cottageAmenities = [
@@ -402,7 +402,9 @@ export const navigationItems = [
   { id: 'home', label: 'Главная', path: '/' },
   { id: 'cottages', label: 'Размещение', path: '/cottages' },
   { id: 'fishing', label: 'Рыбалка', path: '/fishing' },
-  { id: 'services', label: 'Услуги', path: '/services' },
+  { id: 'banya', label: 'Баня', path: '/banya' },
+  { id: 'dining', label: 'Питание', path: '/dining' },
+  { id: 'entertainment', label: 'Развлечения', path: '/entertainment' },
   { id: 'booking', label: 'Бронирование', path: '/booking' },
   { id: 'contacts', label: 'Контакты', path: '/contacts' },
 ]

@@ -239,8 +239,8 @@ function HomeContent() {
             <p style={{ fontSize: 16, lineHeight: 1.75, color: '#b3a68e', margin: '18px 0 0' }}>
               Трёхразовое питание на основе традиционной домашней кухни: свежие продукты из подсобного хозяйства, рыба из Рыбинского водохранилища. Приготовим даже пойманный вами трофей.
             </p>
-            <button type="button" onClick={() => onNav('/services')} className="fh-btn-primary" style={{ marginTop: 28, background: '#b8762e', color: '#fff', border: 'none', cursor: 'pointer', fontSize: 15, fontWeight: 600, padding: '14px 28px', borderRadius: 999 }}>
-              Питание и услуги →
+            <button type="button" onClick={() => onNav('/dining')} className="fh-btn-primary" style={{ marginTop: 28, background: '#b8762e', color: '#fff', border: 'none', cursor: 'pointer', fontSize: 15, fontWeight: 600, padding: '14px 28px', borderRadius: 999 }}>
+              Подробнее о питании →
             </button>
           </div>
         </div>
