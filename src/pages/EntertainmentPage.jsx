@@ -8,7 +8,7 @@ const entertainmentCards = [
   {
     title: 'Детская площадка с батутами',
     text: 'Детям есть где выплеснуть энергию, пока взрослые отдыхают у дома, готовят ужин или собираются на воду.',
-    image: '/images/old-site/activities/g-25758067.jpg',
+    image: '/images/custom/entertainment-playground.png',
     label: 'Для детей',
   },
   {
@@ -20,13 +20,13 @@ const entertainmentCards = [
   {
     title: 'Грибы и ягоды',
     text: 'Окрестные леса подходят для спокойных прогулок с корзинкой: воздух, тишина и настоящая загородная пауза.',
-    image: '/images/old-site/activities/extra-19019454.jpg',
+    image: '/images/custom/entertainment-mushrooms.png',
     label: 'Лес рядом',
   },
   {
     title: 'Русский бильярд',
     text: 'Партия-другая под вечер, когда рыбалка закончилась, баня уже натоплена, а компания не хочет расходиться.',
-    image: '/images/old-site/houses/house-25757992.jpg',
+    image: '/images/custom/entertainment-billiards.png',
     label: 'Вечер',
   },
   {
@@ -38,7 +38,7 @@ const entertainmentCards = [
   {
     title: 'Прогулки по бору',
     text: 'Маршруты вдоль воды и леса: выйти без спешки, подышать соснами и вернуться к камину.',
-    image: '/images/old-site/activities/extra-25758076.jpg',
+    image: '/images/custom/entertainment-forest-walk.png',
     label: 'Прогулки',
   },
 ]

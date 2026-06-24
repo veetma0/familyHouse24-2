@@ -12,7 +12,7 @@ function HomeContent() {
   const [hoveredCottageId, setHoveredCottageId] = useState('')
   const homeCottages = cottages.slice(0, 3)
   const heroImage = '/images/old-site/activities/extra-19019454.jpg'
-  const aboutImage = '/images/old-site/activities/g-25758067.jpg'
+  const aboutImage = '/images/custom/home-return-place.png'
   useScrollReveal()
 
   return (
@@ -30,7 +30,7 @@ function HomeContent() {
           background: '#221d18',
         }}
       >
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center 38%' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(34,29,24,0.45) 0%, rgba(34,29,24,0.2) 40%, rgba(34,29,24,0.86) 100%)' }} />
         <div className="fh-section-pad" style={{ position: 'relative', ...wrap, width: '100%', padding: '0 32px 80px' }}>
           <div style={{ maxWidth: 720, animation: 'fh-fade-up 0.8s ease both' }}>

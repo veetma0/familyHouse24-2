@@ -2,16 +2,17 @@ import SiteShell from '../components/SiteShell'
 import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import { banya, rules } from '../data/siteData'
-import { wrap, kicker, kickerGold, h2, photoPlh } from '../data/styles'
+import { wrap, kicker, kickerGold, h2 } from '../data/styles'
 
 function BanyaContent() {
-  const { openBooking, onNav } = useShell()
+  const { onNav } = useShell()
+  const banyaImage = '/images/custom/banya-steam-room.png'
   useScrollReveal()
 
   return (
     <>
       <section className="fh-section-pad" style={{ position: 'relative', background: '#221d18', padding: '80px 32px 72px', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${banya.image})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.38 }} />
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${banyaImage})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.38 }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(34,29,24,0.92), rgba(34,29,24,0.62))' }} />
         <div style={{ position: 'relative', ...wrap }}>
           <span style={kickerGold}>Баня</span>
@@ -29,10 +30,10 @@ function BanyaContent() {
           <div
             style={{
               minHeight: 420,
-              background: banya.image ? '#3a342b' : photoPlh('#3a342b', '#332e26'),
-              backgroundImage: banya.image ? `url(${banya.image})` : undefined,
-              backgroundSize: banya.image ? 'cover' : undefined,
-              backgroundPosition: banya.image ? 'center' : undefined,
+              background: '#3a342b',
+              backgroundImage: `url(${banyaImage})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
             }}
           />
           <div className="fh-directions-text" style={{ padding: '58px 56px' }}>
@@ -51,9 +52,9 @@ function BanyaContent() {
               <span style={{ fontSize: 15, color: '#d8b483' }}>{banya.priceUnit}</span>
               <span style={{ fontSize: 14, color: '#8c8071' }}>· {banya.minNote}</span>
             </div>
-            <button type="button" onClick={() => openBooking('Русская баня')} className="fh-btn-primary" style={{ marginTop: 28, background: '#b8762e', color: '#fff', border: 'none', cursor: 'pointer', fontSize: 15, fontWeight: 600, padding: '14px 30px', borderRadius: 999 }}>
-              Забронировать баню
-            </button>
+            <div style={{ marginTop: 28, display: 'inline-flex', alignItems: 'center', background: 'rgba(216,180,131,0.12)', border: '1px solid rgba(216,180,131,0.28)', color: '#d8b483', fontSize: 15, fontWeight: 700, padding: '13px 22px', borderRadius: 999 }}>
+              Уточняйте у администрации
+            </div>
           </div>
         </div>
       </section>

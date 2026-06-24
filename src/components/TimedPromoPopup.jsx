@@ -43,9 +43,7 @@ function TimedPromoPopup({ onClose }) {
         <div className="fh-popup-content">
           {/* Left side - Image */}
           <div className="fh-popup-visual">
-            <div className="fh-popup-image">
-              <span style={{ color: 'rgba(231,221,200,0.6)' }}>фото · закат на воде</span>
-            </div>
+            <div className="fh-popup-image" />
             {/* Badge */}
             <div className="fh-popup-badge">
               <span style={{ fontSize: 11, fontWeight: 700, color: '#fff', letterSpacing: '0.1em' }}>✓ Уже разобрали</span>
