@@ -2,6 +2,11 @@
 // Источники: система бронирования Bnovo (цены домов) + основной сайт
 // family-house24.ru (баня, техника, питание, услуги, прайс, правила).
 
+export const siteLogos = {
+  header: '/images/logo/logo-header.png',
+  icon: '/images/logo/logo-icon.png',
+}
+
 // ── Контакты базы (единый источник для формы, мессенджеров, футера) ──
 // Телефон в международном формате без + и пробелов — для ссылок wa.me / tel.
 export const contact = {

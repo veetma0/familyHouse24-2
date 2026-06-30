@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { navigationItems, contact, legal } from '../data/siteData'
+import { navigationItems, contact, legal, siteLogos } from '../data/siteData'
 import { dateOffset } from '../utils/dates'
 import { ShellContext } from './shellContext'
 
@@ -113,7 +113,6 @@ function Header({ activeId, onNav, onBook, onBurger, mobileOpen }) {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 12,
             background: 'none',
             border: 'none',
             cursor: 'pointer',
@@ -121,31 +120,11 @@ function Header({ activeId, onNav, onBook, onBurger, mobileOpen }) {
             textAlign: 'left',
           }}
         >
-          <span
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: '50%',
-              background: '#2b2620',
-              color: '#e7ddc8',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 18,
-              flex: 'none',
-            }}
-          >
-            F
-          </span>
-          <span style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1 }}>
-            <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 20, color: '#2b2620', letterSpacing: '0.01em' }}>
-              Семейный дом
-            </span>
-            <span style={{ fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#9a8c74' }}>
-              рыболовная база · рыбинка
-            </span>
-          </span>
+          <img
+            src={siteLogos.header}
+            alt="Family House"
+            style={{ height: 46, width: 'auto', display: 'block' }}
+          />
         </button>
 
         <nav className="fh-desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
@@ -259,22 +238,12 @@ function Footer({ onNav }) {
         >
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <span
-                style={{
-                  width: 38,
-                  height: 38,
-                  borderRadius: '50%',
-                  background: '#b8762e',
-                  color: '#fff',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: 18,
-                }}
-              >
-                F
-              </span>
+              <img
+                src={siteLogos.icon}
+                alt=""
+                aria-hidden="true"
+                style={{ height: 42, width: 'auto', display: 'block', flex: 'none' }}
+              />
               <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: '#f6efe1' }}>Family House</span>
             </div>
             <p style={{ fontSize: 14.5, lineHeight: 1.7, color: '#8c8071', margin: '18px 0 0', maxWidth: 320 }}>
