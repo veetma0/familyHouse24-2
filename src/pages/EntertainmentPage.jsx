@@ -49,15 +49,13 @@ function EntertainmentContent() {
 
   return (
     <>
-      <section className="fh-section-pad" style={{ position: 'relative', background: '#221d18', padding: '80px 32px 72px', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: "url('/images/old-site/activities/g-25758067.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.34 }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(34,29,24,0.94), rgba(34,29,24,0.58))' }} />
-        <div style={{ position: 'relative', ...wrap }}>
+      <section className="fh-section-pad" style={{ background: '#221d18', padding: '80px 32px 72px' }}>
+        <div style={wrap}>
           <span style={kickerGold}>Развлечения</span>
           <h1 className="fh-h1" style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400, fontSize: 'clamp(40px, 5vw, 64px)', color: '#f6efe1', margin: '16px 0 0', letterSpacing: '-0.015em' }}>
             Чем заняться на базе
           </h1>
-          <p style={{ fontSize: 18, lineHeight: 1.7, color: 'rgba(243,237,224,0.8)', margin: '18px 0 0', maxWidth: 650 }}>
+          <p style={{ fontSize: 18, lineHeight: 1.7, color: 'rgba(243,237,224,0.78)', margin: '18px 0 0', maxWidth: 650 }}>
             Family House — это не только рыбалка. Здесь есть отдых для детей, игры для компании, прогулки по лесу, спорт и тихие вечера у воды.
           </p>
         </div>
@@ -104,9 +102,9 @@ function EntertainmentContent() {
         <div style={wrap}>
           <span style={kickerGold}>Прогулки с воды</span>
           <h2 style={{ ...h2, fontSize: 'clamp(32px, 3.6vw, 46px)', color: '#f6efe1', margin: '16px 0 42px' }}>Можно съездить к местам рядом</h2>
-          <div className="fh-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'rgba(231,221,200,0.14)', border: '1px solid rgba(231,221,200,0.14)', borderRadius: 4, overflow: 'hidden' }}>
-            {excursions.map((item) => (
-              <div key={item.t} data-reveal style={{ background: '#2b2620', padding: '30px 26px' }}>
+          <div className="fh-water-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 20 }}>
+            {excursions.map((item, idx) => (
+              <div key={item.t} data-reveal className={`fh-water-card fh-water-card-${idx}`} style={{ background: 'rgba(246,239,225,0.06)', border: '1px solid rgba(231,221,200,0.14)', borderRadius: 8, padding: '30px 26px' }}>
                 <h3 style={{ fontSize: 18, fontWeight: 700, color: '#f6efe1', margin: '0 0 10px' }}>{item.t}</h3>
                 <p style={{ fontSize: 14.5, lineHeight: 1.6, color: '#b3a68e', margin: 0 }}>{item.d}</p>
               </div>

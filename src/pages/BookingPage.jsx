@@ -44,11 +44,9 @@ function BookingContent() {
       {/* ===== ОБЛОЖКА СТРАНИЦЫ ===== */}
       <section
         className="fh-section-pad"
-        style={{ position: 'relative', background: '#221d18', padding: '72px 32px 64px', overflow: 'hidden' }}
+        style={{ background: '#221d18', padding: '80px 32px 72px' }}
       >
-        <div style={{ position: 'absolute', inset: 0, background: 'repeating-linear-gradient(125deg, #2a241d, #2a241d 22px, #25201a 22px, #25201a 44px)', opacity: 0.6 }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(34,29,24,0.2) 0%, rgba(34,29,24,0.85) 100%)' }} />
-        <div style={{ ...wrap, position: 'relative' }}>
+        <div style={{ ...wrap }}>
           <span style={kickerGold}>Онлайн-бронирование</span>
           <h1
             className="fh-h1"

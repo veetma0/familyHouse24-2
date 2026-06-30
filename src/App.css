@@ -187,6 +187,69 @@ a {
   box-shadow: 0 0 0 3px rgba(184, 118, 46, 0.12);
 }
 
+/* ---------- Ползунок сезонов на странице рыбалки ---------- */
+.fh-season-switch {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: min(560px, 100%);
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid rgba(43, 38, 32, 0.14);
+  background: #ece1cf;
+  overflow: hidden;
+}
+.fh-season-switch-thumb {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  height: calc(100% - 8px);
+  border-radius: 999px;
+  background: #2b2620;
+  box-shadow: 0 10px 24px rgba(43, 38, 32, 0.22);
+  transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.fh-season-switch.is-winter .fh-season-switch-thumb {
+  transform: translateX(100%);
+}
+.fh-season-switch-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  position: relative;
+  z-index: 1;
+  border: none;
+  background: transparent;
+  padding: 12px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  color: #4b4339;
+  transition: color 0.25s ease;
+}
+.fh-season-switch-btn.is-active {
+  color: #f6efe1;
+}
+
+/* ---------- Сетка "Прогулки с воды" ---------- */
+.fh-water-card {
+  min-height: 170px;
+}
+.fh-water-card-0,
+.fh-water-card-1,
+.fh-water-card-2 {
+  grid-column: span 2;
+}
+.fh-water-card-3 {
+  grid-column: 2 / span 2;
+}
+.fh-water-card-4 {
+  grid-column: 4 / span 2;
+}
+
 /* ---------- Scroll reveal (плавное появление секций) ---------- */
 .fh-reveal {
   opacity: 0;
@@ -370,6 +433,15 @@ a {
   .fh-header-book {
     display: none !important;
   }
+  .fh-fleet-card {
+    grid-template-columns: 1fr !important;
+  }
+  .fh-water-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .fh-water-card {
+    grid-column: auto !important;
+  }
 }
 
 @media (max-width: 720px) {
@@ -410,6 +482,13 @@ a {
 }
 
 @media (max-width: 560px) {
+  .fh-season-switch-btn {
+    font-size: 12.5px;
+    padding: 11px 10px;
+  }
+  .fh-water-grid {
+    grid-template-columns: 1fr !important;
+  }
   .fh-form-2 {
     grid-template-columns: 1fr !important;
   }

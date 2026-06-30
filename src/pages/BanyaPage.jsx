@@ -11,15 +11,13 @@ function BanyaContent() {
 
   return (
     <>
-      <section className="fh-section-pad" style={{ position: 'relative', background: '#221d18', padding: '80px 32px 72px', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${banyaImage})`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.38 }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(34,29,24,0.92), rgba(34,29,24,0.62))' }} />
-        <div style={{ position: 'relative', ...wrap }}>
+      <section className="fh-section-pad" style={{ background: '#221d18', padding: '80px 32px 72px' }}>
+        <div style={wrap}>
           <span style={kickerGold}>Баня</span>
           <h1 className="fh-h1" style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400, fontSize: 'clamp(40px, 5vw, 64px)', color: '#f6efe1', margin: '16px 0 0', letterSpacing: '-0.015em' }}>
             {banya.name}
           </h1>
-          <p style={{ fontSize: 18, lineHeight: 1.7, color: 'rgba(243,237,224,0.8)', margin: '18px 0 0', maxWidth: 640 }}>
+          <p style={{ fontSize: 18, lineHeight: 1.7, color: 'rgba(243,237,224,0.78)', margin: '18px 0 0', maxWidth: 640 }}>
             Кедровый сруб, жаркая парилка, каминный зал и спокойный вечер после рыбалки или прогулки у воды.
           </p>
         </div>

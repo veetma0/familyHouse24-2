@@ -1,77 +1,127 @@
+import { useState } from 'react'
 import SiteShell from '../components/SiteShell'
 import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import { summer, winter, techFleet, catchSpecies, fishingServices, excursions, fishingImages } from '../data/siteData'
+import { summer, winter, catchSpecies, fishingServices, excursions, summerFleetCards, winterFleetCards } from '../data/siteData'
 import { wrap, kicker, kickerGold, h2, photoPlh } from '../data/styles'
 
 function FishingContent() {
   const { openBooking, onNav } = useShell()
   useScrollReveal()
+  const [activeSeason, setActiveSeason] = useState('summer')
+  const isSummer = activeSeason === 'summer'
+  const seasonPoints = isSummer ? summer : winter
+  const seasonFleet = isSummer ? summerFleetCards : winterFleetCards
+  const seasonAccent = isSummer ? '#b8762e' : '#5b7d99'
+  const seasonTag = isSummer ? 'Тёплый сезон' : 'Холодный сезон'
+  const seasonTitle = isSummer ? 'Летняя рыбалка' : 'Зимняя рыбалка'
+  const seasonLead = isSummer
+    ? 'Катера для троллинга, прогулок и рыбалки по бровкам — все варианты идут друг за другом, с понятной ценой и условиями.'
+    : 'Для зимних выездов выбирайте воздушные подушки и снегоходы: комфортная доставка к точкам, чёткие тарифы и правила безопасности.'
+  const seasonBackground = isSummer ? photoPlh('#ddcfb4', '#d3c4a6') : photoPlh('#dfe3e6', '#d2d8dc')
+  const fleetPhotoPlaceholder = isSummer ? photoPlh('#e0c9a7', '#d2b88f') : photoPlh('#cfdae2', '#c1cfd8')
 
   return (
     <>
       {/* HERO */}
-      <section className="fh-section-pad" style={{ position: 'relative', padding: '90px 32px 84px', background: '#2a3a32', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, background: 'repeating-linear-gradient(125deg, #2e4036, #2e4036 20px, #293a31 20px, #293a31 40px)' }} />
-        <div style={{ position: 'relative', ...wrap }}>
-          <span style={{ ...kicker, color: '#cdd9b8' }}>Рыбалка на Рыбинке</span>
+      <section className="fh-section-pad" style={{ background: '#221d18', padding: '80px 32px 72px' }}>
+        <div style={wrap}>
+          <span style={kickerGold}>Рыбалка на Рыбинке</span>
           <h1 className="fh-h1" style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400, fontSize: 'clamp(40px, 5vw, 64px)', color: '#f6efe1', margin: '16px 0 0', letterSpacing: '-0.015em' }}>
             Рыбалка, ради которой стоит приехать
           </h1>
-          <p style={{ fontSize: 18, lineHeight: 1.7, color: 'rgba(243,237,224,0.82)', margin: '18px 0 0', maxWidth: 640 }}>
+          <p style={{ fontSize: 18, lineHeight: 1.7, color: 'rgba(243,237,224,0.78)', margin: '18px 0 0', maxWidth: 640 }}>
             Река Сить и 540 км² Рыбинского водохранилища с более чем 35 видами рыбы. Своя техника, снасти и опытный егерь — мы привезём вас точно туда, где сегодня берёт.
           </p>
         </div>
       </section>
 
-      {/* SUMMER / WINTER */}
+      {/* SUMMER / WINTER + FLEET */}
       <section className="fh-section-pad" style={{ padding: '100px 32px' }}>
-        <div className="fh-fishing-cols" style={{ ...wrap, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28 }}>
-          <div data-reveal style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.08)', borderRadius: 6, overflow: 'hidden' }}>
+        <div style={wrap}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 34 }}>
+            <div className={`fh-season-switch ${isSummer ? 'is-summer' : 'is-winter'}`} aria-label="Выбор сезона рыбалки">
+              <span className="fh-season-switch-thumb" />
+              <button type="button" className={`fh-season-switch-btn ${isSummer ? 'is-active' : ''}`} onClick={() => setActiveSeason('summer')} aria-pressed={isSummer}>
+                <span aria-hidden="true">☀</span>
+                <span>Летняя рыбалка</span>
+              </button>
+              <button type="button" className={`fh-season-switch-btn ${!isSummer ? 'is-active' : ''}`} onClick={() => setActiveSeason('winter')} aria-pressed={!isSummer}>
+                <span aria-hidden="true">❄</span>
+                <span>Зимняя рыбалка</span>
+              </button>
+            </div>
+          </div>
+          <div data-reveal style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.08)', borderRadius: 8, overflow: 'hidden', marginBottom: 34 }}>
             <div
               style={{
-                aspectRatio: '16 / 8',
-                background: fishingImages.summer ? '#ddcfb4' : photoPlh('#ddcfb4', '#d3c4a6'),
-                backgroundImage: fishingImages.summer ? `url(${fishingImages.summer})` : undefined,
-                backgroundSize: fishingImages.summer ? 'cover' : undefined,
-                backgroundPosition: fishingImages.summer ? 'center' : undefined,
+                aspectRatio: '16 / 7',
+                background: seasonBackground,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 20,
               }}
-            />
+            >
+              <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(43,38,32,0.58)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                {isSummer ? 'фото летней рыбалки · заглушка' : 'фото зимней рыбалки · заглушка'}
+              </span>
+            </div>
             <div style={{ padding: 36 }}>
-              <span style={{ fontSize: 12, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#b8762e', fontWeight: 600 }}>Тёплый сезон</span>
-              <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 30, color: '#2b2620', margin: '12px 0 18px' }}>Летняя рыбалка</h2>
+              <span style={{ fontSize: 12, letterSpacing: '0.2em', textTransform: 'uppercase', color: seasonAccent, fontWeight: 600 }}>{seasonTag}</span>
+              <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 30, color: '#2b2620', margin: '12px 0 18px' }}>{seasonTitle}</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                {summer.map((s) => (
-                  <div key={s} style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-                    <span style={{ color: '#b8762e', fontWeight: 700, flex: 'none', marginTop: 1 }}>—</span>
-                    <span style={{ fontSize: 15.5, color: '#3a352e', lineHeight: 1.5 }}>{s}</span>
+                {seasonPoints.map((point) => (
+                  <div key={point} style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+                    <span style={{ color: seasonAccent, fontWeight: 700, flex: 'none', marginTop: 1 }}>—</span>
+                    <span style={{ fontSize: 15.5, color: '#3a352e', lineHeight: 1.5 }}>{point}</span>
                   </div>
                 ))}
               </div>
             </div>
           </div>
-          <div data-reveal style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.08)', borderRadius: 6, overflow: 'hidden' }}>
-            <div
-              style={{
-                aspectRatio: '16 / 8',
-                background: fishingImages.winter ? '#dfe3e6' : photoPlh('#dfe3e6', '#d2d8dc'),
-                backgroundImage: fishingImages.winter ? `url(${fishingImages.winter})` : undefined,
-                backgroundSize: fishingImages.winter ? 'cover' : undefined,
-                backgroundPosition: fishingImages.winter ? 'center' : undefined,
-              }}
-            />
-            <div style={{ padding: 36 }}>
-              <span style={{ fontSize: 12, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#5b7d99', fontWeight: 600 }}>Холодный сезон</span>
-              <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 30, color: '#2b2620', margin: '12px 0 18px' }}>Зимняя рыбалка</h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                {winter.map((w) => (
-                  <div key={w} style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-                    <span style={{ color: '#5b7d99', fontWeight: 700, flex: 'none', marginTop: 1 }}>—</span>
-                    <span style={{ fontSize: 15.5, color: '#3a352e', lineHeight: 1.5 }}>{w}</span>
+
+          <span style={isSummer ? kicker : kickerGold}>{isSummer ? 'Катера и лодки' : 'Воздушные подушки и снегоходы'}</span>
+          <h2 style={{ ...h2, fontSize: 'clamp(30px, 3.4vw, 44px)', color: '#2b2620', margin: '16px 0 12px' }}>
+            {isSummer ? 'Катера идут друг за другом — выбирайте свой формат' : 'Техника для зимней рыбалки и выездов по льду'}
+          </h2>
+          <p style={{ fontSize: 15.5, color: '#6b6157', margin: '0 0 34px', maxWidth: 860, lineHeight: 1.6 }}>{seasonLead}</p>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+            {seasonFleet.map((item) => (
+              <article key={item.id} data-reveal className="fh-fleet-card" style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.1)', borderRadius: 8, display: 'grid', gridTemplateColumns: '280px 1fr', overflow: 'hidden' }}>
+                <div style={{ background: item.imageBg || fleetPhotoPlaceholder, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, minHeight: 220 }}>
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.t}
+                      loading="lazy"
+                      style={{ width: '100%', height: '100%', minHeight: 220, objectFit: item.imageFit || 'cover', objectPosition: item.imagePosition || 'center' }}
+                    />
+                  ) : (
+                    <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(43,38,32,0.62)', letterSpacing: '0.08em', textTransform: 'uppercase', padding: 18 }}>
+                      {item.plh}
+                    </span>
+                  )}
+                </div>
+                <div style={{ padding: '22px 24px' }}>
+                  <div className="fh-price-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 14, marginBottom: 10 }}>
+                    <h3 style={{ fontSize: 21, color: '#2b2620', margin: 0, fontFamily: "'Playfair Display', serif", fontWeight: 500 }}>{item.t}</h3>
+                    <span style={{ fontSize: 16, fontWeight: 700, color: seasonAccent, whiteSpace: 'nowrap' }}>{item.price}</span>
                   </div>
-                ))}
-              </div>
-            </div>
+                  <p style={{ fontSize: 14.5, lineHeight: 1.65, color: '#5f564c', margin: '0 0 14px' }}>{item.d}</p>
+                  <div style={{ fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#8d806f', marginBottom: 10 }}>Условия</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    {item.conditions.map((condition) => (
+                      <div key={condition} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                        <span style={{ color: seasonAccent, fontWeight: 700, flex: 'none' }}>—</span>
+                        <span style={{ fontSize: 14, color: '#3a352e', lineHeight: 1.5 }}>{condition}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -87,27 +137,6 @@ function FishingContent() {
                 <h3 style={{ fontSize: 17, fontWeight: 600, color: '#2b2620', margin: '0 0 8px', lineHeight: 1.3 }}>{s.t}</h3>
                 <p style={{ fontSize: 14, lineHeight: 1.6, color: '#6b6157', margin: '0 0 16px', flex: 1 }}>{s.d}</p>
                 <span style={{ fontSize: 14.5, fontWeight: 600, color: '#b8762e' }}>{s.price}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* TECH */}
-      <section className="fh-section-pad" style={{ background: '#2b2620', padding: '100px 32px' }}>
-        <div style={wrap}>
-          <span style={kickerGold}>Всё уже на базе</span>
-          <h2 style={{ ...h2, fontSize: 'clamp(32px, 3.6vw, 46px)', color: '#f6efe1', margin: '16px 0 12px' }}>Вся техника уже на берегу</h2>
-          <p style={{ fontSize: 15.5, color: '#b3a68e', margin: '0 0 44px', maxWidth: 620, lineHeight: 1.6 }}>
-            Быстрый катер с егерем, лодки, снегоходы и даже воздушные подушки — выберите, на чём отправитесь за уловом в этот раз.
-          </p>
-          <div className="fh-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'rgba(231,221,200,0.14)', border: '1px solid rgba(231,221,200,0.14)', borderRadius: 4, overflow: 'hidden' }}>
-            {techFleet.map((t) => (
-              <div key={t.t} data-reveal style={{ background: '#2b2620', padding: '30px 26px', display: 'flex', flexDirection: 'column' }}>
-                <h3 style={{ fontSize: 18, fontWeight: 600, color: '#f6efe1', margin: '0 0 10px' }}>{t.t}</h3>
-                <p style={{ fontSize: 14, lineHeight: 1.6, color: '#b3a68e', margin: '0 0 16px', flex: 1 }}>{t.d}</p>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 21, color: '#d8b483' }}>{t.price}</div>
-                {t.note && <div style={{ fontSize: 12.5, color: '#8c8071', marginTop: 8, lineHeight: 1.5 }}>{t.note}</div>}
               </div>
             ))}
           </div>
@@ -140,9 +169,9 @@ function FishingContent() {
               Заказать прогулку →
             </button>
           </div>
-          <div className="fh-grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
-            {excursions.map((e) => (
-              <div key={e.t} data-reveal style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.08)', borderRadius: 6, padding: '26px 26px' }}>
+          <div className="fh-water-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 20 }}>
+            {excursions.map((e, idx) => (
+              <div key={e.t} data-reveal className={`fh-water-card fh-water-card-${idx}`} style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.08)', borderRadius: 8, padding: '26px 26px' }}>
                 <h3 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 21, color: '#2b2620', margin: '0 0 8px' }}>{e.t}</h3>
                 <p style={{ fontSize: 14, lineHeight: 1.6, color: '#6b6157', margin: 0 }}>{e.d}</p>
               </div>
