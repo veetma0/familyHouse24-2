@@ -2,7 +2,7 @@ import { useState } from 'react'
 import SiteShell from '../components/SiteShell'
 import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import { summer, winter, catchSpecies, fishingServices, excursions, summerFleetCards, winterFleetCards } from '../data/siteData'
+import { summer, winter, catchSpecies, fishingServices, excursions, summerFleetCards, winterFleetCards, fishingImages } from '../data/siteData'
 import { wrap, kicker, kickerGold, h2, photoPlh } from '../data/styles'
 
 function FishingContent() {
@@ -17,7 +17,8 @@ function FishingContent() {
   const seasonTitle = isSummer ? 'Летняя рыбалка' : 'Зимняя рыбалка'
   const seasonLead = isSummer
     ? 'Катера для троллинга, прогулок и рыбалки по бровкам — все варианты идут друг за другом, с понятной ценой и условиями.'
-    : 'Для зимних выездов выбирайте воздушные подушки и снегоходы: комфортная доставка к точкам, чёткие тарифы и правила безопасности.'
+    : 'Для зимних выездов — воздушная подушка ХИВУС-10: комфортная доставка к точкам, чёткие тарифы и правила безопасности.'
+  const seasonPhoto = isSummer ? fishingImages.summer : fishingImages.winter
   const seasonBackground = isSummer ? photoPlh('#ddcfb4', '#d3c4a6') : photoPlh('#dfe3e6', '#d2d8dc')
   const fleetPhotoPlaceholder = isSummer ? photoPlh('#e0c9a7', '#d2b88f') : photoPlh('#cfdae2', '#c1cfd8')
 
@@ -56,16 +57,26 @@ function FishingContent() {
             <div
               style={{
                 aspectRatio: '16 / 7',
-                background: seasonBackground,
+                background: seasonPhoto ? '#2b2620' : seasonBackground,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                padding: 20,
+                padding: seasonPhoto ? 0 : 20,
+                overflow: 'hidden',
               }}
             >
-              <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(43,38,32,0.58)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                {isSummer ? 'фото летней рыбалки · заглушка' : 'фото зимней рыбалки · заглушка'}
-              </span>
+              {seasonPhoto ? (
+                <img
+                  src={seasonPhoto}
+                  alt={seasonTitle}
+                  loading="lazy"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+                />
+              ) : (
+                <span style={{ fontFamily: 'monospace', fontSize: 12, color: 'rgba(43,38,32,0.58)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                  {isSummer ? 'фото летней рыбалки · заглушка' : 'фото зимней рыбалки · заглушка'}
+                </span>
+              )}
             </div>
             <div style={{ padding: 36 }}>
               <span style={{ fontSize: 12, letterSpacing: '0.2em', textTransform: 'uppercase', color: seasonAccent, fontWeight: 600 }}>{seasonTag}</span>
@@ -81,7 +92,7 @@ function FishingContent() {
             </div>
           </div>
 
-          <span style={isSummer ? kicker : kickerGold}>{isSummer ? 'Катера и лодки' : 'Воздушные подушки и снегоходы'}</span>
+          <span style={isSummer ? kicker : kickerGold}>{isSummer ? 'Катера' : 'Воздушная подушка'}</span>
           <h2 style={{ ...h2, fontSize: 'clamp(30px, 3.4vw, 44px)', color: '#2b2620', margin: '16px 0 12px' }}>
             {isSummer ? 'Катера идут друг за другом — выбирайте свой формат' : 'Техника для зимней рыбалки и выездов по льду'}
           </h2>

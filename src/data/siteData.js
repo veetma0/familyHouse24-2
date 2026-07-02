@@ -3,8 +3,8 @@
 // family-house24.ru (баня, техника, питание, услуги, прайс, правила).
 
 export const siteLogos = {
-  header: '/images/logo/logo-header.png',
-  icon: '/images/logo/logo-icon.png',
+  header: '/images/logo/logo-icon.png?v=2',
+  icon: '/images/logo/logo-icon.png?v=2',
 }
 
 // ── Контакты базы (единый источник для формы, мессенджеров, футера) ──
@@ -207,7 +207,7 @@ export const winter = [
   'Подлёдная ловля судака',
   'Жерлицы на щуку',
   'Зимний фидер на леща',
-  'Выезды на снегоходах к дальним точкам',
+  'Выезды на ХИВУС-10 к дальним точкам',
 ]
 
 export const summerFleetCards = [
@@ -229,62 +229,23 @@ export const summerFleetCards = [
     image: '/images/fishing/summer-excursion.png',
     plh: 'фото катера · заглушка',
   },
-  {
-    id: 'motor-boat',
-    t: 'Лодка с мотором',
-    d: 'Вариант для тех, кто хочет идти вдоль берега или работать по локальным точкам без аренды большого катера.',
-    price: '2 500 ₽ / 4 часа',
-    conditions: ['До 2 гостей', 'Выдаём спасжилеты и якорь', 'Возврат в светлое время суток', 'При повреждении — компенсация по акту'],
-    image: '/images/fishing/summer-motor-boat.png',
-    imageFit: 'contain',
-    imagePosition: 'center',
-    imageBg: '#e7e2d6',
-    plh: 'фото лодки · заглушка',
-  },
 ]
 
 export const winterFleetCards = [
   {
-    id: 'hovercraft-nord',
-    t: 'Воздушная подушка «Север»',
+    id: 'hovercraft-khivus',
+    t: 'Воздушная подушка «ХИВУС-10»',
     d: 'Проходит по тонкому льду и промоинам в межсезонье. Используется для безопасной доставки к дальним зимним точкам.',
     price: '9 000 ₽ / выезд',
     conditions: ['До 5 гостей с экипировкой', 'Маршрут определяет капитан по погоде', 'Спасательное снаряжение включено', 'Отмена при небезопасной ледовой обстановке'],
-    image: '/images/fishing/winter-hovercraft-nord.png',
+    image: '/images/fishing/winter-hovercraft-khivus-10.png',
     plh: 'фото подушки · заглушка',
-  },
-  {
-    id: 'hovercraft-taifun',
-    t: 'Воздушная подушка «Тайфун»',
-    d: 'Усиленный вариант для групповых выездов и трансфера оборудования на зимние локации с неровным покрытием.',
-    price: '12 000 ₽ / выезд',
-    conditions: ['До 8 гостей', 'В стоимость входит водитель-егерь', 'Погрузка снастей и ящиков включена', 'Время ожидания на точке — до 3 часов'],
-    image: '/images/fishing/winter-hovercraft-taifun.png',
-    plh: 'фото подушки · заглушка',
-  },
-  {
-    id: 'snowmobile-lynx',
-    t: 'Снегоход Lynx',
-    d: 'Быстрая доставка по льду к утренним и вечерним лункам, а также перемещение между точками во время клёва.',
-    price: '4 500 ₽ / 2 часа',
-    conditions: ['1 водитель + 1 пассажир', 'Шлем и тёплый плед включены', 'Заправка входит в цену', 'Продление — 1 500 ₽ / час'],
-    image: '/images/fishing/winter-snowmobile-lynx.png',
-    plh: 'фото снегохода · заглушка',
-  },
-  {
-    id: 'snowmobile-yamaha',
-    t: 'Снегоход Yamaha VK540',
-    d: 'Надёжный тяговый снегоход для дальних зимних маршрутов и перевозки саней с оборудованием.',
-    price: '5 500 ₽ / 2 часа',
-    conditions: ['1 водитель + 1 пассажир или сани до 150 кг', 'Работает только по согласованному маршруту', 'Инструктаж перед выездом обязателен', 'При сильном ветре выезд переносится'],
-    image: '/images/fishing/winter-snowmobile-yamaha.png',
-    plh: 'фото снегохода · заглушка',
   },
 ]
 
 export const fishingImages = {
-  summer: '/images/old-site/activities/fishing-25757752.jpg',
-  winter: '/images/old-site/activities/g-25761308.jpg',
+  summer: '/images/fishing/summer-main.png',
+  winter: '/images/fishing/winter-main.png',
 }
 
 // Техника и прокат (используется на /fishing и /services).

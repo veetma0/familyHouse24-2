@@ -106,9 +106,9 @@ function HomeContent() {
         <div style={wrap}>
           <span style={kicker}>Почему гости влюбляются в это место</span>
           <h2 style={{ ...h2, fontSize: 'clamp(32px, 3.6vw, 46px)', color: '#2b2620', margin: '16px 0 48px' }}>Четыре причины собрать чемодан</h2>
-          <div className="fh-grid-4" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 1, background: 'rgba(43,38,32,0.1)', border: '1px solid rgba(43,38,32,0.1)', borderRadius: 4, overflow: 'hidden' }}>
+          <div className="fh-grid-4 fh-reasons-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', border: '1px solid rgba(43,38,32,0.1)', borderRadius: 4, overflow: 'hidden' }}>
             {reasons.map((r) => (
-              <div key={r.n} data-reveal style={{ background: '#faf6ee', padding: '36px 28px', minHeight: 240, display: 'flex', flexDirection: 'column' }}>
+              <div key={r.n} data-reveal className="fh-reasons-item" style={{ background: '#faf6ee', padding: '36px 28px', minHeight: 240, display: 'flex', flexDirection: 'column' }}>
                 <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 28, color: '#cdb88f' }}>{r.n}</span>
                 <h3 style={{ fontSize: 19, fontWeight: 600, color: '#2b2620', margin: '20px 0 12px', lineHeight: 1.25, minHeight: 48 }}>{r.t}</h3>
                 <p style={{ fontSize: 14.5, lineHeight: 1.65, color: '#6b6157', margin: 0 }}>{r.d}</p>
@@ -197,21 +197,27 @@ function HomeContent() {
       {/* ===== ЧЕМ ЗАНЯТЬСЯ / НА ТЕРРИТОРИИ ===== */}
       <section className="fh-section-pad" style={{ padding: '0 32px 120px' }}>
         <div style={wrap}>
-          <span style={kicker}>Не только рыбалка</span>
-          <h2 style={{ ...h2, fontSize: 'clamp(32px, 3.6vw, 46px)', color: '#2b2620', margin: '16px 0 48px' }}>Чем заняться на базе</h2>
-          <div className="fh-grid-3 fh-experience" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
-            {experience.map((e) => (
+          <div className="fh-stack-mobile" style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 24, marginBottom: 40 }}>
+            <div>
+              <span style={kicker}>Не только рыбалка</span>
+              <h2 style={{ ...h2, fontSize: 'clamp(32px, 3.6vw, 46px)', color: '#2b2620', margin: '16px 0 0' }}>Чем заняться на базе</h2>
+            </div>
+            <button type="button" onClick={() => onNav('/entertainment')} className="fh-btn-outline" style={{ background: 'none', border: '1px solid rgba(43,38,32,0.25)', borderRadius: 999, cursor: 'pointer', fontSize: 15, fontWeight: 600, color: '#2b2620', padding: '12px 24px', whiteSpace: 'nowrap' }}>
+              Все развлечения →
+            </button>
+          </div>
+          <div className="fh-water-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 20 }}>
+            {experience.map((e, idx) => (
               <button
                 key={e.t}
                 type="button"
                 data-reveal
                 onClick={() => onNav(e.path)}
-                className="fh-card-hover"
-                style={{ textAlign: 'left', cursor: 'pointer', background: '#faf6ee', border: '1px solid rgba(43,38,32,0.08)', borderRadius: 6, padding: '30px 28px', display: 'flex', flexDirection: 'column', minHeight: 150 }}
+                className={`fh-water-card fh-water-card-${idx} fh-card-hover`}
+                style={{ textAlign: 'left', cursor: 'pointer', background: '#faf6ee', border: '1px solid rgba(43,38,32,0.08)', borderRadius: 8, padding: '26px 26px', width: '100%' }}
               >
-                <h3 style={{ fontSize: 19, fontWeight: 600, color: '#2b2620', margin: '0 0 10px' }}>{e.t}</h3>
-                <p style={{ fontSize: 14.5, lineHeight: 1.6, color: '#6b6157', margin: 0, flex: 1 }}>{e.d}</p>
-                <span style={{ fontSize: 14, fontWeight: 600, color: '#b8762e', marginTop: 16 }}>Подробнее →</span>
+                <h3 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 21, color: '#2b2620', margin: '0 0 8px' }}>{e.t}</h3>
+                <p style={{ fontSize: 14, lineHeight: 1.6, color: '#6b6157', margin: 0 }}>{e.d}</p>
               </button>
             ))}
           </div>

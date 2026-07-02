@@ -81,6 +81,30 @@ function Toasts({ toasts, onClose }) {
   )
 }
 
+const brandTitleStyle = {
+  fontFamily: "'Playfair Display', serif",
+  fontSize: 22,
+  letterSpacing: '0.03em',
+  lineHeight: 1.05,
+}
+
+function BrandMark({ color = '#2b2620', fishHeight = 42 }) {
+  return (
+    <>
+      <img
+        src={siteLogos.icon}
+        alt=""
+        aria-hidden="true"
+        style={{ height: fishHeight, width: 'auto', display: 'block', flex: 'none' }}
+      />
+      <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color }}>
+        <span style={brandTitleStyle}>Семейный</span>
+        <span style={brandTitleStyle}>дом</span>
+      </span>
+    </>
+  )
+}
+
 /* ---------------- Header ---------------- */
 function Header({ activeId, onNav, onBook, onBurger, mobileOpen }) {
   return (
@@ -96,11 +120,11 @@ function Header({ activeId, onNav, onBook, onBurger, mobileOpen }) {
       }}
     >
       <div
-        className="fh-section-pad"
+        className="fh-section-pad fh-header-bar"
         style={{
           maxWidth: 1240,
           margin: '0 auto',
-          padding: '16px 32px',
+          padding: '16px 32px 16px 0',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -110,24 +134,24 @@ function Header({ activeId, onNav, onBook, onBurger, mobileOpen }) {
         <button
           type="button"
           onClick={() => onNav('/')}
+          aria-label="Семейный дом — на главную"
           style={{
             display: 'flex',
             alignItems: 'center',
+            gap: 14,
             background: 'none',
             border: 'none',
             cursor: 'pointer',
             padding: 0,
+            margin: 0,
             textAlign: 'left',
+            flex: 'none',
           }}
         >
-          <img
-            src={siteLogos.header}
-            alt="Family House"
-            style={{ height: 46, width: 'auto', display: 'block' }}
-          />
+          <BrandMark />
         </button>
 
-        <nav className="fh-desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+        <nav className="fh-desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: 4, marginLeft: 40 }}>
           {navigationItems.map((item) => (
             <button
               key={item.id}
@@ -237,14 +261,8 @@ function Footer({ onNav }) {
           }}
         >
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <img
-                src={siteLogos.icon}
-                alt=""
-                aria-hidden="true"
-                style={{ height: 42, width: 'auto', display: 'block', flex: 'none' }}
-              />
-              <span style={{ fontFamily: "'Playfair Display', serif", fontSize: 22, color: '#f6efe1' }}>Family House</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+              <BrandMark color="#f6efe1" />
             </div>
             <p style={{ fontSize: 14.5, lineHeight: 1.7, color: '#8c8071', margin: '18px 0 0', maxWidth: 320 }}>
               Эко-отель на реке Сить, в 10 км от Рыбинского водохранилища. Дома и баня, домашняя кухня и настоящая рыбалка — круглый год.

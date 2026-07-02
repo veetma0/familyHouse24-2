@@ -401,10 +401,32 @@ a {
   padding-left: 8px;
 }
 
+/* Сетка «4 причины» на главной — явные разделители между карточками */
+.fh-reasons-item {
+  border-right: 1px solid rgba(43, 38, 32, 0.1);
+}
+.fh-reasons-item:last-child {
+  border-right: none;
+}
+
+.fh-header-bar {
+  padding-left: 0 !important;
+}
+
 /* ============================================================
    Адаптив
    ============================================================ */
 @media (max-width: 980px) {
+  .fh-reasons-item {
+    border-right: none;
+    border-bottom: none;
+  }
+  .fh-reasons-item:nth-child(odd) {
+    border-right: 1px solid rgba(43, 38, 32, 0.1);
+  }
+  .fh-reasons-item:nth-child(-n + 2) {
+    border-bottom: 1px solid rgba(43, 38, 32, 0.1);
+  }
   .fh-grid-2,
   .fh-grid-3,
   .fh-grid-4,
@@ -460,6 +482,13 @@ a {
     border-bottom: 1px solid rgba(231, 221, 200, 0.12);
   }
   .fh-grid-stats > div:last-child {
+    border-bottom: none;
+  }
+  .fh-reasons-item {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(43, 38, 32, 0.1);
+  }
+  .fh-reasons-item:last-child {
     border-bottom: none;
   }
   .fh-directions-text,
