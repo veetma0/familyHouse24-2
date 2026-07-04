@@ -2,8 +2,8 @@ import { useRef, useState } from 'react'
 import SiteShell from '../components/SiteShell'
 import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import { wrap, kicker, kickerGold, h2 } from '../data/styles'
-import { contact, mapEmbedUrl, faq, legal } from '../data/siteData'
+import { contact, contactCards, mapEmbedUrl, faq, legal } from '../data/siteData'
+import { kicker, kickerGold, h2 } from '../data/styles'
 
 const inputStyle = {
   width: '100%',
@@ -15,7 +15,7 @@ const inputStyle = {
   color: '#2b2620',
   outline: 'none',
 }
-const labelStyle = { display: 'block', fontSize: 13, fontWeight: 600, color: '#4a4339', marginBottom: 8 }
+const labelStyle = { display: 'block', fontSize: 13, fontWeight: 700, color: '#4a4339', marginBottom: 8 }
 const errStyle = { display: 'block', fontSize: 13, color: '#a14334', marginTop: 6 }
 
 function ContactsContent() {
@@ -28,7 +28,7 @@ function ContactsContent() {
   const topicRef = useRef(null)
   const msgRef = useRef(null)
   const [errors, setErrors] = useState({})
-  const [openFaq, setOpenFaq] = useState(null)
+  const [openFaq, setOpenFaq] = useState(0)
 
   const digits = (v) => (v || '').replace(/\D/g, '')
 
@@ -73,123 +73,108 @@ function ContactsContent() {
     addToast('success', 'Открываем мессенджер…', 'Заявка подставлена в чат — отправьте её, и мы ответим в течение часа.')
   }
 
-  const infoBlock = (label, children) => (
-    <div>
-      <div style={{ fontSize: 12, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#9a8c74', marginBottom: 5 }}>{label}</div>
-      {children}
-    </div>
-  )
-
   return (
     <>
       {/* HERO */}
-      <section className="fh-section-pad" style={{ background: '#221d18', padding: '80px 32px 72px' }}>
-        <div style={wrap}>
-          <span style={kickerGold}>Связаться с нами</span>
-          <h1 className="fh-h1" style={{ fontFamily: "'Playfair Display', serif", fontWeight: 400, fontSize: 'clamp(40px, 5vw, 64px)', color: '#f6efe1', margin: '16px 0 0', letterSpacing: '-0.015em' }}>
-            Напишите — и мы всё устроим
+      <section style={{ background: '#221d18', padding: '60px 32px 46px' }} className="fh-section-pad">
+        <div style={{ maxWidth: 1180, margin: '0 auto' }}>
+          <span style={kickerGold}>На связи каждый день</span>
+          <h1 className="fh-oswald" style={{ fontSize: 'clamp(38px,5vw,72px)', fontWeight: 700, textTransform: 'uppercase', color: '#f6efe1', margin: '12px 0 0' }}>
+            Контакты
           </h1>
-          <p style={{ fontSize: 18, lineHeight: 1.7, color: 'rgba(243,237,224,0.78)', margin: '18px 0 0', maxWidth: 560 }}>
-            Подберём дом, подскажем про рыбалку и дорогу, забронируем удобные даты. Просто напишите нам — а дальше дело за нами.
+          <p style={{ fontSize: 17, lineHeight: 1.6, color: '#b3a68e', margin: '16px 0 0', maxWidth: 620 }}>
+            Позвоните, напишите или приезжайте. Администратор отвечает с 10:00 до 20:00, без выходных. Точную геолокацию пришлём после брони.
           </p>
         </div>
       </section>
 
-      {/* FORM + INFO */}
-      <section className="fh-section-pad" style={{ padding: '72px 32px 100px' }}>
-        <div className="fh-contacts" style={{ ...wrap, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'start' }}>
+      {/* КАРТОЧКИ КОНТАКТОВ */}
+      <section style={{ padding: '56px 32px 20px' }} className="fh-section-pad">
+        <div className="fh-grid-3" style={{ maxWidth: 1180, margin: '0 auto' }}>
+          {contactCards.map((cc) => (
+            <a
+              key={cc.label}
+              href={cc.href}
+              target={cc.href.startsWith('http') ? '_blank' : undefined}
+              rel={cc.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              data-reveal
+              className="fh-cardlift"
+              style={{ display: 'flex', flexDirection: 'column', gap: 6, textDecoration: 'none', background: '#faf6ee', border: '1px solid rgba(43,38,32,0.09)', borderRadius: 8, padding: '26px 28px' }}
+            >
+              <span className="fh-oswald" style={{ fontSize: 12, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#b8762e' }}>{cc.label}</span>
+              <span className="fh-oswald" style={{ fontSize: 22, fontWeight: 600, color: '#2b2620', lineHeight: 1.2 }}>{cc.value}</span>
+              <span style={{ fontSize: 14, color: '#8c8071' }}>{cc.note}</span>
+            </a>
+          ))}
+        </div>
+      </section>
 
-          <div data-reveal data-reveal-stagger="off" style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.08)', borderRadius: 8, padding: 40 }}>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 28, color: '#2b2620', margin: '0 0 6px' }}>Расскажите о поездке</h2>
-            <p style={{ fontSize: 14.5, color: '#6b6157', margin: '0 0 28px' }}>Прочитаем и ответим в течение часа в рабочее время.</p>
-            <form onSubmit={(e) => { e.preventDefault(); send('whatsapp') }} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-              <div>
-                <label style={labelStyle}>Имя</label>
-                <input ref={nameRef} type="text" placeholder="Как к вам обращаться" className="fh-input" style={inputStyle} />
-                {errors.name && <span style={errStyle}>Пожалуйста, укажите имя</span>}
-              </div>
-              <div className="fh-form-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-                <div>
-                  <label style={labelStyle}>Телефон</label>
-                  <input ref={phoneRef} type="tel" placeholder="+7 ___ ___ __ __" className="fh-input" style={inputStyle} />
-                  {errors.phone && <span style={errStyle}>Введите телефон</span>}
-                </div>
-                <div>
-                  <label style={labelStyle}>Email</label>
-                  <input ref={emailRef} type="email" placeholder="можно не указывать" className="fh-input" style={inputStyle} />
-                </div>
-              </div>
-              <div>
-                <label style={labelStyle}>Тема</label>
-                <select ref={topicRef} className="fh-input" style={inputStyle}>
-                  <option>Бронирование дома</option>
-                  <option>Вопрос о рыбалке</option>
-                  <option>Как добраться</option>
-                  <option>Другое</option>
-                </select>
-              </div>
-              <div>
-                <label style={labelStyle}>Сообщение</label>
-                <textarea ref={msgRef} rows={4} placeholder="Когда планируете приехать, сколько гостей, что важно?" className="fh-input" style={{ ...inputStyle, resize: 'vertical', lineHeight: 1.5 }} />
-                {errors.msg && <span style={errStyle}>Напишите пару слов о поездке</span>}
-              </div>
-              <div className="fh-form-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginTop: 4 }}>
-                <button type="button" onClick={() => send('whatsapp')} className="fh-btn-primary" style={{ background: '#25a35a', color: '#fff', border: 'none', cursor: 'pointer', fontSize: 15, fontWeight: 600, padding: 15, borderRadius: 999 }}>
-                  Написать в WhatsApp
-                </button>
-                <button type="button" onClick={() => send('telegram')} className="fh-btn-dark" style={{ background: '#2b2620', color: '#f6efe1', border: 'none', cursor: 'pointer', fontSize: 15, fontWeight: 600, padding: 15, borderRadius: 999 }}>
-                  Написать в Telegram
-                </button>
-              </div>
-              <p style={{ fontSize: 13, color: '#9a8c74', margin: '2px 0 0', textAlign: 'center' }}>
-                Заявка откроется в мессенджере с заполненным текстом — останется нажать «Отправить».
-              </p>
-            </form>
-          </div>
+      {/* КАРТА */}
+      <section style={{ padding: '30px 32px 40px' }} className="fh-section-pad">
+        <div style={{ maxWidth: 1180, margin: '0 auto', borderRadius: 10, overflow: 'hidden', border: '1px solid rgba(43,38,32,0.12)', minHeight: 440 }} data-reveal data-reveal-stagger="off">
+          <iframe src={mapEmbedUrl} title="Карта проезда — Family House" loading="lazy" allowFullScreen style={{ width: '100%', height: '100%', minHeight: 440, border: 0, display: 'block' }} />
+        </div>
+      </section>
 
-          <div data-reveal data-reveal-stagger="off" style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-            <div style={{ background: '#2b2620', borderRadius: 8, padding: 36 }}>
-              <h3 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 500, fontSize: 24, color: '#f6efe1', margin: '0 0 24px' }}>Позвоните или напишите</h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-                {infoBlock('Телефон', (
-                  <a href="tel:+74951510082" style={{ fontSize: 20, fontWeight: 600, color: '#f6efe1', textDecoration: 'none' }}>+7 (495) 151-00-82</a>
-                ))}
-                {infoBlock('Email', (
-                  <a href="mailto:Familyhouse.baza@gmail.com" style={{ fontSize: 17, fontWeight: 500, color: '#f6efe1', textDecoration: 'none' }}>Familyhouse.baza@gmail.com</a>
-                ))}
-                {infoBlock('Instagram', (
-                  <a href={`https://instagram.com/${contact.instagram}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: 17, fontWeight: 500, color: '#f6efe1', textDecoration: 'none' }}>@{contact.instagram}</a>
-                ))}
-                {infoBlock('Адрес', (
-                  <div style={{ fontSize: 16, color: '#e7ddc8', lineHeight: 1.5 }}>{contact.address}</div>
-                ))}
-                {infoBlock('Режим работы офиса', (
-                  <div style={{ fontSize: 16, color: '#e7ddc8' }}>{contact.office}</div>
-                ))}
-                {infoBlock('Заезд и выезд', (
-                  <div style={{ fontSize: 16, color: '#e7ddc8' }}>Заезд {contact.checkIn}, выезд {contact.checkOut}</div>
-                ))}
+      {/* ФОРМА ЗАЯВКИ (WhatsApp / Telegram) */}
+      <section style={{ padding: '20px 32px 40px' }} className="fh-section-pad">
+        <div style={{ maxWidth: 720, margin: '0 auto', background: '#faf6ee', border: '1px solid rgba(43,38,32,0.1)', borderRadius: 10, padding: '40px' }} data-reveal data-reveal-stagger="off">
+          <span style={kicker}>Оставьте заявку</span>
+          <h2 style={{ ...h2, fontSize: 'clamp(24px,3vw,34px)', color: '#2b2620', margin: '12px 0 6px' }}>Напишите — и мы всё устроим</h2>
+          <p style={{ fontSize: 14.5, color: '#6b6157', margin: '0 0 26px' }}>Подберём дом, подскажем про рыбалку и дорогу. Ответим в течение часа в рабочее время.</p>
+          <form onSubmit={(e) => { e.preventDefault(); send('whatsapp') }} style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+            <div>
+              <label style={labelStyle}>Имя</label>
+              <input ref={nameRef} type="text" placeholder="Как к вам обращаться" className="fh-input" style={inputStyle} />
+              {errors.name && <span style={errStyle}>Пожалуйста, укажите имя</span>}
+            </div>
+            <div className="fh-form-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+              <div>
+                <label style={labelStyle}>Телефон</label>
+                <input ref={phoneRef} type="tel" placeholder="+7 ___ ___ __ __" className="fh-input" style={inputStyle} />
+                {errors.phone && <span style={errStyle}>Введите телефон</span>}
+              </div>
+              <div>
+                <label style={labelStyle}>Email</label>
+                <input ref={emailRef} type="email" placeholder="можно не указывать" className="fh-input" style={inputStyle} />
               </div>
             </div>
-            <div style={{ borderRadius: 8, overflow: 'hidden', border: '1px solid rgba(43,38,32,0.1)', minHeight: 240, flex: 1, display: 'flex' }}>
-              <iframe
-                src={mapEmbedUrl}
-                title="Карта проезда — Family House"
-                loading="lazy"
-                allowFullScreen
-                style={{ width: '100%', height: '100%', minHeight: 240, border: 0, display: 'block' }}
-              />
+            <div>
+              <label style={labelStyle}>Тема</label>
+              <select ref={topicRef} className="fh-input" style={inputStyle}>
+                <option>Бронирование дома</option>
+                <option>Вопрос о рыбалке</option>
+                <option>Как добраться</option>
+                <option>Другое</option>
+              </select>
             </div>
-          </div>
-
+            <div>
+              <label style={labelStyle}>Сообщение</label>
+              <textarea ref={msgRef} rows={4} placeholder="Когда планируете приехать, сколько гостей, что важно?" className="fh-input" style={{ ...inputStyle, resize: 'vertical', lineHeight: 1.5 }} />
+              {errors.msg && <span style={errStyle}>Напишите пару слов о поездке</span>}
+            </div>
+            <div className="fh-form-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginTop: 4 }}>
+              <button type="button" onClick={() => send('whatsapp')} className="fh-oswald fh-btn-primary" style={{ background: '#25a35a', color: '#fff', border: 'none', cursor: 'pointer', fontSize: 14, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', padding: 15, borderRadius: 3 }}>
+                Написать в WhatsApp
+              </button>
+              <button type="button" onClick={() => send('telegram')} className="fh-oswald fh-btn-dark" style={{ background: '#2b2620', color: '#f6efe1', border: 'none', cursor: 'pointer', fontSize: 14, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', padding: 15, borderRadius: 3 }}>
+                Написать в Telegram
+              </button>
+            </div>
+            <p style={{ fontSize: 13, color: '#9a8c74', margin: '2px 0 0', textAlign: 'center' }}>
+              Заявка откроется в мессенджере с заполненным текстом — останется нажать «Отправить».
+            </p>
+          </form>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="fh-section-pad" style={{ padding: '0 32px 90px' }}>
-        <div style={{ ...wrap, maxWidth: 860 }}>
-          <span style={kicker}>Частые вопросы</span>
-          <h2 style={{ ...h2, fontSize: 'clamp(30px, 3.4vw, 44px)', color: '#2b2620', margin: '16px 0 36px' }}>Отвечаем заранее</h2>
+      <section style={{ padding: '40px 32px 90px' }} className="fh-section-pad">
+        <div style={{ maxWidth: 900, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center' }} data-reveal data-reveal-stagger="off">
+            <span style={kicker}>Вопросы и ответы</span>
+            <h2 style={{ ...h2, fontSize: 'clamp(30px,4vw,50px)', color: '#2b2620', margin: '12px 0 34px' }}>Частые вопросы</h2>
+          </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {faq.map((item, i) => {
               const open = openFaq === i
@@ -197,30 +182,25 @@ function ContactsContent() {
                 <div key={item.q} data-reveal style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.1)', borderRadius: 8, overflow: 'hidden' }}>
                   <button
                     type="button"
-                    onClick={() => setOpenFaq(open ? null : i)}
+                    onClick={() => setOpenFaq(open ? -1 : i)}
                     aria-expanded={open}
-                    style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: '20px 24px' }}
+                    style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, background: 'none', border: 'none', cursor: 'pointer', padding: '22px 26px', textAlign: 'left' }}
                   >
-                    <span style={{ fontSize: 16.5, fontWeight: 600, color: '#2b2620' }}>{item.q}</span>
-                    <span style={{ flex: 'none', fontSize: 22, lineHeight: 1, color: '#b8762e', transform: open ? 'rotate(45deg)' : 'none', transition: 'transform 0.2s ease' }}>+</span>
+                    <span className="fh-oswald" style={{ fontSize: 18, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.01em', color: '#2b2620' }}>{item.q}</span>
+                    <span className="fh-oswald" style={{ flex: 'none', fontSize: 26, fontWeight: 400, color: '#b8762e', lineHeight: 1 }}>{open ? '–' : '+'}</span>
                   </button>
                   {open && (
-                    <p style={{ fontSize: 15, lineHeight: 1.7, color: '#6b6157', margin: 0, padding: '0 24px 22px' }}>{item.a}</p>
+                    <p style={{ fontSize: 16, lineHeight: 1.7, color: '#6b6157', margin: 0, padding: '0 26px 24px' }}>{item.a}</p>
                   )}
                 </div>
               )
             })}
           </div>
-        </div>
-      </section>
-
-      {/* РЕКВИЗИТЫ */}
-      <section className="fh-section-pad" style={{ padding: '0 32px 80px' }}>
-        <div style={{ ...wrap, paddingTop: 28, borderTop: '1px solid rgba(43,38,32,0.1)' }}>
-          <div style={{ fontSize: 12, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#9a8c74', marginBottom: 8 }}>Реквизиты</div>
-          <p style={{ fontSize: 13.5, color: '#8a7a5f', margin: 0, lineHeight: 1.7 }}>
-            {legal.company} · ИНН {legal.inn} · ОГРН {legal.ogrn}
-          </p>
+          <div style={{ marginTop: 40, paddingTop: 24, borderTop: '1px solid rgba(43,38,32,0.1)', textAlign: 'center' }}>
+            <p style={{ fontSize: 13, color: '#8a7a5f', margin: 0, lineHeight: 1.7 }}>
+              {legal.company} · ИНН {legal.inn} · ОГРН {legal.ogrn}
+            </p>
+          </div>
         </div>
       </section>
     </>

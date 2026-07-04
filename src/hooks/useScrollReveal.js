@@ -1,17 +1,15 @@
 import { useEffect } from 'react'
 
 /**
- * Плавное появление при скролле. Тегирует элементы с [data-reveal]
- * (и их группы по родителю — лёгкий каскад) классом fh-reveal и
- * добавляет is-visible при попадании во вьюпорт. Уважает
+ * Плавное появление при скролле. Элементы с [data-reveal] получают
+ * класс is-visible при попадании во вьюпорт (стили — в App.css).
+ * Внутри одного родителя добавляем лёгкий каскад. Уважает
  * prefers-reduced-motion.
  */
 export function useScrollReveal(deps = []) {
   useEffect(() => {
     const nodes = Array.from(document.querySelectorAll('[data-reveal]'))
     if (nodes.length === 0) return undefined
-
-    nodes.forEach((el) => el.classList.add('fh-reveal'))
 
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduce || typeof IntersectionObserver === 'undefined') {

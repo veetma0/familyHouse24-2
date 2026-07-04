@@ -1,25 +1,34 @@
-// Общие куски стиля из дизайна (диагональные плейсхолдеры фото, kicker и т.п.)
+// Общие куски стиля из дизайна Family House.dc.html
+// (Oswald для заголовков/подписей, PT Sans — базовый текст).
 
-export const wrap = { maxWidth: 1240, margin: '0 auto' }
+export const wrap = { maxWidth: 1280, margin: '0 auto' }
 
+// Заголовочный шрифт из дизайна
+export const oswald = { fontFamily: "'Oswald', sans-serif" }
+
+// Надпись-«кикер» над заголовком секции
 export const kicker = {
+  ...oswald,
   fontSize: 13,
-  letterSpacing: '0.22em',
+  fontWeight: 600,
+  letterSpacing: '0.3em',
   textTransform: 'uppercase',
   color: '#b8762e',
-  fontWeight: 600,
 }
 
-export const kickerGold = { ...kicker, color: '#d8b483' }
+export const kickerGold = { ...kicker, color: '#e0b45f' }
 
+// Крупный заголовок секции (Oswald, uppercase)
 export const h2 = {
-  fontFamily: "'Playfair Display', serif",
-  fontWeight: 400,
-  letterSpacing: '-0.01em',
+  ...oswald,
+  fontWeight: 700,
+  letterSpacing: '0.01em',
+  textTransform: 'uppercase',
+  lineHeight: 1.02,
   margin: 0,
 }
 
-// Диагональная штриховка-плейсхолдер «фото» (как в макете)
+// Диагональная штриховка-плейсхолдер «фото» (запас на случай отсутствия картинки)
 export function photoPlh(c1, c2, step = 12) {
   return `repeating-linear-gradient(135deg, ${c1}, ${c1} ${step}px, ${c2} ${step}px, ${c2} ${step * 2}px)`
 }

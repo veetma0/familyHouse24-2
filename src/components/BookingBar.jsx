@@ -3,37 +3,37 @@ import { useNavigate } from 'react-router-dom'
 import { dateOffset, humanDate, nextDay, toInputDate } from '../utils/dates'
 
 /* ============================================================
-   Плашка бронирования на главной (под hero).
+   Форма быстрого поиска в hero главной страницы.
 
-   Короткая форма «Заезд / Выезд / Гости / Найти» прямо на странице.
-   По кнопке — внутренний переход на /booking с датами в URL, где
-   встроен модуль Bnovo. Клиент сразу видит свободные дома и не
-   покидает сайт (минимум переходов).
+   «Заезд / Выезд / Гости / Найти» — прямо на баннере, как в дизайне.
+   Дату выбираем в фирменном календаре-поповере. По кнопке — внутренний
+   переход на /booking с датами в URL, где встроен модуль Bnovo.
    ============================================================ */
 
-const fieldLabel = {
-  display: 'block',
+const labelStyle = {
+  fontFamily: "'Oswald', sans-serif",
   fontSize: 11,
   fontWeight: 600,
   letterSpacing: '0.14em',
   textTransform: 'uppercase',
-  color: '#9a8c74',
-  marginBottom: 7,
+  color: '#a2917a',
 }
 
-const fieldInput = {
-  width: '100%',
-  background: 'transparent',
-  border: 'none',
-  borderRadius: 0,
-  padding: 0,
-  fontSize: 16,
-  fontWeight: 600,
-  color: '#2b2620',
-  outline: 'none',
-  fontFamily: 'inherit',
-  cursor: 'pointer',
-}
+const CalIcon = () => (
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#b8762e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flex: 'none' }}>
+    <rect x="3" y="4.5" width="18" height="16" rx="2.5" />
+    <path d="M3 9.5h18" />
+    <path d="M8 2.5v4" />
+    <path d="M16 2.5v4" />
+  </svg>
+)
+
+const GuestsIcon = () => (
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#b8762e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flex: 'none' }}>
+    <circle cx="12" cy="8" r="4" />
+    <path d="M4 21c0-4 4-6 8-6s8 2 8 6" />
+  </svg>
+)
 
 const monthNames = [
   'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
@@ -154,7 +154,7 @@ function BookingBar() {
 
   const openCalendar = (type) => {
     setVisibleMonth(startOfMonth(type === 'checkIn' ? checkIn : checkOut))
-    setActiveCalendar(type)
+    setActiveCalendar((prev) => (prev === type ? null : type))
   }
 
   const onCalendarSelect = (value) => {
@@ -171,52 +171,49 @@ function BookingBar() {
     }
   }
 
-  // Уходим на встроенную страницу /booking (модуль Bnovo внутри сайта),
-  // даты передаём в URL в формате ГГГГ-ММ-ДД (его понимает getBnovoIframeUrl).
+  // Уходим на встроенную страницу /booking (модуль Bnovo внутри сайта).
   const onSubmit = (e) => {
     e.preventDefault()
     const search = new URLSearchParams({ checkIn, checkOut, adults: String(adults) })
     navigate(`/booking?${search.toString()}`)
   }
 
+  const cellStyle = {
+    position: 'relative',
+    padding: '15px 22px',
+    borderRight: '1px solid rgba(43,38,32,0.1)',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 6,
+  }
+
   return (
-    <section
-      className="fh-section-pad fh-bookingbar-wrap"
+    <form
+      ref={bookingBarRef}
+      onSubmit={onSubmit}
+      className="fh-book-panel"
       style={{
+        maxWidth: 1120,
         position: 'relative',
-        padding: '40px 32px',
-        marginTop: -44,
-        zIndex: 20,
-        background: '#faf6ee',
+        borderRadius: 12,
+        overflow: 'visible',
+        boxShadow: '0 26px 64px rgba(0,0,0,0.5)',
+        border: '1px solid rgba(255,255,255,0.14)',
       }}
     >
-      <form
-        ref={bookingBarRef}
-        onSubmit={onSubmit}
-        className="fh-bookingbar"
-        style={{
-          maxWidth: 1140,
-          margin: '0 auto',
-          background: '#faf6ee',
-          border: '1px solid rgba(43,38,32,0.08)',
-          borderRadius: 14,
-          boxShadow: '0 24px 60px rgba(28,24,20,0.22)',
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr auto',
-          alignItems: 'stretch',
-          gap: 0,
-          overflow: 'visible',
-        }}
-      >
-        <div className="fh-bookingbar-cell" style={{ position: 'relative', padding: '20px 26px', borderRight: '1px solid rgba(43,38,32,0.1)' }}>
-          <label style={fieldLabel} htmlFor="bb-checkin">Заезд</label>
+      <div style={{ height: 3, background: 'linear-gradient(90deg, #a3661f, #e0b45f 50%, #a3661f)', borderRadius: '12px 12px 0 0' }} />
+      <div className="fh-bookbar" style={{ borderRadius: '0 0 12px 12px', overflow: 'hidden' }}>
+        {/* Заезд */}
+        <div className="fh-bookbar-cell" style={cellStyle}>
+          <span style={labelStyle}>Заезд</span>
           <button
-            id="bb-checkin"
             type="button"
             className="fh-date-trigger"
             onClick={() => openCalendar('checkIn')}
             aria-expanded={activeCalendar === 'checkIn'}
+            style={{ display: 'flex', alignItems: 'center', gap: 9 }}
           >
+            <CalIcon />
             {humanDate(checkIn)}
           </button>
           {activeCalendar === 'checkIn' && (
@@ -232,15 +229,17 @@ function BookingBar() {
           )}
         </div>
 
-        <div className="fh-bookingbar-cell" style={{ position: 'relative', padding: '20px 26px', borderRight: '1px solid rgba(43,38,32,0.1)' }}>
-          <label style={fieldLabel} htmlFor="bb-checkout">Выезд</label>
+        {/* Выезд */}
+        <div className="fh-bookbar-cell" style={cellStyle}>
+          <span style={labelStyle}>Выезд</span>
           <button
-            id="bb-checkout"
             type="button"
             className="fh-date-trigger"
             onClick={() => openCalendar('checkOut')}
             aria-expanded={activeCalendar === 'checkOut'}
+            style={{ display: 'flex', alignItems: 'center', gap: 9 }}
           >
+            <CalIcon />
             {humanDate(checkOut)}
           </button>
           {activeCalendar === 'checkOut' && (
@@ -256,50 +255,58 @@ function BookingBar() {
           )}
         </div>
 
-        <div className="fh-bookingbar-cell" style={{ padding: '20px 26px', borderRight: '1px solid rgba(43,38,32,0.1)' }}>
-          <label style={fieldLabel} htmlFor="bb-guests">Гости</label>
-          <select
-            id="bb-guests"
-            value={adults}
-            onChange={(e) => setAdults(e.target.value)}
-            style={{ ...fieldInput, appearance: 'none', WebkitAppearance: 'none' }}
-          >
-            <option value="1">1 гость</option>
-            <option value="2">2 гостя</option>
-            <option value="3">3 гостя</option>
-            <option value="4">4 гостя</option>
-            <option value="5">5 гостей</option>
-            <option value="6">6 гостей</option>
-            <option value="7">7 гостей</option>
-            <option value="8">8+ гостей</option>
-          </select>
+        {/* Гости */}
+        <div className="fh-bookbar-cell" style={{ ...cellStyle }}>
+          <span style={labelStyle}>Гости</span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
+            <GuestsIcon />
+            <select
+              value={adults}
+              onChange={(e) => setAdults(e.target.value)}
+              className="fh-oswald"
+              aria-label="Число гостей"
+              style={{ appearance: 'none', WebkitAppearance: 'none', border: 'none', background: 'transparent', fontSize: 17, fontWeight: 600, color: '#2b2620', cursor: 'pointer', outline: 'none', padding: 0, width: '100%' }}
+            >
+              <option value="1">1 гость</option>
+              <option value="2">2 гостя</option>
+              <option value="3">3 гостя</option>
+              <option value="4">4 гостя</option>
+              <option value="5">5 гостей</option>
+              <option value="6">6 гостей</option>
+              <option value="7">7 гостей</option>
+              <option value="8">8+ гостей</option>
+            </select>
+          </span>
         </div>
 
-        <div className="fh-bookingbar-cell fh-bookingbar-submit" style={{ padding: 14, display: 'flex', alignItems: 'center' }}>
+        {/* Кнопка */}
+        <div className="fh-bookbar-cell" style={{ padding: 12, display: 'flex', alignItems: 'center' }}>
           <button
             type="submit"
-            className="fh-btn-primary"
+            className="fh-oswald fh-btn-primary"
             style={{
               height: '100%',
-              minHeight: 56,
+              minHeight: 60,
               width: '100%',
-              whiteSpace: 'nowrap',
               background: '#b8762e',
               color: '#fff',
               border: 'none',
               cursor: 'pointer',
-              fontSize: 15.5,
+              fontSize: 15,
               fontWeight: 600,
-              padding: '0 30px',
-              borderRadius: 10,
-              boxShadow: '0 8px 22px rgba(184,118,46,0.3)',
+              letterSpacing: '0.05em',
+              textTransform: 'uppercase',
+              padding: '0 32px',
+              borderRadius: 8,
+              whiteSpace: 'nowrap',
+              boxShadow: '0 8px 22px rgba(184,118,46,0.36)',
             }}
           >
             Найти свободный дом →
           </button>
         </div>
-      </form>
-    </section>
+      </div>
+    </form>
   )
 }
 
