@@ -87,14 +87,15 @@ function BrandMark({ light = false }) {
     <>
       <img
         src={siteLogos.icon}
-        alt="Family House"
+        alt="Семейный дом"
         style={{ height: 44, width: 'auto', display: 'block', flex: 'none' }}
+        className="fh-brand-logo"
       />
       <span className="fh-oswald" style={{ display: 'flex', flexDirection: 'column', lineHeight: 0.98, textAlign: 'left' }}>
-        <span style={{ fontSize: 20, fontWeight: 700, letterSpacing: '0.06em', color: light ? '#f6efe1' : '#2b2620' }}>
-          FAMILY HOUSE
+        <span className="fh-brand-name" style={{ fontSize: 20, fontWeight: 700, letterSpacing: '0.06em', color: light ? '#f6efe1' : '#2b2620' }}>
+          СЕМЕЙНЫЙ ДОМ
         </span>
-        <span style={{ fontSize: 10.5, fontWeight: 500, letterSpacing: '0.28em', color: '#b8762e' }}>
+        <span className="fh-brand-sub" style={{ fontSize: 10.5, fontWeight: 500, letterSpacing: '0.28em', color: '#b8762e' }}>
           БАЗА ОТДЫХА · РЫБАЛКА
         </span>
       </span>
@@ -102,49 +103,17 @@ function BrandMark({ light = false }) {
   )
 }
 
-/* ---------------- Верхняя строка ---------------- */
-function TopStrip() {
-  return (
-    <div style={{ background: '#221d18', color: '#cabfae', fontSize: 13 }}>
-      <div
-        className="fh-section-pad"
-        style={{
-          maxWidth: 1280,
-          margin: '0 auto',
-          padding: '9px 32px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: 20,
-          flexWrap: 'wrap',
-        }}
-      >
-        <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#7bb27b', boxShadow: '0 0 0 3px rgba(123,178,123,0.25)', flex: 'none' }} />
-          Ярославская область, д. Набережная · на реке Сить у Рыбинского водохранилища
-        </span>
-        <span style={{ display: 'flex', alignItems: 'center', gap: 22 }}>
-          <span className="fh-topstrip-note" style={{ color: '#8c8071' }}>Приём гостей 10:00–20:00, без выходных</span>
-          <a href="tel:+74951510082" style={{ color: '#e7ddc8', textDecoration: 'none', fontWeight: 700, whiteSpace: 'nowrap' }}>
-            +7 (495) 151-00-82
-          </a>
-        </span>
-      </div>
-    </div>
-  )
-}
-
 /* ---------------- Header ---------------- */
-function Header({ activeId, onNav, onBook, onBurger, mobileOpen }) {
+function Header({ activeId, onNav, onBook, onBurger, mobileOpen, hidden, scrolled }) {
   return (
     <>
-      <TopStrip />
       <header
+        className={`fh-header${hidden ? ' is-hidden' : ''}${scrolled ? ' is-scrolled' : ''}`}
         style={{
           position: 'sticky',
           top: 0,
           zIndex: 50,
-          background: 'rgba(243,237,224,0.9)',
+          background: 'rgba(243,237,224,0.92)',
           backdropFilter: 'blur(14px)',
           WebkitBackdropFilter: 'blur(14px)',
           borderBottom: '1px solid rgba(43,38,32,0.1)',
@@ -165,7 +134,7 @@ function Header({ activeId, onNav, onBook, onBurger, mobileOpen }) {
           <button
             type="button"
             onClick={() => onNav('/')}
-            aria-label="Family House — на главную"
+            aria-label="Семейный дом — на главную"
             style={{ display: 'flex', alignItems: 'center', gap: 12, background: 'none', border: 'none', cursor: 'pointer', padding: 0, flex: 'none' }}
           >
             <BrandMark />
@@ -273,7 +242,7 @@ function Footer({ onNav }) {
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               <img src={siteLogos.icon} alt="" style={{ height: 42, width: 'auto' }} />
               <span className="fh-oswald" style={{ fontSize: 20, fontWeight: 700, letterSpacing: '0.06em', color: '#f6efe1' }}>
-                FAMILY HOUSE
+                СЕМЕЙНЫЙ ДОМ
               </span>
             </div>
             <p style={{ fontSize: 14.5, lineHeight: 1.7, color: '#8c8071', margin: '18px 0 0', maxWidth: 340 }}>
@@ -313,7 +282,7 @@ function Footer({ onNav }) {
           </div>
         </div>
         <div style={{ paddingTop: 26, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
-          <span style={{ fontSize: 13, color: '#6f655a' }}>© 2026 Family House. Все права защищены.</span>
+          <span style={{ fontSize: 13, color: '#6f655a' }}>© 2026 «Семейный дом». Все права защищены.</span>
           <span style={{ fontSize: 13, color: '#6f655a' }}>
             {legal.company} · ИНН {legal.inn} · ОГРН {legal.ogrn}
           </span>
@@ -328,12 +297,40 @@ function SiteShell({ activeId, children }) {
   const navigate = useNavigate()
   const location = useLocation()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [headerHidden, setHeaderHidden] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const [toasts, setToasts] = useState([])
   const counter = useRef(0)
+  const lastScrollY = useRef(0)
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0 })
+    lastScrollY.current = 0
+    // headerHidden не сбрасываем здесь: у каждой страницы свой SiteShell
+    // (свежий стейт при монтировании), а обработчик скролла держит шапку
+    // видимой у самого верха страницы.
   }, [location.pathname])
+
+  // Шапка прячется при прокрутке вниз и появляется при прокрутке вверх.
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY
+      setScrolled(y > 8)
+      // У самого верха — всегда показываем шапку.
+      if (y < 90) {
+        setHeaderHidden(false)
+        lastScrollY.current = y
+        return
+      }
+      const delta = y - lastScrollY.current
+      // Небольшой порог, чтобы не «дёргалась» на микродвижениях.
+      if (Math.abs(delta) < 8) return
+      setHeaderHidden(delta > 0)
+      lastScrollY.current = y
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   useEffect(() => {
     if (!mobileOpen) return undefined
@@ -384,12 +381,14 @@ function SiteShell({ activeId, children }) {
 
   return (
     <ShellContext.Provider value={{ openBooking, addToast, onNav: navigate }}>
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#f3ede0', overflowX: 'hidden' }}>
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#f3ede0', overflowX: 'clip' }}>
         <Header
           activeId={activeId}
           onNav={onNav}
           onBook={openBooking}
           mobileOpen={mobileOpen}
+          hidden={headerHidden && !mobileOpen}
+          scrolled={scrolled}
           onBurger={() => setMobileOpen((v) => !v)}
         />
 

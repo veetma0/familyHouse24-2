@@ -53,7 +53,7 @@ function ReviewsContent() {
           </div>
 
           <div data-reveal data-reveal-stagger="off" style={{ background: '#fff', border: '1px solid rgba(43,38,32,0.12)', borderRadius: 12, overflow: 'hidden', display: 'flex', flexDirection: 'column', minHeight: 680 }}>
-            <iframe src={yandex.widget} title="Отзывы о Family House на Яндекс.Картах" loading="lazy" style={{ width: '100%', height: '100%', minHeight: 680, border: 0, display: 'block' }} />
+            <iframe src={yandex.widget} title="Отзывы о базе «Семейный дом» на Яндекс.Картах" loading="lazy" style={{ width: '100%', height: '100%', minHeight: 680, border: 0, display: 'block' }} />
           </div>
         </div>
 

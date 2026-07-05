@@ -25,7 +25,8 @@ function HomeContent() {
   const tabs = [{ id: 'all', label: 'Все дома' }, ...cottages.map((c) => ({ id: c.id, label: c.name }))]
   const filtered = filter === 'all' ? cottages : cottages.filter((c) => c.id === filter)
   const gActive = homeGallery[galleryIdx] || homeGallery[0]
-  const topCats = yandex.categories.slice(0, 5)
+  // Показываем топ-оценки гостей, кроме оценки персонала.
+  const topCats = yandex.categories.filter((c) => c.t !== 'Персонал').slice(0, 5)
 
   return (
     <>
@@ -44,14 +45,14 @@ function HomeContent() {
         <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
           <img
             src={HERO_IMG}
-            alt="Аэропанорама базы Family House на реке Сить"
+            alt="Аэропанорама базы «Семейный дом» на реке Сить"
             className="fh-kenburns"
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 55%' }}
           />
         </div>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(20,18,14,0.55) 0%, rgba(20,18,14,0.15) 32%, rgba(20,18,14,0.35) 62%, rgba(20,18,14,0.9) 100%)' }} />
 
-        {/* Рейтинг */}
+        {/* Рейтинг (десктоп — плашка в углу) */}
         <div
           className="fh-hero-badge"
           style={{ position: 'absolute', top: 34, right: 32, display: 'flex', alignItems: 'center', gap: 12, background: 'rgba(20,18,14,0.5)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', border: '1px solid rgba(246,239,225,0.2)', borderRadius: 4, padding: '12px 18px' }}
@@ -65,13 +66,19 @@ function HomeContent() {
 
         <div className="fh-section-pad" style={{ position: 'relative', ...wrap, width: '100%', padding: '0 32px 54px' }}>
           <div className="fh-hero-reveal" style={{ maxWidth: 860 }}>
-            <span className="fh-oswald" style={{ display: 'inline-block', fontSize: 13, fontWeight: 600, letterSpacing: '0.32em', textTransform: 'uppercase', color: '#e0b45f', paddingBottom: 14 }}>
+            {/* Рейтинг (мобильная версия — в потоке, не перекрывает заголовок) */}
+            <span className="fh-hero-rating fh-oswald">
+              <span className="fh-hero-rating-stars">★★★★★</span>
+              <b>4.9</b>
+              <span className="fh-hero-rating-label">216 оценок на Яндекс.Картах</span>
+            </span>
+            <span className="fh-oswald fh-hero-kicker" style={{ display: 'inline-block', fontSize: 13, fontWeight: 600, letterSpacing: '0.32em', textTransform: 'uppercase', color: '#e0b45f', paddingBottom: 14 }}>
               Эко-отель · Рыбинское водохранилище
             </span>
-            <h1 className="fh-oswald" style={{ fontSize: 'clamp(40px,7vw,104px)', fontWeight: 700, lineHeight: 0.94, letterSpacing: '0.01em', textTransform: 'uppercase', color: '#f6efe1', margin: 0, textShadow: '0 4px 30px rgba(0,0,0,0.4)' }}>
+            <h1 className="fh-oswald fh-hero-h1" style={{ fontSize: 'clamp(34px,7vw,104px)', fontWeight: 700, lineHeight: 0.96, letterSpacing: '0.01em', textTransform: 'uppercase', color: '#f6efe1', margin: 0, textShadow: '0 4px 30px rgba(0,0,0,0.4)' }}>
               Рыболовная база<br />отдыха<br />«Семейный дом»
             </h1>
-            <p style={{ fontSize: 19, lineHeight: 1.65, color: 'rgba(243,237,224,0.9)', margin: '22px 0 0', maxWidth: 620 }}>
+            <p className="fh-hero-lead" style={{ fontSize: 'clamp(16px,4.4vw,19px)', lineHeight: 1.6, color: 'rgba(243,237,224,0.9)', margin: '20px 0 0', maxWidth: 620 }}>
               Дома и номера у самой воды, русская баня на кедре, катера с егерем и домашняя кухня — для рыбаков, семей и хорошей компании. Круглый год.
             </p>
           </div>
@@ -82,14 +89,14 @@ function HomeContent() {
       </section>
 
       {/* ============ ИНТРО ============ */}
-      <section style={{ padding: '96px 32px 40px' }} className="fh-section-pad">
+      <section style={{ padding: 'clamp(54px, 10vw, 96px) 32px 40px' }} className="fh-section-pad">
         <div style={{ maxWidth: 1000, margin: '0 auto', textAlign: 'center' }} data-reveal>
           <span style={kicker}>О базе отдыха</span>
           <h2 style={{ ...h2, fontSize: 'clamp(34px,4.6vw,60px)', color: '#2b2620', margin: '16px 0 0' }}>
             Прекрасное решение для комфортного отдыха
           </h2>
           <p style={{ fontSize: 18, lineHeight: 1.75, color: '#6b6157', margin: '22px auto 0', maxWidth: 760 }}>
-            Family House стоит на берегу реки Сить, в сосновом бору, в 10 км от Рыбинского водохранилища. Мы принимаем рыбаков, охотников, яхтсменов и семьи с детьми — и всё для отдыха уже ждёт вас на берегу.
+            «Семейный дом» стоит на берегу реки Сить, в сосновом бору, в 10 км от Рыбинского водохранилища. Мы принимаем рыбаков, охотников, яхтсменов и семьи с детьми — и всё для отдыха уже ждёт вас на берегу.
           </p>
         </div>
       </section>
@@ -116,7 +123,7 @@ function HomeContent() {
       </section>
 
       {/* ============ РАЗМЕЩЕНИЕ (фильтр + галерея с флипом) ============ */}
-      <section style={{ padding: '80px 32px 40px' }} className="fh-section-pad">
+      <section style={{ padding: 'clamp(48px, 9vw, 80px) 32px 40px' }} className="fh-section-pad">
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           <div style={{ textAlign: 'center' }} data-reveal data-reveal-stagger="off">
             <span style={kicker}>Дома у воды</span>
@@ -200,7 +207,7 @@ function HomeContent() {
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(28,20,12,0.82), rgba(28,20,12,0.68))' }} />
         <div className="fh-section-pad" style={{ position: 'relative', maxWidth: 1180, margin: '0 auto', padding: '96px 32px' }}>
           <div style={{ textAlign: 'center', maxWidth: 760, margin: '0 auto' }} data-reveal data-reveal-stagger="off">
-            <span style={kickerGold}>Если рыбалка — то в Family House</span>
+            <span style={kickerGold}>Если рыбалка — то в «Семейный дом»</span>
             <h2 style={{ ...h2, fontSize: 'clamp(32px,4.4vw,58px)', color: '#f6efe1', margin: '14px 0 0' }}>
               Рыбалка на Рыбинском водохранилище
             </h2>
@@ -225,7 +232,7 @@ function HomeContent() {
       </section>
 
       {/* ============ ИНФРАСТРУКТУРА (интерактивная галерея) ============ */}
-      <section style={{ padding: '96px 32px 40px' }} className="fh-section-pad">
+      <section style={{ padding: 'clamp(54px, 10vw, 96px) 32px 40px' }} className="fh-section-pad">
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           <div style={{ textAlign: 'center' }} data-reveal data-reveal-stagger="off">
             <span style={kicker}>Всё в одном месте</span>
@@ -263,7 +270,7 @@ function HomeContent() {
       </section>
 
       {/* ============ ОТЗЫВЫ · ЯНДЕКС.КАРТЫ ============ */}
-      <section style={{ padding: '80px 32px 40px' }} className="fh-section-pad">
+      <section style={{ padding: 'clamp(48px, 9vw, 80px) 32px 40px' }} className="fh-section-pad">
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 40 }} data-reveal data-reveal-stagger="off">
             <span style={kicker}>Отзывы гостей · Яндекс.Карты</span>
@@ -295,7 +302,7 @@ function HomeContent() {
             </div>
 
             <div style={{ background: '#fff', border: '1px solid rgba(43,38,32,0.12)', borderRadius: 12, overflow: 'hidden', display: 'flex', flexDirection: 'column', minHeight: 520 }}>
-              <iframe src={yandex.widget} title="Отзывы о Family House на Яндекс.Картах" loading="lazy" style={{ width: '100%', height: '100%', minHeight: 520, border: 0, display: 'block' }} />
+              <iframe src={yandex.widget} title="Отзывы о базе «Семейный дом» на Яндекс.Картах" loading="lazy" style={{ width: '100%', height: '100%', minHeight: 520, border: 0, display: 'block' }} />
             </div>
           </div>
 
@@ -308,10 +315,10 @@ function HomeContent() {
       </section>
 
       {/* ============ КАРТА + КОНТАКТЫ ============ */}
-      <section style={{ padding: '80px 32px 40px' }} className="fh-section-pad">
+      <section style={{ padding: 'clamp(48px, 9vw, 80px) 32px 40px' }} className="fh-section-pad">
         <div className="fh-directions" style={{ maxWidth: 1280, margin: '0 auto', borderRadius: 10, overflow: 'hidden', background: '#2b2620' }} data-reveal data-reveal-stagger="off">
           <div style={{ minHeight: 420 }}>
-            <iframe src={mapEmbedUrl} title="Карта проезда — Family House" loading="lazy" allowFullScreen style={{ width: '100%', height: '100%', minHeight: 420, border: 0, display: 'block' }} />
+            <iframe src={mapEmbedUrl} title="Карта проезда — база «Семейный дом»" loading="lazy" allowFullScreen style={{ width: '100%', height: '100%', minHeight: 420, border: 0, display: 'block' }} />
           </div>
           <div className="fh-directions-pad" style={{ padding: '56px 52px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <span style={kickerGold}>Как добраться</span>
@@ -343,13 +350,13 @@ function HomeContent() {
       </section>
 
       {/* ============ CTA ============ */}
-      <section style={{ padding: '40px 32px 96px' }} className="fh-section-pad">
+      <section style={{ padding: '40px 32px clamp(60px, 11vw, 96px)' }} className="fh-section-pad">
         <div style={{ maxWidth: 1280, margin: '0 auto', position: 'relative', borderRadius: 12, overflow: 'hidden' }} data-reveal data-reveal-stagger="off">
           <img src={HERO_IMG} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(120deg, rgba(20,18,14,0.9), rgba(20,18,14,0.6))' }} />
           <div style={{ position: 'relative', padding: '72px 40px', textAlign: 'center' }}>
             <h2 style={{ ...h2, ...oswald, fontSize: 'clamp(30px,4.2vw,56px)', color: '#f6efe1', margin: 0, lineHeight: 1.03 }}>
-              Готовы к незабываемому<br />отдыху в «Family House»?
+              Готовы к незабываемому<br />отдыху в «Семейный дом»?
             </h2>
             <p style={{ fontSize: 17, color: 'rgba(243,237,224,0.85)', margin: '18px auto 30px', maxWidth: 560 }}>
               Выберите даты — и мы покажем свободные дома прямо сейчас. Гарантируем лучшую цену без скрытых комиссий.

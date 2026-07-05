@@ -50,7 +50,7 @@ function ContactsContent() {
     }
 
     const lines = [
-      'Заявка с сайта Family House',
+      'Заявка с сайта «Семейный дом»',
       `Имя: ${name}`,
       `Телефон: ${phone}`,
       email ? `Email: ${email}` : null,
@@ -112,7 +112,7 @@ function ContactsContent() {
       {/* КАРТА */}
       <section style={{ padding: '30px 32px 40px' }} className="fh-section-pad">
         <div style={{ maxWidth: 1180, margin: '0 auto', borderRadius: 10, overflow: 'hidden', border: '1px solid rgba(43,38,32,0.12)', minHeight: 440 }} data-reveal data-reveal-stagger="off">
-          <iframe src={mapEmbedUrl} title="Карта проезда — Family House" loading="lazy" allowFullScreen style={{ width: '100%', height: '100%', minHeight: 440, border: 0, display: 'block' }} />
+          <iframe src={mapEmbedUrl} title="Карта проезда — база «Семейный дом»" loading="lazy" allowFullScreen style={{ width: '100%', height: '100%', minHeight: 440, border: 0, display: 'block' }} />
         </div>
       </section>
 

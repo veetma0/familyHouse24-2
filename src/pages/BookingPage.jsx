@@ -80,7 +80,7 @@ function BookingContent() {
                 </div>
               )}
               <iframe
-                title="Бронирование Family House"
+                title="Бронирование — база «Семейный дом»"
                 src={iframeUrl}
                 onLoad={() => setLoaded(true)}
                 className="fh-booking-iframe"

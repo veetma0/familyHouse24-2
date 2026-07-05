@@ -18,7 +18,8 @@ body {
   color: #2b2620;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  /* clip (не hidden): гасит горизонтальный вылет, но не ломает position: sticky у шапки */
+  overflow-x: clip;
 }
 input,
 select,
@@ -266,6 +267,52 @@ img {
 }
 
 /* ============================================================
+   Hero: рейтинг (десктоп — плашка в углу, мобильные — в потоке)
+   ============================================================ */
+.fh-hero-rating {
+  display: none; /* видна только на мобильных, включается в медиазапросе */
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: 18px;
+  padding: 8px 15px;
+  border-radius: 999px;
+  background: rgba(20, 18, 14, 0.5);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(246, 239, 225, 0.22);
+}
+.fh-hero-rating .fh-hero-rating-stars {
+  color: #e0b45f;
+  letter-spacing: 0.08em;
+  font-size: 13px;
+}
+.fh-hero-rating b {
+  color: #f6efe1;
+  font-size: 17px;
+  font-weight: 700;
+}
+.fh-hero-rating .fh-hero-rating-label {
+  color: #d3c8b5;
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+@media (max-width: 680px) {
+  .fh-hero-badge {
+    display: none !important;
+  }
+  .fh-hero-rating {
+    display: inline-flex;
+  }
+  .fh-hero-kicker {
+    font-size: 11.5px !important;
+    letter-spacing: 0.22em !important;
+  }
+}
+
+/* ============================================================
    Раскладки дизайна
    ============================================================ */
 
@@ -379,6 +426,27 @@ img {
 /* ============================================================
    Хедер / бургер / мобильное меню
    ============================================================ */
+/* Плавное авто-скрытие шапки при прокрутке (в основном на мобильных). */
+.fh-header {
+  transition: transform 0.42s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.3s ease, background 0.3s ease;
+  will-change: transform;
+}
+.fh-header.is-scrolled {
+  box-shadow: 0 10px 30px rgba(28, 24, 20, 0.12);
+}
+/* Скрытие вверх — только на мобильных/планшетах, где показан бургер. */
+@media (max-width: 1040px) {
+  .fh-header.is-hidden {
+    transform: translateY(-100%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fh-header {
+    transition: none;
+  }
+}
+
 .fh-burger {
   display: none;
   flex-direction: column;
@@ -426,9 +494,10 @@ img {
   backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* flex-start (не center): при 10+ пунктах меню прокручивается и ничего не обрезается */
+  justify-content: flex-start;
   gap: 2px;
-  padding: 104px 30px 44px;
+  padding: 88px 28px 40px;
   opacity: 0;
   visibility: hidden;
   transform: translateY(2%) scale(1.04);
@@ -485,7 +554,7 @@ img {
 }
 .fh-mobile-link {
   font-family: 'Oswald', sans-serif;
-  font-size: 26px;
+  font-size: 23px;
   font-weight: 600;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -493,7 +562,7 @@ img {
   background: none;
   border: none;
   text-align: left;
-  padding: 13px 0;
+  padding: 11px 0;
   cursor: pointer;
   border-bottom: 1px solid rgba(246, 239, 225, 0.1);
   transition: color 0.25s ease,
@@ -544,9 +613,6 @@ img {
   }
   .fh-masonry {
     columns: 2;
-  }
-  .fh-topstrip-note {
-    display: none;
   }
 }
 
@@ -639,11 +705,6 @@ img {
   }
   .fh-cta-actions > * {
     width: 100% !important;
-  }
-  .fh-hero-badge {
-    top: 20px !important;
-    right: 16px !important;
-    padding: 8px 12px !important;
   }
   .fh-form-2 {
     grid-template-columns: 1fr !important;
