@@ -33,7 +33,7 @@ function SimpleContent({ pageKey }) {
       {/* ПОДРОБНЕЕ + ЧТО ВКЛЮЧЕНО */}
       <section style={{ padding: '76px 32px 20px' }} className="fh-section-pad">
         <div
-          className={`fh-about${pg.itemsGrid === '3-2' || pg.amenitiesStack ? ' fh-about--stack' : ''}`}
+          className={`fh-about${pg.amenitiesStack ? ' fh-about--stack' : ''}`}
           style={{ maxWidth: 1180, margin: '0 auto' }}
         >
           <div data-reveal data-reveal-stagger="off">
