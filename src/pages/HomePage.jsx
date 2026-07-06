@@ -5,6 +5,8 @@ import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import {
   cottages,
+  homeHero,
+  homeAbout,
   homeBands,
   fishStats,
   homeGallery,
@@ -53,33 +55,49 @@ function HomeContent() {
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(20,18,14,0.55) 0%, rgba(20,18,14,0.15) 32%, rgba(20,18,14,0.35) 62%, rgba(20,18,14,0.9) 100%)' }} />
 
         {/* Рейтинг (десктоп — плашка в углу) */}
-        <div
+        <a
+          href={yandex.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Оценка ${yandex.rating} на Яндекс.Картах — открыть отзывы`}
           className="fh-hero-badge"
           style={{ position: 'absolute', top: 34, right: 32, display: 'flex', alignItems: 'center', gap: 12, background: 'rgba(20,18,14,0.5)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', border: '1px solid rgba(246,239,225,0.2)', borderRadius: 4, padding: '12px 18px' }}
         >
-          <span className="fh-oswald" style={{ fontSize: 34, fontWeight: 700, color: '#f6efe1', lineHeight: 1 }}>4.9</span>
+          <span className="fh-oswald" style={{ fontSize: 34, fontWeight: 700, color: '#f6efe1', lineHeight: 1 }}>{yandex.rating}</span>
           <span style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ color: '#e0b45f', fontSize: 14, letterSpacing: '0.14em' }}>★★★★★</span>
             <span style={{ color: '#cabfae', fontSize: 12 }}>оценка гостей</span>
           </span>
-        </div>
+        </a>
 
-        <div className="fh-section-pad" style={{ position: 'relative', ...wrap, width: '100%', padding: '0 32px 54px' }}>
+        <div className="fh-section-pad fh-hero-pad" style={{ position: 'relative', ...wrap, width: '100%', padding: '0 36px 54px' }}>
           <div className="fh-hero-reveal" style={{ maxWidth: 860 }}>
             {/* Рейтинг (мобильная версия — в потоке, не перекрывает заголовок) */}
-            <span className="fh-hero-rating fh-oswald">
+            <a
+              href={yandex.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Оценка ${yandex.rating} на Яндекс.Картах — открыть отзывы`}
+              className="fh-hero-rating fh-oswald"
+            >
               <span className="fh-hero-rating-stars">★★★★★</span>
-              <b>4.9</b>
-              <span className="fh-hero-rating-label">216 оценок на Яндекс.Картах</span>
+              <b>{yandex.rating}</b>
+              <span className="fh-hero-rating-label">{yandex.ratingsCount} оценок на Яндекс.Картах</span>
+            </a>
+            <span className="fh-oswald fh-hero-kicker" style={{ display: 'inline-block', fontSize: 13, fontWeight: 600, letterSpacing: '0.32em', textTransform: 'uppercase', color: '#e0b45f', paddingBottom: 18 }}>
+              {homeHero.kicker}
             </span>
-            <span className="fh-oswald fh-hero-kicker" style={{ display: 'inline-block', fontSize: 13, fontWeight: 600, letterSpacing: '0.32em', textTransform: 'uppercase', color: '#e0b45f', paddingBottom: 14 }}>
-              Эко-отель · Рыбинское водохранилище
-            </span>
-            <h1 className="fh-oswald fh-hero-h1" style={{ fontSize: 'clamp(34px,7vw,104px)', fontWeight: 700, lineHeight: 0.96, letterSpacing: '0.01em', textTransform: 'uppercase', color: '#f6efe1', margin: 0, textShadow: '0 4px 30px rgba(0,0,0,0.4)' }}>
+            <h1 className="fh-oswald fh-hero-h1" style={{ fontSize: 'clamp(34px,7vw,104px)', fontWeight: 700, lineHeight: 1.06, letterSpacing: '0.01em', textTransform: 'uppercase', color: '#f6efe1', margin: 0, textShadow: '0 4px 30px rgba(0,0,0,0.4)' }}>
               Рыболовная база<br />отдыха<br />«Семейный дом»
             </h1>
-            <p className="fh-hero-lead" style={{ fontSize: 'clamp(16px,4.4vw,19px)', lineHeight: 1.6, color: 'rgba(243,237,224,0.9)', margin: '20px 0 0', maxWidth: 620 }}>
-              Дома и номера у самой воды, русская баня на кедре, катера с егерем и домашняя кухня — для рыбаков, семей и хорошей компании. Круглый год.
+            <p className="fh-oswald" style={{ fontSize: 'clamp(14px,3.2vw,18px)', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#e0b45f', margin: '18px 0 0' }}>
+              {homeHero.subtitle}
+            </p>
+            <p className="fh-hero-lead" style={{ fontSize: 'clamp(16px,4.4vw,19px)', lineHeight: 1.6, color: 'rgba(243,237,224,0.95)', margin: '16px 0 0', maxWidth: 680, fontWeight: 500 }}>
+              {homeHero.welcome}
+            </p>
+            <p className="fh-hero-lead" style={{ fontSize: 'clamp(15px,3.8vw,17px)', lineHeight: 1.65, color: 'rgba(243,237,224,0.88)', margin: '14px 0 0', maxWidth: 680 }}>
+              {homeHero.lead}
             </p>
           </div>
           <div style={{ marginTop: 34 }}>
@@ -90,18 +108,23 @@ function HomeContent() {
 
       {/* ============ ИНТРО ============ */}
       <section style={{ padding: 'clamp(54px, 10vw, 96px) 32px 40px' }} className="fh-section-pad">
-        <div style={{ maxWidth: 1000, margin: '0 auto', textAlign: 'center' }} data-reveal>
-          <span style={kicker}>О базе отдыха</span>
-          <h2 style={{ ...h2, fontSize: 'clamp(34px,4.6vw,60px)', color: '#2b2620', margin: '16px 0 0' }}>
-            Прекрасное решение для комфортного отдыха
-          </h2>
-          <p style={{ fontSize: 18, lineHeight: 1.75, color: '#6b6157', margin: '22px auto 0', maxWidth: 760 }}>
-            «Семейный дом» стоит на берегу реки Сить, в сосновом бору, в 10 км от Рыбинского водохранилища. Мы принимаем рыбаков, охотников, яхтсменов и семьи с детьми — и всё для отдыха уже ждёт вас на берегу.
-          </p>
+        <div style={{ maxWidth: 680, margin: '0 auto' }} data-reveal>
+          <div style={{ textAlign: 'center', marginBottom: 32 }}>
+            <span style={kicker}>{homeAbout.kicker}</span>
+            <h2 style={{ ...h2, fontSize: 'clamp(30px,4.2vw,52px)', color: '#2b2620', margin: '16px 0 0', lineHeight: 1.15 }}>
+              {homeAbout.title}
+            </h2>
+          </div>
+          <div className="fh-about-text">
+            <p className="fh-about-text-lead">{homeAbout.lead}</p>
+            {homeAbout.paragraphs.map((p) => (
+              <p key={p.slice(0, 40)}>{p}</p>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ============ НУМЕРОВАННЫЕ ПОЛОСЫ 01–05 ============ */}
+      {/* ============ НУМЕРОВАННЫЕ ПОЛОСЫ 01–06 ============ */}
       <section style={{ padding: '24px 32px 40px' }} className="fh-section-pad">
         <div style={{ maxWidth: 1180, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 22 }}>
           {homeBands.map((b) => (
@@ -212,7 +235,7 @@ function HomeContent() {
               Рыбалка на Рыбинском водохранилище
             </h2>
             <p style={{ fontSize: 17, lineHeight: 1.7, color: 'rgba(243,237,224,0.85)', margin: '20px 0 0' }}>
-              Больше 35 видов рыбы, а егерь знает рельеф дна и сегодняшние точки клёва. Судак, щука, лещ, окунь, налим и берш — и летом, и в мороз.
+              Рыбинское водохранилище за многие столетия зарекомендовало себя как жемчужина рыбацкой жизни. Более 35 видов рыбы. Наши егеря сделают всё возможное, чтобы вы побили все предыдущие рекорды своего улова!
             </p>
           </div>
           <div className="fh-grid-stats" style={{ marginTop: 52, borderTop: '1px solid rgba(246,239,225,0.18)', borderBottom: '1px solid rgba(246,239,225,0.18)' }} data-reveal data-reveal-stagger="off">

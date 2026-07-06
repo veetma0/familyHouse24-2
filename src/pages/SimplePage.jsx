@@ -32,7 +32,10 @@ function SimpleContent({ pageKey }) {
 
       {/* ПОДРОБНЕЕ + ЧТО ВКЛЮЧЕНО */}
       <section style={{ padding: '76px 32px 20px' }} className="fh-section-pad">
-        <div className="fh-about" style={{ maxWidth: 1180, margin: '0 auto' }}>
+        <div
+          className={`fh-about${pg.itemsGrid === '3-2' || pg.amenitiesStack ? ' fh-about--stack' : ''}`}
+          style={{ maxWidth: 1180, margin: '0 auto' }}
+        >
           <div data-reveal data-reveal-stagger="off">
             <span style={{ ...kicker, letterSpacing: '0.28em' }}>Подробнее</span>
             {(pg.longText || []).map((para, i) => (
@@ -41,9 +44,17 @@ function SimpleContent({ pageKey }) {
           </div>
           <div data-reveal data-reveal-stagger="off" style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.1)', borderRadius: 10, padding: '30px 30px 32px' }}>
             <span className="fh-oswald" style={{ fontSize: 13, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#2b2620' }}>Что включено</span>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 18 }}>
+            <div
+              className={
+                pg.amenitiesGrid === '3'
+                  ? `fh-grid-3 fh-amenities-grid${pg.amenitiesStack ? '' : ' fh-amenities-grid--inline'}`
+                  : pg.itemsGrid === '3-2'
+                    ? 'fh-grid-3 fh-grid-3-2 fh-amenities-grid'
+                    : 'fh-amenities-flex'
+              }
+            >
               {(pg.amenities || []).map((am) => (
-                <span key={am} className="fh-oswald" style={{ fontSize: 13, fontWeight: 500, letterSpacing: '0.03em', textTransform: 'uppercase', color: '#6b5a3f', background: '#efe6d4', border: '1px solid rgba(184,118,46,0.28)', padding: '9px 14px', borderRadius: 999 }}>{am}</span>
+                <span key={am} className="fh-oswald fh-amenity-tag">{am}</span>
               ))}
             </div>
           </div>
@@ -53,7 +64,7 @@ function SimpleContent({ pageKey }) {
       {/* КАРТОЧКИ */}
       <section style={{ padding: '44px 32px 80px' }} className="fh-section-pad">
         <div style={{ maxWidth: 1180, margin: '0 auto' }}>
-          <div className="fh-grid-3">
+          <div className={pg.itemsGrid === '3-2' ? 'fh-grid-3 fh-grid-3-2' : 'fh-grid-3'}>
             {pg.items.map((it) => (
               <div key={it.t} data-reveal className="fh-cardlift" style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.09)', borderRadius: 8, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                 {it.img && (

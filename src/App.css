@@ -282,6 +282,23 @@ img {
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(246, 239, 225, 0.22);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.fh-hero-badge {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+@media (hover: hover) {
+  .fh-hero-badge:hover,
+  .fh-hero-rating:hover {
+    background: rgba(20, 18, 14, 0.68);
+    border-color: rgba(246, 239, 225, 0.38);
+  }
 }
 .fh-hero-rating .fh-hero-rating-stars {
   color: #e0b45f;
@@ -309,6 +326,14 @@ img {
   .fh-hero-kicker {
     font-size: 11.5px !important;
     letter-spacing: 0.22em !important;
+  }
+}
+
+/* Hero: чуть больше боковых отступов у текста заголовка */
+@media (max-width: 720px) {
+  .fh-hero-pad {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
   }
 }
 
@@ -385,11 +410,100 @@ img {
   align-items: start;
 }
 
+.fh-about--stack {
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+.fh-amenity-tag {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #6b5a3f;
+  background: #efe6d4;
+  border: 1px solid rgba(184, 118, 46, 0.28);
+  padding: 9px 14px;
+  border-radius: 999px;
+}
+
+.fh-amenities-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.fh-amenities-grid {
+  margin-top: 18px;
+}
+
+.fh-amenities-grid > .fh-amenity-tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 56px;
+  padding: 14px 18px;
+  border-radius: 8px;
+}
+
+/* 3×3 в боковой колонке (питание и т.п.) — блок остаётся справа от текста */
+.fh-amenities-grid--inline {
+  gap: 10px;
+}
+.fh-amenities-grid--inline > .fh-amenity-tag {
+  font-size: 11.5px;
+  padding: 10px 8px;
+  min-height: 50px;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+}
+
+.fh-about-text {
+  font-size: 17px;
+  line-height: 1.85;
+  color: #5c5349;
+  text-align: left;
+  hyphens: auto;
+}
+
+.fh-about-text p {
+  margin: 0 0 1.35em;
+}
+
+.fh-about-text p:last-child {
+  margin-bottom: 0;
+}
+
+.fh-about-text-lead {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #4a4238;
+  margin-bottom: 1.5em !important;
+  padding-bottom: 1.35em;
+  border-bottom: 1px solid rgba(43, 38, 32, 0.1);
+}
+
 /* Сетки карточек 3-в-ряд (услуги, контакты) */
 .fh-grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+}
+
+/* 3 карточки сверху, 2 снизу по центру */
+.fh-grid-3-2 {
+  grid-template-columns: repeat(6, 1fr);
+}
+.fh-grid-3-2 > *:nth-child(-n + 3) {
+  grid-column: span 2;
+}
+.fh-grid-3-2 > *:nth-child(4) {
+  grid-column: 2 / 4;
+}
+.fh-grid-3-2 > *:nth-child(5) {
+  grid-column: 4 / 6;
 }
 
 /* Масонри фото */
@@ -611,6 +725,14 @@ img {
   .fh-grid-3 {
     grid-template-columns: 1fr 1fr;
   }
+  .fh-grid-3-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .fh-grid-3-2 > *:nth-child(-n + 3),
+  .fh-grid-3-2 > *:nth-child(4),
+  .fh-grid-3-2 > *:nth-child(5) {
+    grid-column: auto;
+  }
   .fh-masonry {
     columns: 2;
   }
@@ -656,8 +778,14 @@ img {
   }
   .fh-cottages-grid,
   .fh-grid-3,
+  .fh-grid-3-2,
   .fh-gallery-thumbs {
     grid-template-columns: 1fr;
+  }
+  .fh-grid-3-2 > *:nth-child(-n + 3),
+  .fh-grid-3-2 > *:nth-child(4),
+  .fh-grid-3-2 > *:nth-child(5) {
+    grid-column: auto;
   }
   .fh-masonry {
     columns: 1;

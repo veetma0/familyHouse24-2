@@ -91,7 +91,7 @@ function BrandMark({ light = false }) {
         style={{ height: 44, width: 'auto', display: 'block', flex: 'none' }}
         className="fh-brand-logo"
       />
-      <span className="fh-oswald" style={{ display: 'flex', flexDirection: 'column', lineHeight: 0.98, textAlign: 'left' }}>
+      <span className="fh-oswald" style={{ display: 'flex', flexDirection: 'column', gap: 4, lineHeight: 1.05, textAlign: 'left' }}>
         <span className="fh-brand-name" style={{ fontSize: 20, fontWeight: 700, letterSpacing: '0.06em', color: light ? '#f6efe1' : '#2b2620' }}>
           СЕМЕЙНЫЙ ДОМ
         </span>
