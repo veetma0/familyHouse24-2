@@ -487,8 +487,12 @@ img {
 }
 
 /* Галерея рыб на странице рыбалки */
-.fh-fish-carousel .fh-image-carousel {
+.fh-fish-carousel .fh-image-carousel,
+.fh-dining-carousel .fh-image-carousel {
   border-radius: 10px;
+}
+.fh-dining-carousel .fh-image-carousel {
+  overflow: hidden;
 }
 
 /* Галерея домов */

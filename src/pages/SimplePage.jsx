@@ -70,6 +70,20 @@ function SimpleContent({ pageKey }) {
         </div>
       </section>
 
+      {pg.diningGallery?.length > 0 && (
+        <section style={{ padding: '0 32px 40px' }} className="fh-section-pad">
+          <div style={{ maxWidth: 1180, margin: '0 auto' }}>
+            <FishGalleryCarousel
+              images={pg.diningGallery}
+              alt="Питание на базе"
+              className="fh-image-carousel fh-image-carousel--infra"
+              wrapperClassName="fh-dining-carousel"
+              fit="cover"
+            />
+          </div>
+        </section>
+      )}
+
       {/* КАРТОЧКИ */}
       <section style={{ padding: '44px 32px 80px' }} className="fh-section-pad">
         <div style={{ maxWidth: pageKey === 'cottages' ? 1280 : 1180, margin: '0 auto' }}>

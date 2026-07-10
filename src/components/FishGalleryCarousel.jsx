@@ -1,17 +1,23 @@
 import ImageCarousel from './ImageCarousel'
 
-function FishGalleryCarousel({ images }) {
+function FishGalleryCarousel({
+  images,
+  alt = 'Рыба водохранилища',
+  className = 'fh-image-carousel fh-image-carousel--fish',
+  wrapperClassName = 'fh-fish-carousel',
+  fit = 'contain',
+}) {
   if (!images?.length) return null
 
   return (
-    <div className="fh-fish-carousel" data-reveal>
+    <div className={wrapperClassName} data-reveal>
       <ImageCarousel
         images={images}
         cover={images[0]}
-        alt="Рыба водохранилища"
-        className="fh-image-carousel fh-image-carousel--fish"
+        alt={alt}
+        className={className}
         showNav
-        fit="contain"
+        fit={fit}
       />
     </div>
   )

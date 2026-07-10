@@ -6,7 +6,11 @@
 const imgSeq = (folder, count, ext = 'webp') =>
   Array.from({ length: count }, (_, i) => `/images/${folder}/${i + 1}.${ext}`)
 
-export const fishGallery = imgSeq('fishing/gallery', 7)
+export const fishGallery = [
+  ...imgSeq('fishing/gallery', 7),
+  ...imgSeq('fishing/catches', 5, 'png'),
+]
+export const diningGallery = imgSeq('dining', 4, 'png')
 
 export const siteLogos = {
   header: '/images/logo/logo-icon.png?v=2',
@@ -276,7 +280,12 @@ export const homeGallery = [
       '/images/old-site/rooms/room-25758011.jpg',
     ],
   },
-  { src: '/images/old-site/activities/extra-25757931.jpg', kicker: 'Питание', caption: 'Домашняя кухня' },
+  {
+    src: '/images/dining/1.png',
+    kicker: 'Питание',
+    caption: 'Домашняя кухня',
+    gallery: imgSeq('dining', 4, 'png'),
+  },
   {
     src: '/images/custom/banya-steam-room.png',
     kicker: 'Баня',
@@ -292,7 +301,7 @@ export const homeGallery = [
       '/images/fishing/summer-silver-shark.png',
       '/images/fishing/summer-excursion.png',
       '/images/fishing/winter-hovercraft-khivus-10.png',
-      '/images/fishing/summer-motor-boat.png',
+      '/images/fishing/rowboat.png',
     ],
   },
   { src: '/images/old-site/activities/extra-19019454.jpg', kicker: 'Причал', caption: 'Закат на реке Сить' },
@@ -337,7 +346,7 @@ export const pages = {
       { t: 'Экскурсионный катер', d: 'Спокойный выход для семейной рыбалки и прогулки по Рыбинке.', img: '/images/fishing/summer-excursion.png', price: '6 000 ₽ / час' },
       { t: 'Аэроглиссер «ХИВУС-10»', d: 'Проходит по тонкому льду и промоинам. Доставка к дальним зимним точкам.', img: '/images/fishing/winter-hovercraft-khivus-10.png', price: '9 000 ₽ / выезд' },
       { t: 'Снегоходы', d: 'Домчат к дальним лункам по льду и обратно в тепло.', img: '/images/fishing/winter-snowmobile-yamaha.png', price: 'по запросу' },
-      { t: 'Лодка с веслами', d: 'Спокойные прогулки и рыбалка у берега на веслах по тихим заводям.', img: '/images/fishing/summer-motor-boat.png', price: '200 ₽ / час' },
+      { t: 'Лодка с веслами', d: 'Спокойные прогулки и рыбалка у берега на веслах по тихим заводям.', img: '/images/fishing/rowboat.png', price: '200 ₽ / час' },
       { t: 'Велосипеды', d: 'Прокат для прогулок по территории базы и лесным тропам вокруг.', img: '/images/fishing/bikes.webp', price: 'по запросу' },
     ],
   },
@@ -362,7 +371,7 @@ export const pages = {
   dining: {
     kicker: 'По-домашнему',
     title: 'Питание',
-    img: '/images/old-site/activities/extra-25757931.jpg',
+    img: '/images/dining/1.png',
     intro: 'Готовим как дома — без полуфабрикатов. Свои продукты, местные фермеры и рыба из Рыбинки. Ваш улов превратим в уху или зажарим на углях.',
     longText: [
       'На нашей базе отдыха организовано трехразовое питание, основанное на рецептах традиционной домашней кухни.',
@@ -370,6 +379,7 @@ export const pages = {
       'Мы также можем приготовить пойманную вами рыбу и подать ее на обед или ужин.',
     ],
     showAmenities: false,
+    diningGallery,
     note: 'Чтобы всё было свежим и горячим, скажите о завтраке, обеде или ужине заранее — лучше накануне вечером.',
     items: [
       { t: 'Завтрак', d: 'Сытное начало дня в 09:00. Скажите накануне вечером.', img: '', price: 'от 300 ₽' },
