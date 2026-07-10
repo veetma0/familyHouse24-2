@@ -3,6 +3,11 @@
 // страниц). Цены домов — из системы бронирования Bnovo, состав и услуги —
 // с основного сайта family-house24.ru.
 
+const imgSeq = (folder, count, ext = 'webp') =>
+  Array.from({ length: count }, (_, i) => `/images/${folder}/${i + 1}.${ext}`)
+
+export const fishGallery = imgSeq('fishing/gallery', 7)
+
 export const siteLogos = {
   header: '/images/logo/logo-icon.png?v=2',
   icon: '/images/logo/logo-icon.png?v=2',
@@ -86,6 +91,11 @@ export const cottages = [
     price: '12 750',
     image: '/images/houses/american-house.png',
     interior: '/images/interiors/american-interior.png',
+    gallery: [
+      '/images/houses/american-house.png',
+      '/images/interiors/american-interior.png',
+      ...imgSeq('houses/gallery/american', 10),
+    ],
   },
   {
     id: 'hunting',
@@ -97,6 +107,11 @@ export const cottages = [
     price: '12 750',
     image: '/images/houses/hunting-house.png',
     interior: '/images/interiors/hunting-interior.png',
+    gallery: [
+      '/images/houses/hunting-house.png',
+      '/images/interiors/hunting-interior.png',
+      ...imgSeq('houses/gallery/hunting', 11),
+    ],
   },
   {
     id: 'scandi',
@@ -108,6 +123,11 @@ export const cottages = [
     price: '11 050',
     image: '/images/houses/scandi-house.png',
     interior: '/images/interiors/scandi-interior.png',
+    gallery: [
+      '/images/houses/scandi-house.png',
+      '/images/interiors/scandi-interior.png',
+      ...imgSeq('houses/gallery/scandi', 6),
+    ],
   },
   {
     id: 'guesthouse',
@@ -119,8 +139,15 @@ export const cottages = [
     price: '3 400',
     image: '/images/houses/guest-house.png',
     interior: '/images/old-site/rooms/room-25758011.jpg',
+    gallery: [
+      '/images/houses/guest-house.png',
+      '/images/old-site/rooms/room-25758011.jpg',
+      ...imgSeq('houses/gallery/guesthouse', 12),
+    ],
   },
 ]
+
+const cottageFacadeImages = cottages.map((c) => c.image)
 
 // ── Hero и блок «О базе» на главной (тексты с family-house24.ru) ──
 export const homeHero = {
@@ -129,11 +156,14 @@ export const homeHero = {
   welcome: 'Рыбинка зовёт! Мы рады приветствовать вас в «Семейный Дом»!',
   lead:
     'Адреналин от борьбы с трофейной рыбой на просторах Рыбинского водохранилища. Азарт охоты в угодьях у реки Сить. Тишина и чистейший воздух, напоённый ароматами леса. Щедрость природы: грибные поляны и ягодные россыпи у ног. Это не отдых — это приключение! Откройте для себя истинный вкус отдыха!',
+  videoUrl:
+    'https://scontent.cdninstagram.com/o1/v/t16/f2/m84/AQPi9Nl9wY8Qh0k3FpBQS55HH5rLQ3f0rTN94sMlySaVVwtm8wZ-AszCNY5ebKTcpWLIBNqjFL_2ovYroHZR-ziPk2sm3eUK_5LxhhY.mp4?_nc_cat=107&_nc_oc=AdoWZZu49pNUn0e5CdvByfda_3VyKINBikbxM1kfdsY0el0LzwsWg1e_EOyCGm0GF_0&_nc_sid=5e9851&_nc_ht=instagram.fotp3-1.fna.fbcdn.net&_nc_ohc=tI6IZlSiMIQQ7kNvwGmJfTJ&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uSUdUVi5DMy4xMjgwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6NjIxNzExMzEzMjE2MTMwLCJhc3NldF9hZ2VfZGF5cyI6MjE3MywidmlfdXNlY2FzZV9pZCI6MTAxNDUsImR1cmF0aW9uX3MiOjEwMCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=6f535c2f91206ac4&_nc_vs=HBksFQIYTGlnX2JhY2tmaWxsX3RpbWVsaW5lX3ZvZC84QjRCNDg2NjVBRTI0NjNDMUFGOUVEQ0VFNDMyMjU5N192aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HTHlRNEJieEsxMHhROE1EQUlRRUZ2dm9sNUUyYnBrd0FBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAmhIrRn67cmgIVAigCQzMsF0BZBmZmZmZmGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHXsB2XCngEA&_nc_gid=2EPO_UHXuL_moNsqmQhOSQ&_nc_ss=7c689&_nc_zt=28&oh=00_AQBNdAkPFufptHAPtuG7-9ZNeZhhItZ_l9MQWDEzaiWvLw&oe=6A495955',
+  videoLabel: 'Видеообзор базы отдыха',
 }
 
 export const homeAbout = {
   kicker: 'О базе отдыха',
-  title: 'Family House — рыболовная база отдыха',
+  title: 'Семейный дом — рыболовная база отдыха',
   lead:
     'Эко-отель в живописном уголке Ярославской области, на берегу реки Сить, в 10 км от Рыбинского водохранилища в окружении соснового бора.',
   paragraphs: [
@@ -160,7 +190,7 @@ export const homeBands = [
   {
     n: '02',
     t: 'Экологически чистый район',
-    d: '«Family House» — территория, окружённая великолепным лесом, на берегу реки Сить в 50 метрах от воды. Многочасовые пешие и вело-прогулки по нашей территории позволят вам набраться здоровья на свежем воздухе!',
+    d: '«Семейный дом» — территория, окружённая великолепным лесом, на берегу реки Сить в 50 метрах от воды. Многочасовые пешие и вело-прогулки по нашей территории позволят вам набраться здоровья на свежем воздухе!',
     img: '/images/custom/entertainment-forest-walk.png',
     imageLeft: true,
     bg: '#b8762e',
@@ -184,7 +214,7 @@ export const homeBands = [
     n: '04',
     t: 'Исторические места Ярославской области',
     d: 'В нескольких километрах от нашей базы — «Прощёный ручей», двухниточный шлюз, затонувшая деревня. Множество красивых и увлекательных мест: заброшенные деревни, действующие храмы.',
-    img: '/images/fishing/summer-excursion.png',
+    img: '/images/custom/proschenyj-ruchey-breitovo.jpg',
     imageLeft: true,
     bg: '#221d18',
     numColor: '#3a332b',
@@ -226,11 +256,45 @@ export const fishStats = [
 
 // ── Интерактивная галерея «Продуманная инфраструктура» ────────
 export const homeGallery = [
-  { src: '/images/old-site/houses/house-25757985.jpg', kicker: 'Территория', caption: 'Дома и двор' },
-  { src: '/images/old-site/rooms/room-25758005.jpg', kicker: 'Внутри', caption: 'Номера и спальни' },
-  { src: '/images/old-site/activities/extra-25757931.jpg', kicker: 'Трактир', caption: 'Домашняя кухня' },
-  { src: '/images/custom/banya-steam-room.png', kicker: 'Баня', caption: 'Русская баня на кедре' },
-  { src: '/images/fishing/summer-main.png', kicker: 'На воде', caption: 'Катера и лодки' },
+  {
+    src: cottageFacadeImages[0],
+    kicker: 'Территория',
+    caption: 'Дома и двор',
+    gallery: cottageFacadeImages,
+  },
+  {
+    src: '/images/houses/gallery/guesthouse/2.webp',
+    kicker: 'Внутри',
+    caption: 'Номера и спальни',
+    gallery: [
+      '/images/houses/gallery/guesthouse/2.webp',
+      '/images/houses/gallery/guesthouse/3.webp',
+      '/images/houses/gallery/guesthouse/4.webp',
+      '/images/houses/gallery/guesthouse/5.webp',
+      '/images/houses/gallery/guesthouse/6.webp',
+      '/images/old-site/rooms/room-25758005.jpg',
+      '/images/old-site/rooms/room-25758011.jpg',
+    ],
+  },
+  { src: '/images/old-site/activities/extra-25757931.jpg', kicker: 'Питание', caption: 'Домашняя кухня' },
+  {
+    src: '/images/custom/banya-steam-room.png',
+    kicker: 'Баня',
+    caption: 'Русская баня на кедре',
+    gallery: imgSeq('banya', 4),
+  },
+  {
+    src: '/images/fishing/summer-main.png',
+    kicker: 'На воде',
+    caption: 'Катера и лодки',
+    gallery: [
+      '/images/fishing/summer-main.png',
+      '/images/fishing/summer-silver-shark.png',
+      '/images/fishing/summer-excursion.png',
+      '/images/fishing/winter-hovercraft-khivus-10.png',
+      '/images/fishing/summer-motor-boat.png',
+    ],
+  },
   { src: '/images/old-site/activities/extra-19019454.jpg', kicker: 'Причал', caption: 'Закат на реке Сить' },
 ]
 
@@ -240,19 +304,20 @@ export const pages = {
     kicker: 'Дома у воды',
     title: 'Размещение',
     img: '/images/old-site/houses/house-25757985.jpg',
-    intro: 'Четыре авторских дома и гостевой дом с номерами. Бельё, кухня, Wi-Fi и парковка — в каждом.',
+    intro: 'Три комфортабельных коттеджа и гостевой дом с номерами. Бельё, кухня, Wi-Fi и парковка — в каждом.',
     longText: [
       'Все дома стоят в сосновом бору у самой воды — с террасами, мангальными зонами и парковкой у крыльца. Внутри уже готово всё для отдыха большой компанией или семьёй: тёплые спальни, кухня с посудой и уютные общие зоны.',
       'Заезд после 15:00, выезд до 12:00. Бельё и полотенца, Wi-Fi на всей территории, при необходимости добавим дополнительное спальное место и детскую кроватку. От террасы до причала — несколько шагов.',
     ],
-    amenities: ['Wi-Fi на территории', 'Кухня и посуда', 'Бельё и полотенца', 'Мангал и дрова', 'Парковка у дома', 'Терраса у воды'],
+    amenities: ['Wi-Fi на территории', 'Кухня и посуда', 'Бельё и полотенца', 'Мангал и дрова', 'Парковка у дома', 'Причал у воды'],
     amenitiesGrid: '3',
+    showItemBooking: true,
     note: 'Цены на «длинные выходные» могут отличаться — уточняйте у администратора. Копите скидку за каждый приезд.',
     items: [
-      { t: 'Американский дом', d: 'До 12 гостей · 290 м². Каминный зал, зимний сад, 3 санузла, гараж.', img: '/images/houses/american-house.png', price: 'от 12 750 ₽' },
-      { t: 'Охотничий дом', d: 'До 10 гостей · 180 м². Сруб из карельской сосны, 2 балкона.', img: '/images/houses/hunting-house.png', price: 'от 12 750 ₽' },
-      { t: 'Скандинавский', d: '6 гостей · 120 м². Сруб карельской сосны, балкон, Wi-Fi.', img: '/images/houses/scandi-house.png', price: 'от 11 050 ₽' },
-      { t: 'Гостевой дом', d: 'До 10 гостей · 310 м². 2 люкса, 3 стандарта, винный погреб.', img: '/images/houses/guest-house.png', price: 'от 3 400 ₽' },
+      { t: 'Американский дом', d: 'До 12 гостей · 290 м². Каминный зал, зимний сад, 3 санузла, гараж.', img: '/images/houses/gallery/american/1.webp', price: 'от 12 750 ₽' },
+      { t: 'Охотничий дом', d: 'До 10 гостей · 180 м². Сруб из карельской сосны, 2 балкона.', img: '/images/houses/gallery/hunting/1.webp', price: 'от 12 750 ₽' },
+      { t: 'Скандинавский', d: '6 гостей · 120 м². Сруб карельской сосны, балкон, Wi-Fi.', img: '/images/houses/gallery/scandi/1.webp', price: 'от 11 050 ₽' },
+      { t: 'Гостевой дом', d: 'До 10 гостей · 310 м². 2 люкса, 3 стандарта, винный погреб.', img: '/images/houses/gallery/guesthouse/1.webp', price: 'от 3 400 ₽' },
     ],
   },
   fishing: {
@@ -264,16 +329,16 @@ export const pages = {
       'Рыбинское водохранилище — настоящее «Рыбинское море» площадью около 4580 км². В нём больше 35 видов рыбы, а наш егерь знает рельеф дна и сегодняшние точки клёва, поэтому вы вернётесь не с пустыми руками.',
       'Летом — троллинг и спиннинг с катера, рыбалка с лодки и азартная ночная ловля налима. Зимой — подлёдный судак, жерлицы на щуку и выезды на снегоходах и аэроглиссере к дальним лункам. Везти с собой ничего не нужно: катера, лодки и снасти уже ждут на берегу.',
     ],
-    amenities: ['Судак', 'Щука', 'Лещ', 'Окунь', 'Налим', 'Берш'],
-    amenitiesGrid: '3',
+    showAmenities: false,
+    fishGallery,
     note: 'Топливо оплачивается по факту. Точный маршрут выхода согласуется с егерем перед рыбалкой.',
     items: [
       { t: 'Катер Silver Shark 580', d: 'Мотор 140 л.с., до 3 человек, 8 часов на воде с егерём. Троллинг и работа по бровкам.', img: '/images/fishing/summer-silver-shark.png', price: '13 000 ₽ / 8 ч' },
       { t: 'Экскурсионный катер', d: 'Спокойный выход для семейной рыбалки и прогулки по Рыбинке.', img: '/images/fishing/summer-excursion.png', price: '6 000 ₽ / час' },
       { t: 'Аэроглиссер «ХИВУС-10»', d: 'Проходит по тонкому льду и промоинам. Доставка к дальним зимним точкам.', img: '/images/fishing/winter-hovercraft-khivus-10.png', price: '9 000 ₽ / выезд' },
       { t: 'Снегоходы', d: 'Домчат к дальним лункам по льду и обратно в тепло.', img: '/images/fishing/winter-snowmobile-yamaha.png', price: 'по запросу' },
-      { t: 'Моторная лодка', d: 'Рыбалка с лодки на бортовые снасти и сплавы по тихим заводям.', img: '/images/fishing/summer-motor-boat.png', price: '200 ₽ / час' },
-      { t: 'Снасти и услуги', d: 'Спиннинг — 500 ₽, поплавочная — 250 ₽, чистка — 100 ₽/кг, копчение — 600 ₽.', img: '', price: '' },
+      { t: 'Лодка с веслами', d: 'Спокойные прогулки и рыбалка у берега на веслах по тихим заводям.', img: '/images/fishing/summer-motor-boat.png', price: '200 ₽ / час' },
+      { t: 'Велосипеды', d: 'Прокат для прогулок по территории базы и лесным тропам вокруг.', img: '/images/fishing/bikes.webp', price: 'по запросу' },
     ],
   },
   banya: {
@@ -285,8 +350,7 @@ export const pages = {
       'Наша баня рублена из кедра — целебный аромат и мягкий, обволакивающий пар. Просторная парилка вмещает 6–8 человек, рядом — душевая и отдельный санузел, так что париться удобно даже большой компанией.',
       'После парилки — каминный зал с живым огнём, где приятно остыть и посидеть за чаем. Веники, простыни и полотенца всегда под рукой. Жаркая баня — лучший финал дня после рыбалки или прогулки по бору.',
     ],
-    amenities: ['Сруб из кедра', 'Парилка 6–8 чел.', 'Каминный зал', 'Душевая', 'Санузел', '40 м²'],
-    amenitiesGrid: '3',
+    showAmenities: false,
     note: 'Минимальное бронирование бани — 2 часа. Забронируйте заранее, чтобы протопить к вашему приходу.',
     items: [
       { t: 'Аренда бани', d: 'Сруб из кедра, каминный зал, парилка на 6–8 человек. Минимум 2 часа.', img: '', price: '1 500 ₽ / час' },
@@ -305,8 +369,7 @@ export const pages = {
       'Для приготовления блюд используются только свежие продукты из нашего подсобного хозяйства или местных производителей, а рыба только из Рыбинского водохранилища.',
       'Мы также можем приготовить пойманную вами рыбу и подать ее на обед или ужин.',
     ],
-    amenities: ['Трёхразовое питание', 'Свои продукты', 'Рыба из Рыбинки', 'Уха из улова', 'Барбекю', 'Копчение рыбы'],
-    amenitiesGrid: '3',
+    showAmenities: false,
     note: 'Чтобы всё было свежим и горячим, скажите о завтраке, обеде или ужине заранее — лучше накануне вечером.',
     items: [
       { t: 'Завтрак', d: 'Сытное начало дня в 09:00. Скажите накануне вечером.', img: '', price: 'от 300 ₽' },
@@ -326,16 +389,15 @@ export const pages = {
       'Отдых на базе — это не только рыбалка. Детская площадка с батутами, волейбол и футбол, русский бильярд у камина и настольные игры для компании: покер, настольный футбол и нарды.',
       'Вокруг — сосновый бор с одними из самых грибных и ягодных мест России, а по воде — экскурсии на катере к затонувшей деревне, старому двухниточному шлюзу и действующим храмам Брейтовского края.',
     ],
-    amenities: ['Батуты для детей', 'Русский бильярд', 'Волейбол и футбол', 'Грибы и ягоды', 'Прогулки по бору', 'Экскурсии на катере'],
-    amenitiesGrid: '3',
+    showAmenities: false,
     note: 'Экскурсии на катере согласуются с егерем и зависят от погоды на воде.',
-    itemsGrid: '3-2',
     items: [
       { t: 'Детская площадка', d: 'Батуты и безопасный сосновый бор — дети заняты и счастливы.', img: '/images/custom/entertainment-playground.png', price: '' },
       { t: 'Русский бильярд', d: 'Партия-другая под потрескивание камина.', img: '/images/custom/entertainment-billiards.png', price: '500 ₽ / час' },
       { t: 'Прогулки по бору', d: 'Тропинки между сосен и тихий берег реки для неспешных вечеров.', img: '/images/custom/entertainment-forest-walk.png', price: '' },
       { t: 'Грибы и ягоды', d: 'Одни из самых грибных и ягодных мест России. Берите корзинку.', img: '/images/custom/entertainment-mushrooms.png', price: '' },
       { t: 'Экскурсии на катере', d: 'Затонувшая деревня, старый шлюз и тихие храмы Брейтовского края.', img: '/images/fishing/summer-excursion.png', price: '' },
+      { t: 'Рыболовные туры', d: 'Ежедневные выезды с опытными гидами-рыбаками — знаем лучшие точки клёва на Рыбинке.', img: '/images/fishing/summer-main.png', price: '' },
     ],
   },
 }
@@ -447,7 +509,7 @@ export const photos = [
   { src: '/images/interiors/american-interior.png', c: 'Интерьер «Американского»' },
   { src: '/images/old-site/rooms/room-25758005.jpg', c: 'Номер «Стандарт»' },
   { src: '/images/old-site/rooms/room-25758011.jpg', c: 'Номер «Люкс»' },
-  { src: '/images/old-site/activities/extra-25757931.jpg', c: 'Трактир, домашняя кухня' },
+  { src: '/images/old-site/activities/extra-25757931.jpg', c: 'Домашняя кухня' },
   { src: '/images/custom/banya-steam-room.png', c: 'Русская баня на кедре' },
   { src: '/images/fishing/summer-silver-shark.png', c: 'Катер Silver Shark' },
   { src: '/images/fishing/winter-hovercraft-khivus-10.png', c: 'Аэроглиссер «ХИВУС-10»' },

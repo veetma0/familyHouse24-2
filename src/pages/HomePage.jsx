@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import SiteShell from '../components/SiteShell'
 import BookingBar from '../components/BookingBar'
+import CottagesGrid from '../components/CottagesGrid'
+import ImageCarousel from '../components/ImageCarousel'
+import VideoModal from '../components/VideoModal'
 import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import {
-  cottages,
   homeHero,
   homeAbout,
   homeBands,
@@ -20,13 +22,13 @@ const HERO_IMG = '/images/old-site/activities/g-25756808.jpg'
 
 function HomeContent() {
   const { openBooking, onNav } = useShell()
-  const [filter, setFilter] = useState('all')
   const [galleryIdx, setGalleryIdx] = useState(0)
-  useScrollReveal([filter])
-
-  const tabs = [{ id: 'all', label: 'Все дома' }, ...cottages.map((c) => ({ id: c.id, label: c.name }))]
-  const filtered = filter === 'all' ? cottages : cottages.filter((c) => c.id === filter)
+  const [videoOpen, setVideoOpen] = useState(false)
+  useScrollReveal()
   const gActive = homeGallery[galleryIdx] || homeGallery[0]
+  const gActiveImages = gActive.gallery?.length
+    ? [gActive.src, ...gActive.gallery.filter((s) => s !== gActive.src)]
+    : [gActive.src]
   // Показываем топ-оценки гостей, кроме оценки персонала.
   const topCats = yandex.categories.filter((c) => c.t !== 'Персонал').slice(0, 5)
 
@@ -34,6 +36,7 @@ function HomeContent() {
     <>
       {/* ============ HERO ============ */}
       <section
+        className="fh-hero"
         style={{
           position: 'relative',
           minHeight: '94vh',
@@ -66,12 +69,13 @@ function HomeContent() {
           <span className="fh-oswald" style={{ fontSize: 34, fontWeight: 700, color: '#f6efe1', lineHeight: 1 }}>{yandex.rating}</span>
           <span style={{ display: 'flex', flexDirection: 'column' }}>
             <span style={{ color: '#e0b45f', fontSize: 14, letterSpacing: '0.14em' }}>★★★★★</span>
-            <span style={{ color: '#cabfae', fontSize: 12 }}>оценка гостей</span>
+            <span style={{ color: '#cabfae', fontSize: 12 }}>{yandex.ratingsCount} оценок на Яндекс.Картах</span>
           </span>
         </a>
 
         <div className="fh-section-pad fh-hero-pad" style={{ position: 'relative', ...wrap, width: '100%', padding: '0 36px 54px' }}>
-          <div className="fh-hero-reveal" style={{ maxWidth: 860 }}>
+          <div className="fh-hero-reveal fh-hero-reveal--wide">
+            <div className="fh-hero-top-gap" aria-hidden="true" />
             {/* Рейтинг (мобильная версия — в потоке, не перекрывает заголовок) */}
             <a
               href={yandex.url}
@@ -87,9 +91,38 @@ function HomeContent() {
             <span className="fh-oswald fh-hero-kicker" style={{ display: 'inline-block', fontSize: 13, fontWeight: 600, letterSpacing: '0.32em', textTransform: 'uppercase', color: '#e0b45f', paddingBottom: 18 }}>
               {homeHero.kicker}
             </span>
-            <h1 className="fh-oswald fh-hero-h1" style={{ fontSize: 'clamp(34px,7vw,104px)', fontWeight: 700, lineHeight: 1.06, letterSpacing: '0.01em', textTransform: 'uppercase', color: '#f6efe1', margin: 0, textShadow: '0 4px 30px rgba(0,0,0,0.4)' }}>
-              Рыболовная база<br />отдыха<br />«Семейный дом»
+            <h1 className="fh-oswald fh-hero-h1">
+              <span className="fh-hero-h1-line">Рыболовная база отдыха</span>
+              <span className="fh-hero-h1-line">«Семейный дом»</span>
             </h1>
+            {homeHero.videoUrl && (
+              <button
+                type="button"
+                onClick={() => setVideoOpen(true)}
+                className="fh-oswald fh-hero-video-btn"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  marginTop: 20,
+                  background: 'rgba(20,18,14,0.55)',
+                  border: '1px solid rgba(246,239,225,0.32)',
+                  borderRadius: 4,
+                  color: '#f6efe1',
+                  cursor: 'pointer',
+                  fontSize: 13,
+                  fontWeight: 600,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  padding: '12px 20px',
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
+                }}
+              >
+                <span aria-hidden style={{ fontSize: 16, lineHeight: 1 }}>▶</span>
+                {homeHero.videoLabel}
+              </button>
+            )}
             <p className="fh-oswald" style={{ fontSize: 'clamp(14px,3.2vw,18px)', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#e0b45f', margin: '18px 0 0' }}>
               {homeHero.subtitle}
             </p>
@@ -139,7 +172,9 @@ function HomeContent() {
                 <h3 className="fh-oswald" style={{ fontSize: 30, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.02em', color: b.titleColor, margin: '14px 0 0' }}>{b.t}</h3>
                 <p style={{ fontSize: 16, lineHeight: 1.7, color: b.textColor, margin: '14px 0 0', maxWidth: 420 }}>{b.d}</p>
               </div>
-              <img src={b.img} alt={b.t} className="fh-band-img" />
+              <div className="fh-band-media">
+                <img src={b.img} alt={b.t} className="fh-band-img" />
+              </div>
             </div>
           ))}
         </div>
@@ -152,75 +187,11 @@ function HomeContent() {
             <span style={kicker}>Дома у воды</span>
             <h2 style={{ ...h2, fontSize: 'clamp(32px,4.4vw,56px)', color: '#2b2620', margin: '14px 0 6px' }}>Размещение в домах</h2>
             <p style={{ fontSize: 16, color: '#6b6157', margin: '0 auto 26px', maxWidth: 640 }}>
-              Наведите на дом — покажем интерьер. Цены обновляются онлайн в системе бронирования.
+              Три комфортабельных коттеджа и гостевой дом с номерами.
             </p>
           </div>
 
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 8, marginBottom: 34 }} data-reveal data-reveal-stagger="off">
-            {tabs.map((t) => {
-              const active = filter === t.id
-              return (
-                <button
-                  key={t.id}
-                  type="button"
-                  onClick={() => setFilter(t.id)}
-                  className="fh-oswald"
-                  style={{
-                    background: active ? '#2b2620' : 'transparent',
-                    color: active ? '#f6efe1' : '#2b2620',
-                    border: `1px solid ${active ? '#2b2620' : 'rgba(43,38,32,0.25)'}`,
-                    cursor: 'pointer',
-                    fontSize: 13.5,
-                    fontWeight: 500,
-                    letterSpacing: '0.06em',
-                    textTransform: 'uppercase',
-                    padding: '10px 20px',
-                    borderRadius: 999,
-                    transition: 'background 0.2s ease, color 0.2s ease, border-color 0.2s ease',
-                  }}
-                >
-                  {t.label}
-                </button>
-              )
-            })}
-          </div>
-
-          <div className="fh-cottages-grid">
-            {filtered.map((c) => (
-              <div
-                key={c.id}
-                data-reveal
-                className="fh-cardlift"
-                style={{ background: '#faf6ee', borderRadius: 8, overflow: 'hidden', border: '1px solid rgba(43,38,32,0.09)', display: 'flex', flexDirection: 'column' }}
-              >
-                <div className="fh-flip" style={{ position: 'relative', aspectRatio: '3 / 2', overflow: 'hidden', background: '#e4d8c2' }}>
-                  <img src={c.interior} alt={`${c.name} — интерьер`} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-                  <img src={c.image} alt={c.name} data-flip-top style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 1 }} />
-                  <span className="fh-oswald" style={{ position: 'absolute', top: 14, left: 14, zIndex: 2, background: 'rgba(20,18,14,0.82)', color: '#e7ddc8', fontSize: 11, fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '6px 12px', borderRadius: 999 }}>{c.tag}</span>
-                </div>
-                <div style={{ padding: '22px 24px 24px', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                  <h3 className="fh-oswald" style={{ fontSize: 24, fontWeight: 600, textTransform: 'uppercase', color: '#2b2620', margin: 0 }}>{c.name}</h3>
-                  <p style={{ fontSize: 14, color: '#6b6157', margin: '8px 0 0', lineHeight: 1.5 }}>{c.cap} · {c.beds}</p>
-                  <p style={{ fontSize: 13.5, color: '#9a8c74', margin: '6px 0 0', lineHeight: 1.5 }}>{c.extra}</p>
-                  <div style={{ flex: 1 }} />
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, margin: '20px 0 14px' }}>
-                    <span style={{ fontSize: 13, color: '#9a8c74' }}>от</span>
-                    <span className="fh-oswald" style={{ fontSize: 30, fontWeight: 700, color: '#2b2620' }}>{c.price} ₽</span>
-                    <span style={{ fontSize: 13, color: '#9a8c74' }}>/ ночь</span>
-                  </div>
-                  <button type="button" onClick={openBooking} className="fh-oswald fh-btn-dark" style={{ width: '100%', background: '#2b2620', color: '#f6efe1', border: 'none', cursor: 'pointer', fontSize: 14, fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', padding: 13, borderRadius: 3 }}>
-                    Забронировать
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ textAlign: 'center', marginTop: 36 }}>
-            <button type="button" onClick={() => onNav('/cottages')} className="fh-oswald fh-btn-outline" style={{ background: 'none', border: '1px solid rgba(43,38,32,0.28)', borderRadius: 999, cursor: 'pointer', fontSize: 14, fontWeight: 500, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#2b2620', padding: '13px 30px' }}>
-              Все дома и номера →
-            </button>
-          </div>
+          <CottagesGrid openBooking={openBooking} onNav={onNav} showFooterLink />
         </div>
       </section>
 
@@ -267,8 +238,15 @@ function HomeContent() {
 
           <div className="fh-gallery" data-reveal data-reveal-stagger="off">
             <div style={{ position: 'relative', borderRadius: 10, overflow: 'hidden', minHeight: 440 }}>
-              <img src={gActive.src} alt={gActive.caption} style={{ width: '100%', height: '100%', objectFit: 'cover', minHeight: 440 }} />
-              <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: '26px 28px', background: 'linear-gradient(0deg, rgba(20,18,14,0.85), transparent)' }}>
+              <ImageCarousel
+                key={galleryIdx}
+                images={gActiveImages}
+                cover={gActive.src}
+                alt={gActive.caption}
+                className="fh-image-carousel fh-image-carousel--infra"
+                showNav
+              />
+              <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: '26px 28px', background: 'linear-gradient(0deg, rgba(20,18,14,0.85), transparent)', pointerEvents: 'none' }}>
                 <span className="fh-oswald" style={{ fontSize: 12, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#e0b45f' }}>{gActive.kicker}</span>
                 <div className="fh-oswald" style={{ fontSize: 26, fontWeight: 600, textTransform: 'uppercase', color: '#f6efe1', marginTop: 4 }}>{gActive.caption}</div>
               </div>
@@ -276,9 +254,8 @@ function HomeContent() {
             <div className="fh-gallery-thumbs">
               {homeGallery.map((g, i) => (
                 <button
-                  key={g.src}
+                  key={g.caption}
                   type="button"
-                  onMouseEnter={() => setGalleryIdx(i)}
                   onClick={() => setGalleryIdx(i)}
                   className="fh-thumb"
                   style={{ position: 'relative', border: 'none', padding: 0, cursor: 'pointer', borderRadius: 8, overflow: 'hidden', minHeight: 130, outline: i === galleryIdx ? '3px solid #b8762e' : '3px solid transparent' }}
@@ -345,7 +322,7 @@ function HomeContent() {
           </div>
           <div className="fh-directions-pad" style={{ padding: '56px 52px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <span style={kickerGold}>Как добраться</span>
-            <h2 style={{ ...h2, fontSize: 'clamp(28px,3.4vw,44px)', color: '#f6efe1', margin: '14px 0 0', lineHeight: 1.05 }}>270 км от Москвы — и город позади</h2>
+            <h2 style={{ ...h2, fontSize: 'clamp(28px,3.4vw,44px)', color: '#f6efe1', margin: '14px 0 0', lineHeight: 1.05 }}>360 км от Москвы — и вы на базе отдыха</h2>
             <p style={{ fontSize: 15.5, lineHeight: 1.7, color: '#b3a68e', margin: '18px 0 26px' }}>
               {contact.address}. Удобный заезд на любом авто, парковка у каждого дома. Точную геолокацию пришлём после брони.
             </p>
@@ -390,6 +367,14 @@ function HomeContent() {
           </div>
         </div>
       </section>
+
+      {videoOpen && homeHero.videoUrl && (
+        <VideoModal
+          src={homeHero.videoUrl}
+          title={homeHero.videoLabel}
+          onClose={() => setVideoOpen(false)}
+        />
+      )}
     </>
   )
 }

@@ -95,6 +95,27 @@ img {
 .fh-hero-reveal {
   animation: fh-fade-up 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
+.fh-hero-reveal--wide {
+  max-width: 1180px;
+}
+.fh-hero-top-gap {
+  display: none;
+}
+.fh-hero-h1-line {
+  display: block;
+  white-space: nowrap;
+}
+.fh-hero-h1 {
+  font-size: clamp(28px, 6.8vw, 80px);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: #f6efe1;
+  margin: 0;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+  max-width: 100%;
+}
 .fh-kenburns {
   animation: fh-kenburns 18s ease-out both;
 }
@@ -295,7 +316,8 @@ img {
 }
 @media (hover: hover) {
   .fh-hero-badge:hover,
-  .fh-hero-rating:hover {
+  .fh-hero-rating:hover,
+  .fh-hero-video-btn:hover {
     background: rgba(20, 18, 14, 0.68);
     border-color: rgba(246, 239, 225, 0.38);
   }
@@ -322,6 +344,7 @@ img {
   }
   .fh-hero-rating {
     display: inline-flex;
+    margin-top: 10px;
   }
   .fh-hero-kicker {
     font-size: 11.5px !important;
@@ -335,6 +358,14 @@ img {
     padding-left: 24px !important;
     padding-right: 24px !important;
   }
+  .fh-hero-top-gap {
+    display: block;
+    height: 16px;
+  }
+  .fh-hero-h1 {
+    font-size: clamp(18px, 6.8vw, 44px);
+    letter-spacing: 0;
+  }
 }
 
 /* ============================================================
@@ -346,17 +377,118 @@ img {
   display: grid;
   grid-template-columns: 1.05fr 1fr;
   min-height: 340px;
+  align-items: stretch;
   border-radius: 8px;
   overflow: hidden;
 }
+.fh-band-media {
+  position: relative;
+  overflow: hidden;
+  min-height: 340px;
+}
 .fh-band-img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  min-height: 280px;
+  object-position: center;
 }
-.fh-band--rev .fh-band-img {
+.fh-band--rev .fh-band-media {
   order: -1;
+}
+
+/* Карусель фото (дома, инфраструктура) */
+.fh-image-carousel {
+  position: relative;
+  overflow: hidden;
+  background: #f3ede0;
+}
+.fh-image-carousel--house {
+  width: 100%;
+  background: #faf6ee;
+}
+.fh-image-carousel__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.fh-image-carousel--house .fh-image-carousel__img {
+  position: static;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  height: auto;
+  object-fit: cover;
+}
+.fh-image-carousel--infra {
+  width: 100%;
+  min-height: 440px;
+  height: 100%;
+}
+.fh-image-carousel--infra .fh-image-carousel__img {
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  object-position: center;
+}
+.fh-image-carousel--fit-contain .fh-image-carousel__img {
+  object-fit: contain;
+}
+.fh-image-carousel--nav {
+  cursor: default;
+}
+.fh-carousel-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-top: -22px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(20, 18, 14, 0.72);
+  color: #f6efe1;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease, opacity 0.22s ease, transform 0.22s ease;
+}
+.fh-carousel-nav:hover {
+  background: rgba(20, 18, 14, 0.9);
+}
+.fh-carousel-nav--prev {
+  left: 14px;
+}
+.fh-carousel-nav--next {
+  right: 14px;
+}
+.fh-image-carousel--nav-hover .fh-carousel-nav {
+  opacity: 0;
+  pointer-events: none;
+}
+.fh-house-card:hover .fh-carousel-nav,
+.fh-image-carousel--nav-hover:focus-within .fh-carousel-nav {
+  opacity: 1;
+  pointer-events: auto;
+}
+.fh-image-carousel--fish {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  min-height: 460px;
+}
+.fh-image-carousel--fish .fh-image-carousel__img {
+  position: absolute;
+  inset: 0;
+}
+
+/* Галерея рыб на странице рыбалки */
+.fh-fish-carousel .fh-image-carousel {
+  border-radius: 10px;
 }
 
 /* Галерея домов */
@@ -364,6 +496,15 @@ img {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 26px;
+}
+.fh-cottages-grid--single {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 920px;
+  margin: 0 auto;
+}
+.fh-cottages-grid--single .fh-image-carousel--house .fh-image-carousel__img {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
 }
 
 /* Статистика рыбалки */
@@ -413,6 +554,68 @@ img {
 .fh-about--stack {
   grid-template-columns: 1fr;
   gap: 40px;
+}
+
+.fh-simple-about--center {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.fh-simple-about--center > span {
+  display: inline-block;
+}
+
+/* Видеообзор — модальный плеер */
+.fh-video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(10, 9, 7, 0.88);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.fh-video-modal__panel {
+  position: relative;
+  width: min(960px, 100%);
+  background: #1a1712;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.fh-video-modal__player {
+  display: block;
+  width: 100%;
+  max-height: min(72vh, 540px);
+  background: #000;
+}
+
+.fh-video-modal__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(20, 18, 14, 0.72);
+  color: #f6efe1;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .fh-video-modal__close:hover {
+    background: rgba(184, 118, 46, 0.9);
+  }
 }
 
 .fh-amenity-tag {
@@ -768,10 +971,16 @@ img {
   .fh-band {
     grid-template-columns: 1fr;
   }
-  .fh-band-img {
+  .fh-band-media {
     order: -1;
     min-height: 220px;
     max-height: 260px;
+  }
+  .fh-band-img {
+    position: absolute;
+    inset: 0;
+    min-height: 0;
+    max-height: none;
   }
   .fh-band-pad {
     padding: 38px 28px !important;

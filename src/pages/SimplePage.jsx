@@ -1,6 +1,8 @@
 import SiteShell from '../components/SiteShell'
+import CottagesGrid from '../components/CottagesGrid'
 import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
+import FishGalleryCarousel from '../components/FishGalleryCarousel'
 import { pages } from '../data/siteData'
 import { kicker, kickerGold } from '../data/styles'
 
@@ -13,6 +15,7 @@ import { kicker, kickerGold } from '../data/styles'
 function SimpleContent({ pageKey }) {
   const { openBooking, onNav } = useShell()
   const pg = pages[pageKey] || pages.cottages
+  const showAmenities = pg.showAmenities !== false && (pg.amenities?.length > 0)
   useScrollReveal([pageKey])
 
   return (
@@ -33,37 +36,51 @@ function SimpleContent({ pageKey }) {
       {/* ПОДРОБНЕЕ + ЧТО ВКЛЮЧЕНО */}
       <section style={{ padding: '76px 32px 20px' }} className="fh-section-pad">
         <div
-          className={`fh-about${pg.amenitiesStack ? ' fh-about--stack' : ''}`}
+          className={`fh-about${!showAmenities || pg.amenitiesStack ? ' fh-about--stack' : ''}`}
           style={{ maxWidth: 1180, margin: '0 auto' }}
         >
-          <div data-reveal data-reveal-stagger="off">
+          <div
+            data-reveal
+            data-reveal-stagger="off"
+            className={!showAmenities ? 'fh-simple-about fh-simple-about--center' : undefined}
+          >
             <span style={{ ...kicker, letterSpacing: '0.28em' }}>Подробнее</span>
             {(pg.longText || []).map((para, i) => (
               <p key={i} style={{ fontSize: 17, lineHeight: 1.8, color: '#4a4339', margin: '16px 0 0' }}>{para}</p>
             ))}
           </div>
-          <div data-reveal data-reveal-stagger="off" style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.1)', borderRadius: 10, padding: '30px 30px 32px' }}>
-            <span className="fh-oswald" style={{ fontSize: 13, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#2b2620' }}>Что включено</span>
-            <div
-              className={
-                pg.amenitiesGrid === '3'
-                  ? `fh-grid-3 fh-amenities-grid${pg.amenitiesStack ? '' : ' fh-amenities-grid--inline'}`
-                  : pg.itemsGrid === '3-2'
-                    ? 'fh-grid-3 fh-grid-3-2 fh-amenities-grid'
-                    : 'fh-amenities-flex'
-              }
-            >
-              {(pg.amenities || []).map((am) => (
-                <span key={am} className="fh-oswald fh-amenity-tag">{am}</span>
-              ))}
+          {showAmenities && (
+            <div data-reveal data-reveal-stagger="off" style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.1)', borderRadius: 10, padding: '30px 30px 32px' }}>
+              <span className="fh-oswald" style={{ fontSize: 13, fontWeight: 600, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#2b2620' }}>Что включено</span>
+              <div
+                className={
+                  pg.amenitiesGrid === '3'
+                    ? `fh-grid-3 fh-amenities-grid${pg.amenitiesStack ? '' : ' fh-amenities-grid--inline'}`
+                    : pg.itemsGrid === '3-2'
+                      ? 'fh-grid-3 fh-grid-3-2 fh-amenities-grid'
+                      : 'fh-amenities-flex'
+                }
+              >
+                {(pg.amenities || []).map((am) => (
+                  <span key={am} className="fh-oswald fh-amenity-tag">{am}</span>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
       {/* КАРТОЧКИ */}
       <section style={{ padding: '44px 32px 80px' }} className="fh-section-pad">
-        <div style={{ maxWidth: 1180, margin: '0 auto' }}>
+        <div style={{ maxWidth: pageKey === 'cottages' ? 1280 : 1180, margin: '0 auto' }}>
+          {pageKey === 'cottages' ? (
+            <>
+              <div style={{ textAlign: 'center', marginBottom: 8 }} data-reveal data-reveal-stagger="off">
+                <span style={{ ...kicker, letterSpacing: '0.28em' }}>Выберите дом</span>
+              </div>
+              <CottagesGrid openBooking={openBooking} />
+            </>
+          ) : (
           <div className={pg.itemsGrid === '3-2' ? 'fh-grid-3 fh-grid-3-2' : 'fh-grid-3'}>
             {pg.items.map((it) => (
               <div key={it.t} data-reveal className="fh-cardlift" style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.09)', borderRadius: 8, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
@@ -77,15 +94,49 @@ function SimpleContent({ pageKey }) {
                   {it.price && (
                     <div className="fh-oswald" style={{ marginTop: 18, fontSize: 22, fontWeight: 700, color: '#b8762e' }}>{it.price}</div>
                   )}
+                  {pg.showItemBooking && (
+                    <button
+                      type="button"
+                      onClick={openBooking}
+                      className="fh-oswald fh-btn-dark"
+                      style={{
+                        width: '100%',
+                        marginTop: 18,
+                        background: '#2b2620',
+                        color: '#f6efe1',
+                        border: 'none',
+                        cursor: 'pointer',
+                        fontSize: 14,
+                        fontWeight: 600,
+                        letterSpacing: '0.05em',
+                        textTransform: 'uppercase',
+                        padding: 13,
+                        borderRadius: 3,
+                      }}
+                    >
+                      Забронировать
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
           </div>
+          )}
 
           {pg.note && (
             <div data-reveal style={{ display: 'flex', gap: 16, alignItems: 'flex-start', marginTop: 36, background: '#2b2620', borderRadius: 10, padding: '26px 30px' }}>
               <span className="fh-oswald" style={{ flex: 'none', fontSize: 24, color: '#e0b45f', lineHeight: 1 }}>✦</span>
               <p style={{ fontSize: 15.5, lineHeight: 1.7, color: '#cabfae', margin: 0 }}>{pg.note}</p>
+            </div>
+          )}
+
+          {pg.fishGallery?.length > 0 && (
+            <div style={{ marginTop: 40 }}>
+              <span style={{ ...kicker, letterSpacing: '0.28em' }}>Улов с Рыбинки</span>
+              <h2 className="fh-oswald" style={{ fontSize: 'clamp(26px,3.6vw,40px)', fontWeight: 600, textTransform: 'uppercase', color: '#2b2620', margin: '14px 0 0' }}>
+                Рыбы водохранилища
+              </h2>
+              <FishGalleryCarousel images={pg.fishGallery} />
             </div>
           )}
 

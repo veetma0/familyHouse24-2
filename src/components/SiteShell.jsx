@@ -96,7 +96,7 @@ function BrandMark({ light = false }) {
           СЕМЕЙНЫЙ ДОМ
         </span>
         <span className="fh-brand-sub" style={{ fontSize: 10.5, fontWeight: 500, letterSpacing: '0.28em', color: '#b8762e' }}>
-          БАЗА ОТДЫХА · РЫБАЛКА
+          FAMILY HOUSE
         </span>
       </span>
     </>
