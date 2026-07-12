@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import SiteShell from '../components/SiteShell'
 import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
-import { contact, contactCards, mapEmbedUrl, faq, legal } from '../data/siteData'
+import { contact, contactCards, mapEmbedUrl, faq, legalCaption } from '../data/siteData'
 import { kicker, kickerGold, h2 } from '../data/styles'
 
 const inputStyle = {
@@ -198,7 +198,7 @@ function ContactsContent() {
           </div>
           <div style={{ marginTop: 40, paddingTop: 24, borderTop: '1px solid rgba(43,38,32,0.1)', textAlign: 'center' }}>
             <p style={{ fontSize: 13, color: '#8a7a5f', margin: 0, lineHeight: 1.7 }}>
-              {legal.company} · ИНН {legal.inn} · ОГРН {legal.ogrn}
+              {legalCaption}
             </p>
           </div>
         </div>

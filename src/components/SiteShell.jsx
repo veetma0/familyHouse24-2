@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { navItems, footerExtraItems, contact, legal, siteLogos } from '../data/siteData'
+import { navItems, footerExtraItems, contact, legalCaption, siteLogos } from '../data/siteData'
+import CookieConsent from './CookieConsent'
 import { dateOffset } from '../utils/dates'
 import { ShellContext } from './shellContext'
 
@@ -281,10 +282,15 @@ function Footer({ onNav }) {
             </div>
           </div>
         </div>
-        <div style={{ paddingTop: 26, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
-          <span style={{ fontSize: 13, color: '#6f655a' }}>© 2026 «Семейный дом». Все права защищены.</span>
+        <div style={{ paddingTop: 26, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <button type="button" onClick={() => onNav('/privacy')} className="fh-footer-policy-link fh-oswald">
+              Политика обработки данных
+            </button>
+            <span style={{ fontSize: 13, color: '#6f655a' }}>© 2026 «Семейный дом». Все права защищены.</span>
+          </div>
           <span style={{ fontSize: 13, color: '#6f655a' }}>
-            {legal.company} · ИНН {legal.inn} · ОГРН {legal.ogrn}
+            {legalCaption}
           </span>
         </div>
       </div>
@@ -395,6 +401,7 @@ function SiteShell({ activeId, children }) {
         <main style={{ flex: 1 }}>{children}</main>
 
         <Footer onNav={onNav} />
+        <CookieConsent />
       </div>
 
       {/* Мобильное меню */}

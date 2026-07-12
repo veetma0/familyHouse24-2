@@ -1,10 +1,11 @@
+import { useState } from 'react'
 import SiteShell from '../components/SiteShell'
 import CottagesGrid from '../components/CottagesGrid'
 import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
 import FishGalleryCarousel from '../components/FishGalleryCarousel'
 import { pages } from '../data/siteData'
-import { kicker, kickerGold } from '../data/styles'
+import { kicker, kickerGold, h2 } from '../data/styles'
 
 /* ============================================================
    Универсальный шаблон «простой» страницы из дизайна:
@@ -16,6 +17,7 @@ function SimpleContent({ pageKey }) {
   const { openBooking, onNav } = useShell()
   const pg = pages[pageKey] || pages.cottages
   const showAmenities = pg.showAmenities !== false && (pg.amenities?.length > 0)
+  const [openFaq, setOpenFaq] = useState(-1)
   useScrollReveal([pageKey])
 
   return (
@@ -164,6 +166,53 @@ function SimpleContent({ pageKey }) {
           </div>
         </div>
       </section>
+
+      {pg.faq?.length > 0 && (
+        <section style={{ padding: '20px 32px 90px' }} className="fh-section-pad">
+          <div style={{ maxWidth: 900, margin: '0 auto' }}>
+            <div style={{ textAlign: 'center' }} data-reveal data-reveal-stagger="off">
+              <span style={kicker}>Полезно знать</span>
+              <h2 style={{ ...h2, fontSize: 'clamp(30px,4vw,50px)', color: '#2b2620', margin: '12px 0 34px' }}>О рыбалке на Рыбинке</h2>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {pg.faq.map((item, i) => {
+                const open = openFaq === i
+                return (
+                  <div key={item.q} data-reveal style={{ background: '#faf6ee', border: '1px solid rgba(43,38,32,0.1)', borderRadius: 8, overflow: 'hidden' }}>
+                    <button
+                      type="button"
+                      onClick={() => setOpenFaq(open ? -1 : i)}
+                      aria-expanded={open}
+                      style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, background: 'none', border: 'none', cursor: 'pointer', padding: '22px 26px', textAlign: 'left' }}
+                    >
+                      <span className="fh-oswald" style={{ fontSize: 18, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.01em', color: '#2b2620' }}>{item.q}</span>
+                      <span className="fh-oswald" style={{ flex: 'none', fontSize: 26, fontWeight: 400, color: '#b8762e', lineHeight: 1 }}>{open ? '–' : '+'}</span>
+                    </button>
+                    {open && (
+                      <div style={{ padding: '0 26px 24px' }}>
+                        {(item.paragraphs || []).map((para, j) => (
+                          <p key={j} style={{ fontSize: 16, lineHeight: 1.7, color: '#6b6157', margin: j === 0 ? 0 : '14px 0 0' }}>{para}</p>
+                        ))}
+                        {item.link && (
+                          <a
+                            href={item.link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="fh-oswald"
+                            style={{ display: 'inline-flex', marginTop: item.paragraphs?.length ? 18 : 0, fontSize: 14, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', color: '#b8762e', textDecoration: 'none', borderBottom: '1px solid rgba(184,118,46,0.45)' }}
+                          >
+                            {item.link.label} →
+                          </a>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+      )}
     </>
   )
 }

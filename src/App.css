@@ -1199,6 +1199,216 @@ img {
   }
 }
 
+/* ---------- Cookie-баннер и страница политики ---------- */
+.fh-cookie-banner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 120;
+  padding: 0 24px 24px;
+  pointer-events: none;
+}
+
+.fh-cookie-banner__inner {
+  pointer-events: auto;
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 22px;
+  background: #ebebeb;
+  border-radius: 10px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.22);
+}
+
+.fh-cookie-banner__text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #2b2620;
+}
+
+.fh-cookie-banner__link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.fh-cookie-banner__link:hover {
+  color: #b8762e;
+}
+
+.fh-cookie-banner__btn {
+  flex: none;
+  min-width: 72px;
+  border: none;
+  border-radius: 6px;
+  background: #111;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 12px 22px;
+  cursor: pointer;
+}
+
+.fh-cookie-banner__btn:hover {
+  background: #2b2620;
+}
+
+.fh-footer-policy-link {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #cabfae;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-align: left;
+}
+
+.fh-footer-policy-link:hover {
+  color: #f6efe1;
+}
+
+.fh-policy-hero {
+  background: #221d18;
+  padding-top: 60px;
+  padding-bottom: 46px;
+}
+
+.fh-policy-hero__inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.fh-policy-back {
+  display: inline-block;
+  margin-bottom: 28px;
+  font-size: 15px;
+  color: #cabfae;
+  text-decoration: none;
+}
+
+.fh-policy-back:hover {
+  color: #f6efe1;
+  text-decoration: underline;
+}
+
+.fh-policy-hero__title {
+  margin: 0;
+  font-size: clamp(34px, 5vw, 58px);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #f6efe1;
+  text-decoration: underline;
+  text-underline-offset: 10px;
+  text-decoration-thickness: 1px;
+}
+
+.fh-policy-hero__doc {
+  margin: 22px 0 0;
+  max-width: 760px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #b3a68e;
+}
+
+.fh-policy-body {
+  padding-top: 48px;
+  padding-bottom: 96px;
+}
+
+.fh-policy-article {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #faf6ee;
+  border: 1px solid rgba(43, 38, 32, 0.1);
+  border-radius: 10px;
+  padding: 40px 44px;
+}
+
+.fh-policy-section {
+  margin: 34px 0 14px;
+  font-size: 22px;
+  line-height: 1.35;
+  color: #2b2620;
+}
+
+.fh-policy-section:first-child {
+  margin-top: 0;
+}
+
+.fh-policy-subsection {
+  margin: 22px 0 10px;
+  font-size: 17px;
+  line-height: 1.45;
+  color: #2b2620;
+}
+
+.fh-policy-subtitle {
+  margin: 18px 0 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #2b2620;
+}
+
+.fh-policy-p,
+.fh-policy-li,
+.fh-policy-note {
+  margin: 0 0 12px;
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: #4a4339;
+}
+
+.fh-policy-li {
+  display: flex;
+  gap: 10px;
+  padding-left: 4px;
+}
+
+.fh-policy-li span {
+  flex: none;
+  color: #b8762e;
+}
+
+.fh-policy-note {
+  padding: 14px 16px;
+  background: rgba(184, 118, 46, 0.08);
+  border-left: 3px solid #b8762e;
+  border-radius: 4px;
+}
+
+@media (max-width: 720px) {
+  .fh-cookie-banner {
+    padding: 0 12px 12px;
+  }
+
+  .fh-cookie-banner__inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding: 16px 18px;
+  }
+
+  .fh-cookie-banner__btn {
+    width: 100%;
+  }
+
+  .fh-policy-article {
+    padding: 28px 22px;
+  }
+}
+
 /* ---------- Уважаем «поменьше движения» ---------- */
 @media (prefers-reduced-motion: reduce) {
   *,

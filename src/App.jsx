@@ -11,6 +11,7 @@ import PhotosPage from './pages/PhotosPage'
 import ReviewsPage from './pages/ReviewsPage'
 import ContactsPage from './pages/ContactsPage'
 import BookingPage from './pages/BookingPage'
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
       <Route path="/photos" element={<PhotosPage />} />
       <Route path="/reviews" element={<ReviewsPage />} />
       <Route path="/contacts" element={<ContactsPage />} />
+      <Route path="/privacy" element={<PrivacyPolicyPage />} />
       {/* Старый раздел «Услуги» теперь объединён со страницей цен */}
       <Route path="/services" element={<Navigate to="/prices" replace />} />
       <Route path="*" element={<Navigate to="/" replace />} />
