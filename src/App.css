@@ -600,6 +600,14 @@ img {
   background: #000;
 }
 
+.fh-video-modal__embed {
+  display: block;
+  width: 100%;
+  min-height: min(72vh, 540px);
+  border: 0;
+  background: #000;
+}
+
 .fh-video-modal__close {
   position: absolute;
   top: 10px;

@@ -165,8 +165,7 @@ export const homeHero = {
   welcome: 'Рыбинка зовёт! Мы рады приветствовать вас в «Семейный Дом»!',
   lead:
     'Адреналин от борьбы с трофейной рыбой на просторах Рыбинского водохранилища. Азарт охоты в угодьях у реки Сить. Тишина и чистейший воздух, напоённый ароматами леса. Щедрость природы: грибные поляны и ягодные россыпи у ног. Это не отдых — это приключение! Откройте для себя истинный вкус отдыха!',
-  videoUrl:
-    'https://scontent.cdninstagram.com/o1/v/t16/f2/m84/AQPi9Nl9wY8Qh0k3FpBQS55HH5rLQ3f0rTN94sMlySaVVwtm8wZ-AszCNY5ebKTcpWLIBNqjFL_2ovYroHZR-ziPk2sm3eUK_5LxhhY.mp4?_nc_cat=107&_nc_oc=AdoWZZu49pNUn0e5CdvByfda_3VyKINBikbxM1kfdsY0el0LzwsWg1e_EOyCGm0GF_0&_nc_sid=5e9851&_nc_ht=instagram.fotp3-1.fna.fbcdn.net&_nc_ohc=tI6IZlSiMIQQ7kNvwGmJfTJ&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uSUdUVi5DMy4xMjgwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6NjIxNzExMzEzMjE2MTMwLCJhc3NldF9hZ2VfZGF5cyI6MjE3MywidmlfdXNlY2FzZV9pZCI6MTAxNDUsImR1cmF0aW9uX3MiOjEwMCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=6f535c2f91206ac4&_nc_vs=HBksFQIYTGlnX2JhY2tmaWxsX3RpbWVsaW5lX3ZvZC84QjRCNDg2NjVBRTI0NjNDMUFGOUVEQ0VFNDMyMjU5N192aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYOnBhc3N0aHJvdWdoX2V2ZXJzdG9yZS9HTHlRNEJieEsxMHhROE1EQUlRRUZ2dm9sNUUyYnBrd0FBQUYVAgLIARIAKAAYABsCiAd1c2Vfb2lsATEScHJvZ3Jlc3NpdmVfcmVjaXBlATEVAAAmhIrRn67cmgIVAigCQzMsF0BZBmZmZmZmGBJkYXNoX2Jhc2VsaW5lXzFfdjERAHXsB2XCngEA&_nc_gid=2EPO_UHXuL_moNsqmQhOSQ&_nc_ss=7c689&_nc_zt=28&oh=00_AQBNdAkPFufptHAPtuG7-9ZNeZhhItZ_l9MQWDEzaiWvLw&oe=6A495955',
+  videoUrl: 'https://www.instagram.com/tv/CC3Vp1_FJ2i/',
   videoLabel: 'Видеообзор базы отдыха',
 }
 
