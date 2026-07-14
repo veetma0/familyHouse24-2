@@ -57,37 +57,8 @@ function HomeContent() {
         </div>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(20,18,14,0.55) 0%, rgba(20,18,14,0.15) 32%, rgba(20,18,14,0.35) 62%, rgba(20,18,14,0.9) 100%)' }} />
 
-        {/* Рейтинг (десктоп — плашка в углу) */}
-        <a
-          href={yandex.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`Оценка ${yandex.rating} на Яндекс.Картах — открыть отзывы`}
-          className="fh-hero-badge"
-          style={{ position: 'absolute', top: 34, right: 32, display: 'flex', alignItems: 'center', gap: 12, background: 'rgba(20,18,14,0.5)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', border: '1px solid rgba(246,239,225,0.2)', borderRadius: 4, padding: '12px 18px' }}
-        >
-          <span className="fh-oswald" style={{ fontSize: 34, fontWeight: 700, color: '#f6efe1', lineHeight: 1 }}>{yandex.rating}</span>
-          <span style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ color: '#e0b45f', fontSize: 14, letterSpacing: '0.14em' }}>★★★★★</span>
-            <span style={{ color: '#cabfae', fontSize: 12 }}>{yandex.ratingsCount} оценок на Яндекс.Картах</span>
-          </span>
-        </a>
-
         <div className="fh-section-pad fh-hero-pad" style={{ position: 'relative', ...wrap, width: '100%', padding: '0 36px 54px' }}>
           <div className="fh-hero-reveal fh-hero-reveal--wide">
-            <div className="fh-hero-top-gap" aria-hidden="true" />
-            {/* Рейтинг (мобильная версия — в потоке, не перекрывает заголовок) */}
-            <a
-              href={yandex.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Оценка ${yandex.rating} на Яндекс.Картах — открыть отзывы`}
-              className="fh-hero-rating fh-oswald"
-            >
-              <span className="fh-hero-rating-stars">★★★★★</span>
-              <b>{yandex.rating}</b>
-              <span className="fh-hero-rating-label">{yandex.ratingsCount} оценок на Яндекс.Картах</span>
-            </a>
             <span className="fh-oswald fh-hero-kicker" style={{ display: 'inline-block', fontSize: 13, fontWeight: 600, letterSpacing: '0.32em', textTransform: 'uppercase', color: '#e0b45f', paddingBottom: 18 }}>
               {homeHero.kicker}
             </span>
@@ -95,34 +66,29 @@ function HomeContent() {
               <span className="fh-hero-h1-line">Рыболовная база отдыха</span>
               <span className="fh-hero-h1-line">«Семейный дом»</span>
             </h1>
-            {homeHero.videoUrl && (
-              <button
-                type="button"
-                onClick={() => setVideoOpen(true)}
-                className="fh-oswald fh-hero-video-btn"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 10,
-                  marginTop: 20,
-                  background: 'rgba(20,18,14,0.55)',
-                  border: '1px solid rgba(246,239,225,0.32)',
-                  borderRadius: 4,
-                  color: '#f6efe1',
-                  cursor: 'pointer',
-                  fontSize: 13,
-                  fontWeight: 600,
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  padding: '12px 20px',
-                  backdropFilter: 'blur(8px)',
-                  WebkitBackdropFilter: 'blur(8px)',
-                }}
+            <div className="fh-hero-actions">
+              <a
+                href={yandex.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Оценка ${yandex.rating} на Яндекс.Картах — открыть отзывы`}
+                className="fh-oswald fh-hero-yandex-btn"
               >
-                <span aria-hidden style={{ fontSize: 16, lineHeight: 1 }}>▶</span>
-                {homeHero.videoLabel}
-              </button>
-            )}
+                <span className="fh-hero-yandex-btn__stars" aria-hidden="true">★★★★★</span>
+                <span className="fh-hero-yandex-btn__score">{yandex.rating}</span>
+                <span className="fh-hero-yandex-btn__label">{yandex.ratingsCount} оценок · Яндекс.Карты</span>
+              </a>
+              {homeHero.videoUrl && (
+                <button
+                  type="button"
+                  onClick={() => setVideoOpen(true)}
+                  className="fh-oswald fh-hero-video-btn"
+                >
+                  <span aria-hidden className="fh-hero-video-btn__icon">▶</span>
+                  {homeHero.videoLabel}
+                </button>
+              )}
+            </div>
             <p className="fh-oswald" style={{ fontSize: 'clamp(14px,3.2vw,18px)', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#e0b45f', margin: '18px 0 0' }}>
               {homeHero.subtitle}
             </p>
