@@ -14,6 +14,11 @@ function CookieConsent() {
     }
   }, [])
 
+  useEffect(() => {
+    document.body.classList.toggle('has-cookie-banner', visible)
+    return () => document.body.classList.remove('has-cookie-banner')
+  }, [visible])
+
   const accept = () => {
     try {
       localStorage.setItem(STORAGE_KEY, '1')

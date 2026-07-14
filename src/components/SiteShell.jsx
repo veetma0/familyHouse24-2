@@ -227,32 +227,23 @@ function Footer({ onNav }) {
   }
   const allNav = [...navItems, ...footerExtraItems]
   return (
-    <footer style={{ background: '#1a1712', padding: '64px 32px 36px' }} className="fh-section-pad">
-      <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-        <div
-          className="fh-grid-3"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1.5fr 1fr 1fr',
-            gap: 40,
-            paddingBottom: 40,
-            borderBottom: '1px solid rgba(231,221,200,0.12)',
-          }}
-        >
+    <footer className="fh-footer fh-section-pad">
+      <div className="fh-footer__inner">
+        <div className="fh-footer-grid">
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <img src={siteLogos.icon} alt="" style={{ height: 42, width: 'auto' }} />
-              <span className="fh-oswald" style={{ fontSize: 20, fontWeight: 700, letterSpacing: '0.06em', color: '#f6efe1' }}>
+            <div className="fh-footer-brand">
+              <img src={siteLogos.icon} alt="" className="fh-footer-brand__logo" />
+              <span className="fh-oswald fh-footer-brand__name">
                 СЕМЕЙНЫЙ ДОМ
               </span>
             </div>
-            <p style={{ fontSize: 14.5, lineHeight: 1.7, color: '#8c8071', margin: '18px 0 0', maxWidth: 340 }}>
+            <p className="fh-footer-about">
               Эко-отель на реке Сить, в 10 км от Рыбинского водохранилища. Дома и баня, домашняя кухня и настоящая рыбалка — круглый год.
             </p>
           </div>
-          <div>
+          <div className="fh-footer-col">
             <div style={colLabel}>Навигация</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 11, alignItems: 'flex-start' }}>
+            <div className="fh-footer-links">
               {allNav.map((item) => (
                 <button key={item.id} type="button" onClick={() => onNav(item.path)} className="fh-link-underline" style={linkBtn}>
                   {item.label}
@@ -260,9 +251,9 @@ function Footer({ onNav }) {
               ))}
             </div>
           </div>
-          <div>
+          <div className="fh-footer-col">
             <div style={colLabel}>Контакты</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
+            <div className="fh-footer-contacts">
               <a href="tel:+74951510082" style={{ fontSize: 16, color: '#f6efe1', textDecoration: 'none', fontWeight: 700 }}>
                 +7 (495) 151-00-82
               </a>
@@ -282,16 +273,14 @@ function Footer({ onNav }) {
             </div>
           </div>
         </div>
-        <div style={{ paddingTop: 26, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div className="fh-footer-bottom">
+          <div className="fh-footer-bottom__left">
             <button type="button" onClick={() => onNav('/privacy')} className="fh-footer-policy-link fh-oswald">
               Политика обработки данных
             </button>
-            <span style={{ fontSize: 13, color: '#6f655a' }}>© 2026 «Семейный дом». Все права защищены.</span>
+            <span className="fh-footer-copy">© 2026 «Семейный дом». Все права защищены.</span>
           </div>
-          <span style={{ fontSize: 13, color: '#6f655a' }}>
-            {legalCaption}
-          </span>
+          <span className="fh-footer-legal">{legalCaption}</span>
         </div>
       </div>
     </footer>

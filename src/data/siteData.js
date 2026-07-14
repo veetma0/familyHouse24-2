@@ -4,6 +4,7 @@
 // с основного сайта family-house24.ru.
 
 import { fishingFaq } from './fishingFaq'
+import heroVideo from '../assets/video.mp4'
 
 const imgSeq = (folder, count, ext = 'webp') =>
   Array.from({ length: count }, (_, i) => `/images/${folder}/${i + 1}.${ext}`)
@@ -165,7 +166,7 @@ export const homeHero = {
   welcome: 'Рыбинка зовёт! Мы рады приветствовать вас в «Семейный Дом»!',
   lead:
     'Адреналин от борьбы с трофейной рыбой на просторах Рыбинского водохранилища. Азарт охоты в угодьях у реки Сить. Тишина и чистейший воздух, напоённый ароматами леса. Щедрость природы: грибные поляны и ягодные россыпи у ног. Это не отдых — это приключение! Откройте для себя истинный вкус отдыха!',
-  videoUrl: 'https://www.instagram.com/tv/CC3Vp1_FJ2i/',
+  videoUrl: heroVideo,
   videoLabel: 'Видеообзор базы отдыха',
 }
 
