@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { navItems, footerExtraItems, contact, legalCaption, siteLogos } from '../data/siteData'
+import { navItems, footerExtraItems, contact, siteLogos } from '../data/siteData'
 import CookieConsent from './CookieConsent'
 import { dateOffset } from '../utils/dates'
 import { ShellContext } from './shellContext'
@@ -280,7 +280,6 @@ function Footer({ onNav }) {
             </button>
             <span className="fh-footer-copy">© 2026 «Семейный дом». Все права защищены.</span>
           </div>
-          <span className="fh-footer-legal">{legalCaption}</span>
         </div>
       </div>
     </footer>

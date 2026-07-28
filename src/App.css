@@ -1365,16 +1365,10 @@ img {
   gap: 10px;
 }
 
-.fh-footer-copy,
-.fh-footer-legal {
+.fh-footer-copy {
   font-size: 13px;
   color: #8c8071;
   line-height: 1.6;
-}
-
-.fh-footer-legal {
-  max-width: min(100%, 520px);
-  text-align: right;
 }
 
 @media (max-width: 960px) {
@@ -1402,11 +1396,6 @@ img {
     flex-direction: column;
     align-items: flex-start;
     gap: 20px;
-  }
-
-  .fh-footer-legal {
-    max-width: 100%;
-    text-align: left;
   }
 }
 
