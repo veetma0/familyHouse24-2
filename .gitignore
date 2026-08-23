@@ -25,3 +25,4 @@ dist-ssr
 
 # Архив для ручной выгрузки на хостинг (собирается локально)
 familyhouse24-deploy.zip
+familyhouse24-deploy/

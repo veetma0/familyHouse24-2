@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { navItems, footerExtraItems, contact, siteLogos } from '../data/siteData'
 import { legal } from '../data/legal'
 import CookieConsent from './CookieConsent'
+import { COOKIE_SETTINGS_EVENT } from './cookieEvents'
 import { dateOffset } from '../utils/dates'
 import { ShellContext } from './shellContext'
 
@@ -293,6 +294,14 @@ function Footer({ onNav }) {
                 {doc.label}
               </button>
             ))}
+            {/* Позволяет изменить или отозвать согласие на cookie в любой момент */}
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new Event(COOKIE_SETTINGS_EVENT))}
+              className="fh-footer-policy-link fh-oswald"
+            >
+              Настройки cookie
+            </button>
           </nav>
 
           {/* Сведения об исполнителе — требование ПП РФ № 1912 от 27.11.2025 */}

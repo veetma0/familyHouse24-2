@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { COOKIE_SETTINGS_EVENT } from './cookieEvents'
 
 /* ============================================================
    Баннер согласия на использование файлов cookie.
@@ -31,6 +32,12 @@ function CookieConsent() {
   // Читаем сохранённый выбор один раз при инициализации — баннер не мигает
   // при первой отрисовке у пользователей, уже сделавших выбор.
   const [visible, setVisible] = useState(() => !getCookieConsent())
+
+  useEffect(() => {
+    const reopen = () => setVisible(true)
+    window.addEventListener(COOKIE_SETTINGS_EVENT, reopen)
+    return () => window.removeEventListener(COOKIE_SETTINGS_EVENT, reopen)
+  }, [])
 
   useEffect(() => {
     document.body.classList.toggle('has-cookie-banner', visible)
