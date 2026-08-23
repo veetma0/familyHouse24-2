@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { navItems, footerExtraItems, contact, siteLogos } from '../data/siteData'
+import { legal } from '../data/legal'
 import CookieConsent from './CookieConsent'
 import { dateOffset } from '../utils/dates'
 import { ShellContext } from './shellContext'
@@ -254,11 +255,11 @@ function Footer({ onNav }) {
           <div className="fh-footer-col">
             <div style={colLabel}>Контакты</div>
             <div className="fh-footer-contacts">
-              <a href="tel:+74951510082" style={{ fontSize: 16, color: '#f6efe1', textDecoration: 'none', fontWeight: 700 }}>
-                +7 (495) 151-00-82
+              <a href="tel:+79159956687" style={{ fontSize: 16, color: '#f6efe1', textDecoration: 'none', fontWeight: 700 }}>
+                +7 (915) 995-66-87
               </a>
-              <a href="mailto:Familyhouse.baza@gmail.com" style={{ fontSize: 14, color: '#cabfae', textDecoration: 'none' }}>
-                Familyhouse.baza@gmail.com
+              <a href="mailto:familyhouse.baza@gmail.com" style={{ fontSize: 14, color: '#cabfae', textDecoration: 'none' }}>
+                familyhouse.baza@gmail.com
               </a>
               <a
                 href={`https://instagram.com/${contact.instagram}`}
@@ -274,12 +275,38 @@ function Footer({ onNav }) {
           </div>
         </div>
         <div className="fh-footer-bottom">
-          <div className="fh-footer-bottom__left">
-            <button type="button" onClick={() => onNav('/privacy')} className="fh-footer-policy-link fh-oswald">
-              Политика обработки данных
-            </button>
-            <span className="fh-footer-copy">© 2026 «Семейный дом». Все права защищены.</span>
+          {/* Документы (ФЗ-152, ПП РФ № 1912) */}
+          <nav className="fh-footer-docs" aria-label="Юридические документы">
+            {[
+              { path: '/privacy', label: 'Политика обработки данных' },
+              { path: '/cookies', label: 'Файлы cookie' },
+              { path: '/consent', label: 'Согласие на обработку ПД' },
+              { path: '/offer', label: 'Публичная оферта' },
+              { path: '/terms', label: 'Пользовательское соглашение' },
+            ].map((doc) => (
+              <button
+                key={doc.path}
+                type="button"
+                onClick={() => onNav(doc.path)}
+                className="fh-footer-policy-link fh-oswald"
+              >
+                {doc.label}
+              </button>
+            ))}
+          </nav>
+
+          {/* Сведения об исполнителе — требование ПП РФ № 1912 от 27.11.2025 */}
+          <div className="fh-footer-legal">
+            <span>{legal.companyFull}</span>
+            <span>
+              ОГРН {legal.ogrn} · ИНН {legal.inn} · КПП {legal.kpp}
+            </span>
+            <span>{legal.addressLegal}</span>
           </div>
+
+          <span className="fh-footer-copy">
+            © 2026 База отдыха «Семейный дом». Все права защищены.
+          </span>
         </div>
       </div>
     </footer>
@@ -425,12 +452,12 @@ function SiteShell({ activeId, children }) {
           Забронировать
         </button>
         <a
-          href="tel:+74951510082"
+          href="tel:+79159956687"
           onClick={() => setMobileOpen(false)}
           className="fh-oswald"
           style={{ marginTop: 18, fontSize: 20, fontWeight: 600, color: '#e0b45f', textDecoration: 'none', textAlign: 'center' }}
         >
-          +7 (495) 151-00-82
+          +7 (915) 995-66-87
         </a>
       </div>
 

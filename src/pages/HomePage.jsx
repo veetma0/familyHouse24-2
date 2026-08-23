@@ -293,18 +293,18 @@ function HomeContent() {
               {contact.address}. Удобный заезд на любом авто, парковка у каждого дома. Точную геолокацию пришлём после брони.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-              <a href="tel:+74951510082" style={{ display: 'flex', alignItems: 'center', gap: 14, textDecoration: 'none', color: '#f6efe1' }}>
+              <a href="tel:+79159956687" style={{ display: 'flex', alignItems: 'center', gap: 14, textDecoration: 'none', color: '#f6efe1' }}>
                 <span style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(184,118,46,0.22)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flex: 'none' }}>☎</span>
                 <span>
                   <span style={{ display: 'block', fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#8c8071' }}>Телефон</span>
-                  <span className="fh-oswald" style={{ fontSize: 20, fontWeight: 600 }}>+7 (495) 151-00-82</span>
+                  <span className="fh-oswald" style={{ fontSize: 20, fontWeight: 600 }}>+7 (915) 995-66-87</span>
                 </span>
               </a>
-              <a href="mailto:Familyhouse.baza@gmail.com" style={{ display: 'flex', alignItems: 'center', gap: 14, textDecoration: 'none', color: '#f6efe1' }}>
+              <a href="mailto:familyhouse.baza@gmail.com" style={{ display: 'flex', alignItems: 'center', gap: 14, textDecoration: 'none', color: '#f6efe1' }}>
                 <span style={{ width: 44, height: 44, borderRadius: '50%', background: 'rgba(184,118,46,0.22)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flex: 'none' }}>✉</span>
                 <span>
                   <span style={{ display: 'block', fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#8c8071' }}>Почта</span>
-                  <span style={{ fontSize: 16 }}>Familyhouse.baza@gmail.com</span>
+                  <span style={{ fontSize: 16 }}>familyhouse.baza@gmail.com</span>
                 </span>
               </a>
             </div>

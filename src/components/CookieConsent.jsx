@@ -1,29 +1,50 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
+/* ============================================================
+   Баннер согласия на использование файлов cookie.
+
+   Согласие — отдельное явное действие пользователя (ст. 9 ФЗ-152
+   в редакции с 01.09.2025), поэтому у баннера две равнозначные
+   кнопки: принять все / только необходимые. Пассивной формулировки
+   «продолжая пользоваться сайтом, вы соглашаетесь» недостаточно.
+
+   Выбор и его дата сохраняются локально — это доказательство
+   полученного (или неполученного) согласия.
+   ============================================================ */
+
 const STORAGE_KEY = 'fh-cookie-consent'
 
-function CookieConsent() {
-  const [visible, setVisible] = useState(false)
+function getCookieConsent() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    if (!raw) return null
+    // Поддерживаем старый формат ('1'), сохранённый прежней версией баннера.
+    if (raw === '1') return { value: 'all', date: null }
+    return JSON.parse(raw)
+  } catch {
+    return null
+  }
+}
 
-  useEffect(() => {
-    try {
-      setVisible(!localStorage.getItem(STORAGE_KEY))
-    } catch {
-      setVisible(true)
-    }
-  }, [])
+function CookieConsent() {
+  // Читаем сохранённый выбор один раз при инициализации — баннер не мигает
+  // при первой отрисовке у пользователей, уже сделавших выбор.
+  const [visible, setVisible] = useState(() => !getCookieConsent())
 
   useEffect(() => {
     document.body.classList.toggle('has-cookie-banner', visible)
     return () => document.body.classList.remove('has-cookie-banner')
   }, [visible])
 
-  const accept = () => {
+  const decide = (value) => {
     try {
-      localStorage.setItem(STORAGE_KEY, '1')
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ value, date: new Date().toISOString() }),
+      )
     } catch {
-      /* ignore */
+      /* приватный режим браузера — просто закрываем баннер */
     }
     setVisible(false)
   }
@@ -31,18 +52,42 @@ function CookieConsent() {
   if (!visible) return null
 
   return (
-    <div className="fh-cookie-banner" role="dialog" aria-live="polite" aria-label="Уведомление об использовании cookie">
+    <div
+      className="fh-cookie-banner"
+      role="dialog"
+      aria-live="polite"
+      aria-label="Уведомление об использовании файлов cookie"
+    >
       <div className="fh-cookie-banner__inner">
         <p className="fh-cookie-banner__text">
-          Мы используем cookie-файлы, чтобы сайт работал корректно, а также для сбора статистики и улучшения работы сервиса. Продолжая пользоваться сайтом, вы соглашаетесь с их использованием. Подробнее — в{' '}
+          Мы используем файлы cookie: строго необходимые — для работы сайта и формы
+          бронирования, аналитические и функциональные — только с вашего согласия.
+          Подробнее — в{' '}
+          <Link to="/cookies" className="fh-cookie-banner__link">
+            Политике в отношении файлов cookie
+          </Link>{' '}
+          и{' '}
           <Link to="/privacy" className="fh-cookie-banner__link">
-            Политике конфиденциальности
+            Политике обработки персональных данных
           </Link>
           .
         </p>
-        <button type="button" className="fh-cookie-banner__btn fh-oswald" onClick={accept}>
-          OK
-        </button>
+        <div className="fh-cookie-banner__actions">
+          <button
+            type="button"
+            className="fh-cookie-banner__btn fh-cookie-banner__btn--ghost fh-oswald"
+            onClick={() => decide('necessary')}
+          >
+            Только необходимые
+          </button>
+          <button
+            type="button"
+            className="fh-cookie-banner__btn fh-oswald"
+            onClick={() => decide('all')}
+          >
+            Принять все
+          </button>
+        </div>
       </div>
     </div>
   )

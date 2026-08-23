@@ -1,0 +1,26 @@
+# Family House / Семейный дом — статическая сборка (React Router, BrowserRouter).
+# Без этого файла прямой переход/обновление страницы на любом маршруте,
+# кроме "/", будет отдавать 404 — Apache ищет файл /prices, /booking и т.д.,
+# а эти "страницы" существуют только в JS-роутере.
+
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Реальные файлы и папки (assets, images, favicon.svg и т.д.) отдаём как есть.
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Всё остальное — на index.html, дальше маршрутизацию берёт на себя React Router.
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Не даём кешу браузера "залипать" на старой версии index.html после деплоя.
+<IfModule mod_headers.c>
+  <FilesMatch "index\.html$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </FilesMatch>
+</IfModule>

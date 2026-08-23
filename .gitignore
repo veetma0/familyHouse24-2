@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Архив для ручной выгрузки на хостинг (собирается локально)
+familyhouse24-deploy.zip

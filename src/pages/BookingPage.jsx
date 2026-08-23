@@ -97,8 +97,8 @@ function BookingContent() {
               <p style={{ fontSize: 16, color: '#6b6157', margin: '14px auto 28px', maxWidth: 440, lineHeight: 1.6 }}>
                 Ничего страшного — позвоните нам, и мы подберём дом, подскажем свободные даты и забронируем всё за вас.
               </p>
-              <a href="tel:+74951510082" className="fh-oswald fh-btn-primary" style={{ display: 'inline-block', background: '#b8762e', color: '#fff', textDecoration: 'none', fontSize: 16, fontWeight: 600, letterSpacing: '0.04em', padding: '14px 30px', borderRadius: 3 }}>
-                +7 (495) 151-00-82
+              <a href="tel:+79159956687" className="fh-oswald fh-btn-primary" style={{ display: 'inline-block', background: '#b8762e', color: '#fff', textDecoration: 'none', fontSize: 16, fontWeight: 600, letterSpacing: '0.04em', padding: '14px 30px', borderRadius: 3 }}>
+                +7 (915) 995-66-87
               </a>
             </div>
           )}

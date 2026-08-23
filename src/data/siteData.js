@@ -23,10 +23,10 @@ export const siteLogos = {
 // ── Контакты базы (единый источник для формы, мессенджеров, футера) ──
 // Телефон в международном формате без + и пробелов — для ссылок wa.me / tel.
 export const contact = {
-  phoneDisplay: '+7 (495) 151-00-82',
-  phoneDigits: '74951510082',
-  email: 'Familyhouse.baza@gmail.com',
-  telegram: '74951510082',
+  phoneDisplay: '+7 (915) 995-66-87',
+  phoneDigits: '79159956687',
+  email: 'familyhouse.baza@gmail.com',
+  telegram: '+79159956687',
   instagram: 'familyhouse_baza',
   office: '10:00–20:00, без выходных',
   checkIn: 'после 15:00',
@@ -35,7 +35,9 @@ export const contact = {
   address: 'Ярославская область, Брейтовский район, деревня Набережная',
 }
 
-// Реквизиты компании: временно убраны с сайта, добавим после уточнения.
+// Реквизиты исполнителя вынесены в отдельный модуль ./legal.js
+// (используются в футере, документах и формах).
+export { legal, legalCaption, siteDomain, siteUrl } from './legal'
 
 // ── Яндекс.Карты ──────────────────────────────────────────────
 // Точка базы отдыха: 58.273250, 37.890191 (короткая ссылка ниже).
@@ -534,12 +536,12 @@ export const reviews = [
 
 // ── Контактные карточки (страница «Контакты») ─────────────────
 export const contactCards = [
-  { label: 'Телефон', value: '+7 (495) 151-00-82', note: 'Ежедневно 10:00–20:00', href: 'tel:+74951510082' },
-  { label: 'Почта', value: 'Familyhouse.baza@gmail.com', note: 'Ответим в течение дня', href: 'mailto:Familyhouse.baza@gmail.com' },
+  { label: 'Телефон', value: '+7 (915) 995-66-87', note: 'Ежедневно 10:00–20:00', href: 'tel:+79159956687' },
+  { label: 'Почта', value: 'familyhouse.baza@gmail.com', note: 'Ответим в течение дня', href: 'mailto:familyhouse.baza@gmail.com' },
   { label: 'Instagram', value: '@familyhouse_baza', note: 'Фото и новости базы', href: 'https://instagram.com/familyhouse_baza' },
   { label: 'Адрес', value: 'д. Набережная', note: 'Брейтовский р-н, Ярославская обл.', href: mapShareUrl },
-  { label: 'Заезд · выезд', value: 'после 15:00 · до 12:00', note: 'Ранний заезд — по договорённости', href: 'tel:+74951510082' },
-  { label: 'Приём гостей', value: '10:00 – 20:00', note: 'Без выходных, круглый год', href: 'tel:+74951510082' },
+  { label: 'Заезд · выезд', value: 'после 15:00 · до 12:00', note: 'Ранний заезд — по договорённости', href: 'tel:+79159956687' },
+  { label: 'Приём гостей', value: '10:00 – 20:00', note: 'Без выходных, круглый год', href: 'tel:+79159956687' },
 ]
 
 // ── Частые вопросы (страница «Контакты») ──────────────────────

@@ -64,7 +64,7 @@ function PricesContent() {
           </div>
           <p style={{ textAlign: 'center', fontSize: 14, color: '#9a8c74', margin: 0 }}>
             Цены носят справочный характер. Актуальную стоимость и наличие уточняйте у администратора:{' '}
-            <a href="tel:+74951510082" style={{ color: '#b8762e', fontWeight: 700, textDecoration: 'none' }}>+7 (495) 151-00-82</a>
+            <a href="tel:+79159956687" style={{ color: '#b8762e', fontWeight: 700, textDecoration: 'none' }}>+7 (915) 995-66-87</a>
           </p>
         </div>
       </section>

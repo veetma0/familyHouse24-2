@@ -12,6 +12,10 @@ import ReviewsPage from './pages/ReviewsPage'
 import ContactsPage from './pages/ContactsPage'
 import BookingPage from './pages/BookingPage'
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
+import CookiePolicyPage from './pages/CookiePolicyPage'
+import ConsentPage from './pages/ConsentPage'
+import OfferPage from './pages/OfferPage'
+import TermsPage from './pages/TermsPage'
 
 function App() {
   return (
@@ -27,7 +31,12 @@ function App() {
       <Route path="/photos" element={<PhotosPage />} />
       <Route path="/reviews" element={<ReviewsPage />} />
       <Route path="/contacts" element={<ContactsPage />} />
+      {/* Юридические документы */}
       <Route path="/privacy" element={<PrivacyPolicyPage />} />
+      <Route path="/cookies" element={<CookiePolicyPage />} />
+      <Route path="/consent" element={<ConsentPage />} />
+      <Route path="/offer" element={<OfferPage />} />
+      <Route path="/terms" element={<TermsPage />} />
       {/* Старый раздел «Услуги» теперь объединён со страницей цен */}
       <Route path="/services" element={<Navigate to="/prices" replace />} />
       <Route path="*" element={<Navigate to="/" replace />} />

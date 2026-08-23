@@ -1,4 +1,4 @@
-const fallbackBookingPage = 'https://family-house24.ru/booking'
+const fallbackBookingPage = 'https://familyhouse24.ru/booking'
 const defaultBnovoUid = '088c727e-5cbd-4b98-a7f7-f993f7dbb2e0'
 
 export const bnovoConfig = {

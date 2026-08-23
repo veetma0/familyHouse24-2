@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import SiteShell from '../components/SiteShell'
 import { useShell } from '../components/shellContext'
 import { useScrollReveal } from '../hooks/useScrollReveal'
@@ -29,6 +30,9 @@ function ContactsContent() {
   const msgRef = useRef(null)
   const [errors, setErrors] = useState({})
   const [openFaq, setOpenFaq] = useState(0)
+  // Согласие на обработку ПД — отдельное явное действие пользователя
+  // (ст. 9 ФЗ-152 в редакции, действующей с 01.09.2025).
+  const [consent, setConsent] = useState(false)
 
   const digits = (v) => (v || '').replace(/\D/g, '')
 
@@ -43,9 +47,17 @@ function ContactsContent() {
     if (!name) errs.name = true
     if (digits(phone).length < 10) errs.phone = true
     if (msg.length < 5) errs.msg = true
+    // Без согласия на обработку персональных данных заявка не отправляется.
+    if (!consent) errs.consent = true
     if (Object.keys(errs).length) {
       setErrors(errs)
-      addToast('error', 'Не отправлено', 'Заполните имя, телефон и сообщение.')
+      addToast(
+        'error',
+        'Не отправлено',
+        errs.consent && !errs.name && !errs.phone && !errs.msg
+          ? 'Подтвердите согласие на обработку персональных данных.'
+          : 'Заполните имя, телефон и сообщение.',
+      )
       return
     }
 
@@ -153,6 +165,36 @@ function ContactsContent() {
               <textarea ref={msgRef} rows={4} placeholder="Когда планируете приехать, сколько гостей, что важно?" className="fh-input" style={{ ...inputStyle, resize: 'vertical', lineHeight: 1.5 }} />
               {errors.msg && <span style={errStyle}>Напишите пару слов о поездке</span>}
             </div>
+            {/* Согласие на обработку ПД — обязательное отдельное действие (ст. 9 ФЗ-152) */}
+            <div className="fh-consent">
+              <label className="fh-consent__row">
+                <input
+                  type="checkbox"
+                  className="fh-consent__box"
+                  checked={consent}
+                  onChange={(e) => {
+                    setConsent(e.target.checked)
+                    if (e.target.checked) setErrors((prev) => ({ ...prev, consent: false }))
+                  }}
+                  aria-invalid={Boolean(errors.consent)}
+                />
+                <span className="fh-consent__text">
+                  Я даю{' '}
+                  <Link to="/consent" target="_blank" rel="noopener noreferrer">
+                    согласие на обработку персональных данных
+                  </Link>{' '}
+                  и подтверждаю, что ознакомлен(а) с{' '}
+                  <Link to="/privacy" target="_blank" rel="noopener noreferrer">
+                    Политикой обработки персональных данных
+                  </Link>
+                  .
+                </span>
+              </label>
+              {errors.consent && (
+                <span style={errStyle}>Без согласия мы не сможем обработать заявку</span>
+              )}
+            </div>
+
             <div className="fh-form-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginTop: 4 }}>
               <button type="button" onClick={() => send('whatsapp')} className="fh-oswald fh-btn-primary" style={{ background: '#25a35a', color: '#fff', border: 'none', cursor: 'pointer', fontSize: 14, fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', padding: 15, borderRadius: 3 }}>
                 Написать в WhatsApp
